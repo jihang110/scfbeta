@@ -1,0 +1,70 @@
+{
+  "result": 0,
+  "resultData": {
+    "pageType": "page-form",
+    "submitUrl": "/role/add",
+    "title": "新增角色",
+    "idField": "roleId",
+    "fields": [
+      {
+        "type": "hidden",
+        "name": "corpId"
+      },
+      {
+        "type": "hidden",
+        "name": "roleId"
+      },
+      {
+        "type": "text",
+        "label": "角色名称",
+        "name": "roleName",
+        "required": true,
+		"reg": "string"
+      },
+      {
+        "type": "select",
+        "label": "角色类型",
+        "name": "roleType",
+        "dict": [
+          {
+            "key": "1",
+            "value": "平台"
+          },
+          {
+            "key": "2",
+            "value": "保理商"
+          },
+          {
+            "key": "3",
+            "value": "券商"
+          },
+          {
+            "key": "4",
+            "value": "核心企业"
+          },
+          {
+            "key": "5",
+            "value": "供应商"
+          }
+        ]
+      },
+	  {
+        "type": "text",
+        "label": "操作权限",
+        "name": "note"
+      },
+      {
+        "type": "tree",
+        "label": "菜单",
+        "name": "menuIdList",
+        "sourceUrl": "/menu/tree",
+        "keyField": "menuId",
+        "valueField": "menuName",
+        "idField": "menuId",
+        "pidField": "parentId",
+        "childrenField": "subMenuList"
+      }
+    ]
+  },
+  "resultMsg": null
+}

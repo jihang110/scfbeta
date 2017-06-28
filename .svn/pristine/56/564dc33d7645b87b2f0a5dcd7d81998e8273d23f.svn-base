@@ -1,0 +1,46 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "pageStrategy": "none",
+    "title": "获取交易对手信息",
+    "searchFields": [
+      {
+        "type": "text",
+        "label": "交易对手名称",
+        "name": "counterPartyNm"
+      },
+      {
+        "type": "text",
+        "label": "组织机构代码证号",
+        "name": "orgnNo"
+      }
+    ],
+    "sourceUrl": "/factor/invcReg/counter",
+    "idField": "cntId",
+    "columns": [
+      {
+        "title": "交易对手名称",
+        "field": "counterPartyNm"
+      },
+      {
+        "title": "组织机构代码证号",
+        "field": "orgnNo"
+      },
+      {
+        "title": "协议编号",
+        "field": "cntNo"
+      },
+      {
+        "title": "产品名称",
+        "field": "productNm"
+      },
+      {
+      	"type": "hidden",
+        "title": "合同id",
+        "field": "cntId"
+      }
+    ]
+  }
+}

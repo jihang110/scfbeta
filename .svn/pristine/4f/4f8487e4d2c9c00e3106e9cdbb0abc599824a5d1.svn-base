@@ -1,0 +1,41 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-form",
+    "idField": "recUid",
+    "fields": [
+      {
+        "type": "hidden",
+        "name": "recUid"
+      },
+      {
+        "type": "hidden",
+        "name": "productId"
+      },      
+      {
+        "type": "lookup",
+        "label": "产品名称",
+        "name": "productNm",
+        "route": "productLookupList",
+        "required": true
+      }, 
+      {
+        "type": "text",
+        "label": "产品额度",
+        "name": "productLmt",
+        "required": true,
+        "reg": "decimal"
+      },
+      {
+        "type": "select",
+        "label": "额度模式",
+        "name": "lmtMol",
+        "required": true,
+        "dictName": "LIMIT_MODE"
+      }                  
+    ],
+    
+    "script":"business/pub/prdtdist/js/prdtdistForm.js"
+  }
+}

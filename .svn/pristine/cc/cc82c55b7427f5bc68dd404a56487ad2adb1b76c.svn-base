@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta content="width=device-width, initial-scale=1" name="viewport">
+<title>友田信息</title>
+<link rel="stylesheet"
+	href="third-party/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="third-party/bootstrap/css/bootstrap-responsive.min.css">
+<link href="theme.css?8b34182926bdb80fc0a5" rel="stylesheet">
+<style>
+/* CSS Document */
+* {
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+html {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	background: url(image/login_bg.jpg) no-repeat;
+	height: 100%;
+	width: 100%;
+	background-size: 100% 100%;
+	position: absolute;
+}
+
+#centerPointer {
+	width: 0;
+	height: 0;
+	background: red;
+	position: fixed;
+	left: 50%;
+	right: 50%;
+	top: 50%;
+	bottom: 50%;
+}
+
+#container {
+	width: 1100px;
+	height: 408px;
+	margin-left: -488px;
+	margin-top: -204px;
+	position: relative;
+}
+
+#welcome {
+	width: 580px;
+	height: 52px;
+	position: absolute;
+	left: -30px;
+	top: 178px;
+	background: url(image/main_welcome.png) no-repeat;
+}
+
+#copyRight {
+	width: 100%;
+	height: 40px;
+	color: #fff;
+	font-family: "微软雅黑 Regular", "微软雅黑";
+	font-size: 12px;
+	position: fixed;
+	bottom: 0px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#copyRight p {
+	padding-top: 12px;
+}
+
+#inputsArea {
+	width: 418px;
+	height: 408px;
+	position: absolute;
+	left: 578px;
+	padding-left: 21px;
+	z-index: 200;
+}
+
+.transparentBg {
+	background: #fff;
+	opacity: 0.4;
+	filter: alpha(opacity = 40);
+	position: absolute;
+	left: 599px;
+	width: 382px;
+}
+
+.transparentBg#bankLogo_bg {
+	height: 79px;
+	top: 21px;
+}
+
+.transparentBg#userInput_bg {
+	height: 51px;
+	top: 140px;
+}
+
+.transparentBg#passwordInput_bg {
+	height: 51px;
+	top: 203px;
+}
+
+#bankLogo {
+	margin-top: 21px;
+	width: 382px;
+	height: 79px;
+	background: url(image/logo.png) no-repeat 50% 50%;
+	z-index: 300;
+}
+
+#login-form-username {
+	width: 382px;
+	height: 51px;
+	margin-top: 40px;
+ 	background: url(image/login_person.png) no-repeat
+		20px 17px; 
+}
+
+#login-form-password {
+	width: 382px;
+	height: 51px;
+	margin-top: 12px;
+ 	background: url(image/login_lock.png) no-repeat
+		20px 17px; 
+}
+
+/* #loginErrMsg {
+	margin-top: 21px;
+	width: 382px;
+	color: red;
+	background: rgba(255, 255, 255, 0.4);
+} */
+
+.controls {
+	margin-left: 55px;
+	margin-top: 15px;
+	width: 274px;
+	height: 25px;
+	font-size: 14px;
+	border-color: transparent;
+	_border: none;
+	color: #000;
+	font-family: "Microsoft YaHei", "微软雅黑", "宋体", helvetica,
+		"Hiragino Sans GB";
+	font-weight: bold;
+}
+.control-label{
+	margin-left: 0px;
+	margin-top: 15px;
+	width: 50px;
+	height: 25px;
+	font-size: 14px;
+	color: #000;
+}
+
+#login-form-submit {
+	width: 382px;
+	height: 51px;
+	margin-top: 28px;
+	background-color: #004194;
+	cursor: pointer;
+	font-color: #ffffff;
+}
+
+.submitButton {
+	font-size: 20px;
+	font-family: "微软雅黑 Light", "微软雅黑";
+	color: #ffffff;
+	height: 100%;
+	margin-left: 140px;
+	background-color: #004194;
+	width: 100%;
+}
+
+#login-codeimg{
+margin-top: -10px;
+}
+</style>
+</head>
+
+<body>
+
+	<form class="eb-richform" id="login-form-regular">
+		<div id="centerPointer">
+			<div id="container">
+				<div id="welcome"></div>
+				<div id="bankLogo_bg" class="transparentBg"></div>
+				<div id="userInput_bg" class="transparentBg"></div>
+				<div id="passwordInput_bg" class="transparentBg"></div>
+				
+				<div id="inputsArea">
+        	<div id="bankLogo"></div>
+
+				<div id="login-form-username" data-eb-type="text" data-eb-initval=""
+					data-required="true"
+					class="eb-richipt eb-richipt-text control-group">
+					<div class="controls">
+						<input type="text" value="" name="username" data-toggle="tooltip"
+							data-placement="right" />
+					</div>
+				</div>
+
+				<div id="login-form-password" data-eb-type="password"
+					data-eb-initval="" data-required=""
+					class="eb-richipt eb-richipt-text control-group">
+					<!-- <label class="control-label">密码</label> -->
+					<div class="controls">
+						<input type="password" value="" name="password"
+							data-toggle="tooltip" data-placement="right" /> <i
+							class="fa fa-eye"></i>
+					</div>
+				</div>
+
+				<div id="login-form-code" data-eb-type="text" data-eb-initval=""
+					data-required="true"
+					class="eb-richipt eb-richipt-text control-group">
+					<label >验证码</label>
+					<div >
+						<input type="text" value="" name="code" data-toggle="tooltip"
+							data-placement="right" /> <img id="login-codeimg"
+							data-base-url="/scfbeta/login/code" src="/scfbeta/login/code">
+					</div>
+				</div>
+				
+				<div id="login-form-submit">
+		<input name="Submit" type="button" value="立即登录" class="submitButton"
+			onclick="OnSubmit()" />
+	</div>
+			</div>
+		</div>
+		</div>
+		<div id="copyRight">
+			<p>Copyright(c)2016 All Rights Reserved 友田公司 版权所有</p>
+		</div>
+
+
+	</form>
+
+	<!-- 模版预加载 -->
+
+
+	<script id="art-text" type="text/html">
+    <div id="<%=id %>" class="eb-richipt eb-richipt-text control-group<% if (styleClass) { %> styleClass<% } %>"
+  data-eb-type="text"
+  data-eb-initval="<%=value?value:"" %>"
+  data-eb-name="<%=name %>"
+  data-readonly="<%=readonly %>"
+  data-required="<%=required %>"
+  data-reg="<%=reg %>"
+>
+  <% include('art-label') %>
+  <div class="controls">
+    <input type="text" value="<%=value %>" <% if (name) { %>name="<%=name %>"<% } %> data-toggle="tooltip" data-placement="right" />
+  </div>
+</div>
+</script>
+
+	<script id="art-password" type="text/html">
+    <div id="<%=id %>" class="eb-richipt eb-richipt-text control-group<% if (styleClass) { %> styleClass<% } %>"
+  data-eb-type="password"
+  data-eb-initval="<%=value?value:"" %>"
+  data-eb-name="<%=name %>"
+  data-readonly="<%=readonly %>"
+  data-required="<%=required %>"
+  data-reg="<%=reg %>"
+>
+  <% include('art-label') %>
+  <div class="controls">
+      <input type="password" value="<%=value %>"<%=name?" name=" + name:"" %> data-toggle="tooltip" data-placement="right" />
+      <i class="fa fa-eye"></i>
+  </div>
+</div>
+</script>
+
+
+
+	<!--[if lt IE 9]>
+<script type="text/javascript" src="third-party/es5-shim.min.js"></script>
+<script type="text/javascript" src="third-party/es5-sham.min.js"></script>
+<![endif]-->
+	<script type="text/javascript" src="third-party/template-web.js"></script>
+	<script type="text/javascript" src="third-party/jquery.js"></script>
+	<script type="text/javascript"
+		src="third-party/bootstrap/js/bootstrap.min.js"></script>
+	<!--[if lt IE 9]>
+<script type="text/javascript" src="third-party/respond.js"></script>
+<![endif]-->
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$("#login-codeimg").click(
+									function() {
+										$(this).attr(
+												"src",
+												$(this).attr("data-base-url")
+														+ "?"
+														+ eb.utils.random(6));
+									});
+
+							$("#login-form-submit")
+									.click(
+											function(e) {
+												var data = eb.utils.form
+														.extractAsObjects("login-form-regular");
+												data.password = eb.utils.crypto
+														.encrypt("md5",
+																data.password);
+
+												var client = new eb.Client({
+													"url" : "/scfbeta/login",
+													"requestData" : data
+												})
+														.ifSuccess(
+																function(
+																		response) {
+																	window.location = ".";
+																})
+														.ifFail(
+																function(
+																		response) {
+																	alert(response.msg);
+																}).send();
+
+												return false;
+											});
+						});
+	</script>
+
+	<script type="text/javascript"
+		src="application-login.js?8b34182926bdb80fc0a5"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-form",
+    "submitUrl": "/pub/product/add",
+    "idField": "recUid",
+    "title": "新增接口",
+    "fields": [
+      {
+        "type": "hidden",
+        "name": "recUid"
+      },
+      {
+        "type": "text",
+        "label": "产品名称",
+        "name": "productNm",
+        "reg": "string",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "附件",
+        "name": "pictureText",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "产品描述",
+        "name": "productDescript",
+        "required": true
+      }
+    ]
+  }
+}

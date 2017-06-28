@@ -1,0 +1,678 @@
+package com.ut.scf.reqbean.factor;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+import com.ut.scf.core.annotation.EmbbedList;
+
+public class LoanReqBean {
+
+	/**
+	 * 主键
+	 */
+	private String recUid;
+	
+	//额度表id
+	private String limitRecUid;
+
+	/**
+	 * 协议id
+	 */
+	private String cntId;
+
+	// 产品ID
+	private String productId;
+	// 客户ID
+	private String corpId;
+	// 协议编号
+	private String cntNo;
+	// 产品名称
+	private String productNm;
+	// 交易对手名称
+	private String corpName;
+	// 放款账号
+	private String loanAcctNo;
+	// 户名
+	private String loanAcctName;
+	// /开户行
+	private String loanBankName;
+
+	/**
+	 * 可用融资额度
+	 */
+	private BigDecimal lmtBal;
+
+	/**
+	 * 放款账号id
+	 */
+	private String loanAcId;
+
+	/**
+	 * 最大融资比例
+	 */
+	private BigDecimal maxLoanPerc;
+
+	/**
+	 * 扣息方式
+	 */
+	private String payIntTp;
+
+	/**
+	 * 利息承担方
+	 */
+	private String assumeIntTp;
+
+	/**
+	 * 利率
+	 */
+	private BigDecimal loanRt;
+
+	/**
+	 * 扣费方式
+	 */
+	private String chargeMode;
+
+	/**
+	 * 费用承担方
+	 */
+	private String chargeBear;
+
+	/**
+	 * 费率
+	 */
+	private BigDecimal commRt;
+
+	/**
+	 * 宽限天数
+	 */
+	private Integer graceDay;
+
+	/**
+	 * 申请融资比例
+	 */
+	private BigDecimal loanPercApply;
+
+	/**
+	 * 本次融资总额
+	 */
+	private BigDecimal ttlLoanAmt;
+
+	/**
+	 * 利息总额
+	 */
+	private BigDecimal intAmt;
+
+	/**
+	 * 费用总额
+	 */
+	private BigDecimal costAmt;
+
+	/**
+	 * 预计放款金额
+	 */
+	private BigDecimal expectLoanAmt;
+
+	/**
+	 * 创建人
+	 */
+	private String createUser;
+
+	/**
+	 * 创建时间
+	 */
+	private Date createTime;
+
+	/**
+	 * 0删除，1正常
+	 */
+	private Short status;
+
+	/**
+	 * 业务日期
+	 */
+	private Date busiDt;
+
+	/**
+	 * 最后更新人
+	 */
+	private String updateUser;
+
+	/**
+	 * 最后更新时间
+	 */
+	private Date updateTime;
+
+	// 实际放款金额
+	private BigDecimal actualLoanAmt;
+
+	@EmbbedList
+	private List<LoanDetailReqBean> detailList;
+
+	
+ 
+	public String getLimitRecUid() {
+		return limitRecUid;
+	}
+
+	public void setLimitRecUid(String limitRecUid) {
+		this.limitRecUid = limitRecUid;
+	}
+
+	public BigDecimal getActualLoanAmt() {
+		return actualLoanAmt;
+	}
+
+	public void setActualLoanAmt(BigDecimal actualLoanAmt) {
+		this.actualLoanAmt = actualLoanAmt;
+	}
+
+	public List<LoanDetailReqBean> getDetailList() {
+		return detailList;
+	}
+
+	public void setDetailList(List<LoanDetailReqBean> detailList) {
+		this.detailList = detailList;
+	}
+
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+
+	public String getCorpId() {
+		return corpId;
+	}
+
+	public void setCorpId(String corpId) {
+		this.corpId = corpId;
+	}
+
+	public String getCntNo() {
+		return cntNo;
+	}
+
+	public void setCntNo(String cntNo) {
+		this.cntNo = cntNo;
+	}
+
+	public String getProductNm() {
+		return productNm;
+	}
+
+	public void setProductNm(String productNm) {
+		this.productNm = productNm;
+	}
+
+	public String getCorpName() {
+		return corpName;
+	}
+
+	public void setCorpName(String corpName) {
+		this.corpName = corpName;
+	}
+
+	public String getLoanAcctNo() {
+		return loanAcctNo;
+	}
+
+	public void setLoanAcctNo(String loanAcctNo) {
+		this.loanAcctNo = loanAcctNo;
+	}
+
+	public String getLoanAcctName() {
+		return loanAcctName;
+	}
+
+	public void setLoanAcctName(String loanAcctName) {
+		this.loanAcctName = loanAcctName;
+	}
+
+	public String getLoanBankName() {
+		return loanBankName;
+	}
+
+	public void setLoanBankName(String loanBankName) {
+		this.loanBankName = loanBankName;
+	}
+
+	/**
+	 * 主键
+	 * 
+	 * @return REC_UID 主键
+	 */
+	public String getRecUid() {
+		return recUid;
+	}
+
+	/**
+	 * 主键
+	 * 
+	 * @param recUid
+	 *            主键
+	 */
+	public void setRecUid(String recUid) {
+		this.recUid = recUid;
+	}
+
+	/**
+	 * 协议id
+	 * 
+	 * @return CNT_ID 协议id
+	 */
+	public String getCntId() {
+		return cntId;
+	}
+
+	/**
+	 * 协议id
+	 * 
+	 * @param cntId
+	 *            协议id
+	 */
+	public void setCntId(String cntId) {
+		this.cntId = cntId;
+	}
+
+	/**
+	 * 可用融资额度
+	 * 
+	 * @return LMT_BAL 可用融资额度
+	 */
+	public BigDecimal getLmtBal() {
+		return lmtBal;
+	}
+
+	/**
+	 * 可用融资额度
+	 * 
+	 * @param lmtBal
+	 *            可用融资额度
+	 */
+	public void setLmtBal(BigDecimal lmtBal) {
+		this.lmtBal = lmtBal;
+	}
+
+	/**
+	 * 放款账号id
+	 * 
+	 * @return LOAN_AC_ID 放款账号id
+	 */
+	public String getLoanAcId() {
+		return loanAcId;
+	}
+
+	/**
+	 * 放款账号id
+	 * 
+	 * @param loanAcId
+	 *            放款账号id
+	 */
+	public void setLoanAcId(String loanAcId) {
+		this.loanAcId = loanAcId;
+	}
+
+	/**
+	 * 最大融资比例
+	 * 
+	 * @return MAX_LOAN_PERC 最大融资比例
+	 */
+	public BigDecimal getMaxLoanPerc() {
+		return maxLoanPerc;
+	}
+
+	/**
+	 * 最大融资比例
+	 * 
+	 * @param maxLoanPerc
+	 *            最大融资比例
+	 */
+	public void setMaxLoanPerc(BigDecimal maxLoanPerc) {
+		this.maxLoanPerc = maxLoanPerc;
+	}
+
+	/**
+	 * 扣息方式
+	 * 
+	 * @return PAY_INT_TP 扣息方式
+	 */
+	public String getPayIntTp() {
+		return payIntTp;
+	}
+
+	/**
+	 * 扣息方式
+	 * 
+	 * @param payIntTp
+	 *            扣息方式
+	 */
+	public void setPayIntTp(String payIntTp) {
+		this.payIntTp = payIntTp;
+	}
+
+	/**
+	 * 利息承担方
+	 * 
+	 * @return ASSUME_INT_TP 利息承担方
+	 */
+	public String getAssumeIntTp() {
+		return assumeIntTp;
+	}
+
+	/**
+	 * 利息承担方
+	 * 
+	 * @param assumeIntTp
+	 *            利息承担方
+	 */
+	public void setAssumeIntTp(String assumeIntTp) {
+		this.assumeIntTp = assumeIntTp;
+	}
+
+	/**
+	 * 利率
+	 * 
+	 * @return LOAN_RT 利率
+	 */
+	public BigDecimal getLoanRt() {
+		return loanRt;
+	}
+
+	/**
+	 * 利率
+	 * 
+	 * @param loanRt
+	 *            利率
+	 */
+	public void setLoanRt(BigDecimal loanRt) {
+		this.loanRt = loanRt;
+	}
+
+	/**
+	 * 扣费方式
+	 * 
+	 * @return CHARGE_MODE 扣费方式
+	 */
+	public String getChargeMode() {
+		return chargeMode;
+	}
+
+	/**
+	 * 扣费方式
+	 * 
+	 * @param chargeMode
+	 *            扣费方式
+	 */
+	public void setChargeMode(String chargeMode) {
+		this.chargeMode = chargeMode;
+	}
+
+	/**
+	 * 费用承担方
+	 * 
+	 * @return CHARGE_BEAR 费用承担方
+	 */
+	public String getChargeBear() {
+		return chargeBear;
+	}
+
+	/**
+	 * 费用承担方
+	 * 
+	 * @param chargeBear
+	 *            费用承担方
+	 */
+	public void setChargeBear(String chargeBear) {
+		this.chargeBear = chargeBear;
+	}
+
+	/**
+	 * 费率
+	 * 
+	 * @return COMM_RT 费率
+	 */
+	public BigDecimal getCommRt() {
+		return commRt;
+	}
+
+	/**
+	 * 费率
+	 * 
+	 * @param commRt
+	 *            费率
+	 */
+	public void setCommRt(BigDecimal commRt) {
+		this.commRt = commRt;
+	}
+
+	/**
+	 * 宽限天数
+	 * 
+	 * @return GRACE_DAY 宽限天数
+	 */
+	public Integer getGraceDay() {
+		return graceDay;
+	}
+
+	/**
+	 * 宽限天数
+	 * 
+	 * @param graceDay
+	 *            宽限天数
+	 */
+	public void setGraceDay(Integer graceDay) {
+		this.graceDay = graceDay;
+	}
+
+	/**
+	 * 申请融资比例
+	 * 
+	 * @return LOAN_PERC_APPLY 申请融资比例
+	 */
+	public BigDecimal getLoanPercApply() {
+		return loanPercApply;
+	}
+
+	/**
+	 * 申请融资比例
+	 * 
+	 * @param loanPercApply
+	 *            申请融资比例
+	 */
+	public void setLoanPercApply(BigDecimal loanPercApply) {
+		this.loanPercApply = loanPercApply;
+	}
+
+	/**
+	 * 本次融资总额
+	 * 
+	 * @return TTL_LOAN_AMT 本次融资总额
+	 */
+	public BigDecimal getTtlLoanAmt() {
+		return ttlLoanAmt;
+	}
+
+	/**
+	 * 本次融资总额
+	 * 
+	 * @param ttlLoanAmt
+	 *            本次融资总额
+	 */
+	public void setTtlLoanAmt(BigDecimal ttlLoanAmt) {
+		this.ttlLoanAmt = ttlLoanAmt;
+	}
+
+	/**
+	 * 利息总额
+	 * 
+	 * @return INT_AMT 利息总额
+	 */
+	public BigDecimal getIntAmt() {
+		return intAmt;
+	}
+
+	/**
+	 * 利息总额
+	 * 
+	 * @param intAmt
+	 *            利息总额
+	 */
+	public void setIntAmt(BigDecimal intAmt) {
+		this.intAmt = intAmt;
+	}
+
+	/**
+	 * 费用总额
+	 * 
+	 * @return COST_AMT 费用总额
+	 */
+	public BigDecimal getCostAmt() {
+		return costAmt;
+	}
+
+	/**
+	 * 费用总额
+	 * 
+	 * @param costAmt
+	 *            费用总额
+	 */
+	public void setCostAmt(BigDecimal costAmt) {
+		this.costAmt = costAmt;
+	}
+
+	/**
+	 * 预计放款金额
+	 * 
+	 * @return EXPECT_LOAN_AMT 预计放款金额
+	 */
+	public BigDecimal getExpectLoanAmt() {
+		return expectLoanAmt;
+	}
+
+	/**
+	 * 预计放款金额
+	 * 
+	 * @param expectLoanAmt
+	 *            预计放款金额
+	 */
+	public void setExpectLoanAmt(BigDecimal expectLoanAmt) {
+		this.expectLoanAmt = expectLoanAmt;
+	}
+
+	/**
+	 * 创建人
+	 * 
+	 * @return CREATE_USER 创建人
+	 */
+	public String getCreateUser() {
+		return createUser;
+	}
+
+	/**
+	 * 创建人
+	 * 
+	 * @param createUser
+	 *            创建人
+	 */
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser;
+	}
+
+	/**
+	 * 创建时间
+	 * 
+	 * @return CREATE_TIME 创建时间
+	 */
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	/**
+	 * 创建时间
+	 * 
+	 * @param createTime
+	 *            创建时间
+	 */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	/**
+	 * 0删除，1正常
+	 * 
+	 * @return STATUS 0删除，1正常
+	 */
+	public Short getStatus() {
+		return status;
+	}
+
+	/**
+	 * 0删除，1正常
+	 * 
+	 * @param status
+	 *            0删除，1正常
+	 */
+	public void setStatus(Short status) {
+		this.status = status;
+	}
+
+	/**
+	 * 业务日期
+	 * 
+	 * @return BUSI_DT 业务日期
+	 */
+	public Date getBusiDt() {
+		return busiDt;
+	}
+
+	/**
+	 * 业务日期
+	 * 
+	 * @param busiDt
+	 *            业务日期
+	 */
+	public void setBusiDt(Date busiDt) {
+		this.busiDt = busiDt;
+	}
+
+	/**
+	 * 最后更新人
+	 * 
+	 * @return UPDATE_USER 最后更新人
+	 */
+	public String getUpdateUser() {
+		return updateUser;
+	}
+
+	/**
+	 * 最后更新人
+	 * 
+	 * @param updateUser
+	 *            最后更新人
+	 */
+	public void setUpdateUser(String updateUser) {
+		this.updateUser = updateUser;
+	}
+
+	/**
+	 * 最后更新时间
+	 * 
+	 * @return UPDATE_TIME 最后更新时间
+	 */
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	/**
+	 * 最后更新时间
+	 * 
+	 * @param updateTime
+	 *            最后更新时间
+	 */
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+}

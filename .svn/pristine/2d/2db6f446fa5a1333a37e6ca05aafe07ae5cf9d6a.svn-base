@@ -1,0 +1,46 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "pageStrategy":"pseudo",
+    "title": "产品分配列表",
+    "searchFields": [
+      {
+        "type": "hidden",
+        "name": "isPage",
+        "value": 1
+      },
+      {
+        "type": "text",
+        "label": "客户编号",
+        "name": "custId"
+      }
+    ],
+
+    "sourceUrl": "/pub/prdtdist/list",
+    "idField": "recUid",
+    "columns": [
+      {
+        "title": "ID",
+        "field": "recUid"
+      },
+      {
+        "title": "客户编号",
+        "field": "custId"
+      },
+      {
+        "title": "产品编号",
+        "field": "productId"
+      },
+      {
+        "title": "额度模式",
+        "field": "lmtMol"
+      },
+      {
+        "title": "产品额度",
+        "field": "productLmt"
+      }
+    ]
+  }
+}

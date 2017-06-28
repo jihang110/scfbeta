@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ut.scf.dao.sys.ISysFuncInterfaceDao">
+  <resultMap id="BaseResultMap" type="com.ut.scf.pojo.auto.SysFuncInterface">
+    <id column="INTERFACE_ID" jdbcType="NVARCHAR" property="interfaceId" />
+    <result column="INTERFACE_NAME" jdbcType="NVARCHAR" property="interfaceName" />
+    <result column="PATH" jdbcType="NVARCHAR" property="path" />
+    <result column="METHOD" jdbcType="NVARCHAR" property="method" />
+    <result column="ACCESS_STATUS" jdbcType="DECIMAL" property="accessStatus" />
+    <result column="NOTE" jdbcType="NVARCHAR" property="note" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  
+  <select id="getList" parameterType="hashmap" resultMap="BaseResultMap">
+    select INTERFACE_ID, INTERFACE_NAME, PATH, METHOD, ACCESS_STATUS, NOTE, CREATE_TIME
+    from SCFCLOUD.SYS_FUNC_INTERFACE where 1=1
+    <if test="interfaceName != null">
+      and INTERFACE_NAME like '%${interfaceName}%'
+    </if>
+    <if test="path != null">
+      and PATH like '%${path}%'
+    </if>
+     <if test="method != null">
+      and METHOD=#{method}
+    </if>
+    <if test="accessStatus != null">
+      and ACCESS_STATUS=#{accessStatus,jdbcType=DECIMAL}
+    </if>
+  </select>
+   
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ut.scf.dao.sys.IUserDeptRoleDao" >
+	<resultMap id="UserResultMap" type="com.ut.scf.pojo.auto.SysUser">
+    <id column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="mobilephone" jdbcType="VARCHAR" property="mobilephone" />
+    <result column="fixed_phone" jdbcType="VARCHAR" property="fixedPhone" />
+    <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="status" jdbcType="BIT" property="status" />
+  </resultMap>
+  
+  <resultMap id="DeptResultMap" type="com.ut.scf.pojo.auto.CorpDept">
+    <id column="dept_id" jdbcType="VARCHAR" property="deptId" />
+    <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+    <result column="corp_id" jdbcType="VARCHAR" property="corpId" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="dept_type" jdbcType="VARCHAR" property="deptType" />
+    <result column="staff_num" jdbcType="INTEGER" property="staffNum" />
+    <result column="functions" jdbcType="VARCHAR" property="functions" />
+    <result column="org_structure_path" jdbcType="VARCHAR" property="orgStructurePath" />
+    <result column="contact_person" jdbcType="VARCHAR" property="contactPerson" />
+    <result column="contact_phone" jdbcType="VARCHAR" property="contactPhone" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  
+  <resultMap id="RoleResultMap" type="com.ut.scf.pojo.auto.SysRole">
+    <id column="ROLE_ID" jdbcType="NVARCHAR" property="roleId" />
+    <result column="ROLE_NAME" jdbcType="NVARCHAR" property="roleName" />
+    <result column="ROLE_TYPE" jdbcType="DECIMAL" property="roleType" />
+    <result column="CORP_ID" jdbcType="NVARCHAR" property="corpId" />
+    <result column="NOTE" jdbcType="NVARCHAR" property="note" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+  </resultMap>
+    
+  <select id="getDeptListBy" parameterType="string" resultMap="DeptResultMap">
+  	select * from CORP_DEPT where DEPT_ID in (
+    select distinct DEPT_ID from SCFCLOUD.SYS_USER_DEPT_ROLE where USER_ID = #{userId,jdbcType=NVARCHAR}
+    )
+  </select>
+  
+  <select id="getRoleListBy" parameterType="string" resultMap="RoleResultMap">
+  	select * from SYS_ROLE where ROLE_ID in (
+    select distinct ROLE_ID from SCFCLOUD.SYS_USER_DEPT_ROLE where USER_ID = #{userId,jdbcType=NVARCHAR}
+    )
+  </select>  
+  
+  <!-- 用户-机构-角色三者为非强绑定关系，按角色或者公司ID查询用户姓名 -->
+  <select id="getUserNamesByUnbind" parameterType="hashmap" resultMap="UserResultMap">
+	SELECT u.* FROM sys_user u where u.user_id in ( 
+	<if test="roleId != null and roleId != '' ">  
+        select dr.user_id FROM sys_user_dept_role dr where dr.role_id in (${roleId})
+    </if>
+    <if test="roleId != null and roleId != '' and corpId != null and corpId != ''" >  
+    	intersect
+    </if>
+    <if test="corpId != null and corpId != '' ">  
+        select dr.user_id FROM sys_user_dept_role dr,corp_dept d where dr.dept_id=d.dept_id and d.corp_id = #{corpId}
+    </if>
+	)
+  </select>   
+      
+  <!-- 用户-机构-角色三者为强绑定关系，按角色或者公司ID查询用户姓名 -->    
+  <select id="getUserNamesByForcebind" parameterType="hashmap" resultMap="UserResultMap">      
+	select u.* from sys_user u,sys_user_dept_role dr,sys_role r,corp_dept d
+	where u.user_id=dr.user_id and dr.role_id=r.role_id and dr.dept_id=d.dept_id 
+	and u.status=1 
+	<if test="roleId != null and roleId != '' ">  
+	and dr.role_id in (${roleId})
+	</if>
+	<if test="corpId != null and corpId != '' ">  
+	and d.corp_id = #{corpId}
+	</if>
+  </select> 
+</mapper>

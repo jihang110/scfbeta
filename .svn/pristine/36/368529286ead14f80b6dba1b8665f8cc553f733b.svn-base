@@ -1,0 +1,117 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-workflow",
+    "baseUrl": "/factor/invTrans/bpm",
+    "idField": "recUid",
+    "fields": [
+      {
+        "type": "hidden",
+        "name": "recUid"
+      },
+      {
+        "type": "text",
+        "label": "协议编号",
+        "name": "cntNo",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "产品名称",
+        "name": "productNm",
+        "required": true
+      },
+      {
+        "type": "lookup",
+        "label": "交易对手名称",
+        "name": "counterPartyNm",
+        "route":"counterPartyLookupList",
+        "required": true
+      },
+      {
+        "type": "select",
+        "label": "扣费方式",
+        "name": "deduMethod",
+        "dictName": "DEDU_METHOD-E",
+        "required": true
+      },
+      {
+        "type": "select",
+        "label": "费用承当方",
+        "name": "rateBearParty",
+        "dictName": "RATE_BEAR_PARTY-E",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "费率",
+        "name": "rate",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "费用总额",
+        "name": "chargeTotalAmt",
+        "required": true
+      },
+      {
+        "type": "select",
+        "label": "本次是否收费",
+        "name": "isCharge",
+        "dict": [{"key": "", "value": "请选择"}, {"key": "0", "value": "否"}, {"key": "1", "value": "是"}],
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "可转让发票总额",
+        "name": "sumInvAmt",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "本次转让发票总额",
+        "name": "invcTransAmt",
+        "required": true
+      },
+      {
+        "type": "datagrid",
+        "selectStrategy": "multi",
+        "id": "invList",
+        "name": "invList",
+        "idField": "recUid",
+        "columns": [
+          {
+            "title": "发票编号",
+            "field": "invcNo"
+          },
+          {
+            "title": "合同号",
+            "field": "cntrctNo"
+          },
+          {
+            "title": "发票日期",
+            "field": "invcDate"
+          },
+          {
+            "title": "起算日",
+            "field": "invStartDate"
+          },
+          {
+            "title": "发票到期日",
+            "field": "invDueDate"
+          },
+          {
+            "title": "发票金额",
+            "field": "invAmt"
+          },
+          {
+            "title": "费用",
+            "field": "charge"
+          }
+        ]
+      }
+    ],
+    "script": ""
+  }
+}

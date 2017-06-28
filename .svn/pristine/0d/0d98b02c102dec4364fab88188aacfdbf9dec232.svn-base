@@ -1,0 +1,73 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-workflow",
+    "baseUrl": "/pub/prdtdist/bpm",
+
+    "fields": [
+       {
+        "type": "hidden",
+        "name": "corpId"
+      },
+      {
+        "type": "text",
+        "label": "客户名称",
+        "name": "corpName",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "组织机构代码证号",
+        "name": "orgnNo",
+        "required": true,
+        "readonly": true
+      },
+      {
+        "type": "text",
+        "label": "授信额度",
+        "name": "lmtAmt",
+        "required": true,
+        "readonly": true
+      },
+      {
+        "type": "text",
+        "label": "分配授信额度",
+        "name": "releLmtAmt",
+        "required": true,
+        "readonly": true
+      },
+      {
+        "type": "datagrid",
+        "name": "prdDistList",
+        "btnGroup": [
+          {
+            "type": "grid-form-win",
+            "title": "新增",
+            "icon": "fa fa-plus",
+            "route": "prdtdistDetailForm"
+          }
+        ],
+        "idField": "recUid",
+        "columns": [
+          {
+            "title": "产品Id",
+            "field": "productId"
+          },
+          {
+            "title": "产品名称",
+            "field": "productNm"
+          },
+          {
+            "title": "产品额度",
+            "field": "productLmt"
+          },
+          {
+            "title": "额度模式",
+            "field": "lmtMol"
+          }
+        ]
+      }
+    ]
+  }
+}

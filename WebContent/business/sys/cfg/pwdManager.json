@@ -1,0 +1,46 @@
+{
+  "result": 0,
+  "resultData": {
+    "pageType": "page-form",
+    "submitUrl": "/user/updatePassword",
+
+    "formId": "pwdManagerForm",
+
+    "title": "密码维护",
+    "fields": [
+
+      {
+        "type": "password",
+        "label": "旧密码",
+        "name": "oldPassword",
+        "required": true
+      },
+      {
+        "type": "password",
+        "label": "新密码",
+        "name": "newPassword",
+        "required": true
+      },
+	  {
+        "id": "ipt-confirmPassword",
+        "type": "password",
+        "label": "确认新密码",
+        "required": true
+      }
+    ],
+
+    "btnGroup": [
+      {
+        "id": "sys-pswdch-btn",
+        "title": "保存",
+        "icon": "fa fa-paper-plane",
+        "type": "custom",
+        "submitUrl": "/user/updatePassword"
+      }
+    ],
+
+    "script": "business/sys/js/pwdManager.js"
+
+  },
+  "resultMsg": null
+}

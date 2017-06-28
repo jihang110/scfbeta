@@ -1,0 +1,23 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "sourceUrl": "/pub/product/lookupList",
+    "idField": "productId",
+    "columns": [
+      {
+        "title": "ID",
+        "field": "productId"
+      },
+      {
+        "title": "产品名称",
+        "field": "productNm"
+      },
+      {
+        "title": "附件数",
+        "field": "pictureText"
+      } 
+    ] 
+  }
+}

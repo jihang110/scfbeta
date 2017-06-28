@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ut.scf.dao.factor.IPaymentDetailDao" >
+  <select id="getList" parameterType="hashmap" resultType="hashmap" >
+     	select 
+	    PD.REC_UID "recUid", 
+	    PD.RELA_ID "relaId",
+	    PD.INVC_ID "invcId",
+	    PD.PMT_AMT "pmtAmt",
+	    INV.INVC_NO "invcNo",
+	    INV.INV_AMT "invAmt",
+	    INV.INVC_DATE "invcDate",
+	    INV.INV_START_DATE "invStartDate",
+	    INV.INV_DUE_DATE "invDueDate",
+	    INV.CNTRCT_NO "cntrctNo",
+	    INV.INV_STATUS "invStatus",
+	    PD.CREATE_USER "createUser", 
+	    PD.CREATE_TIME "createTime", 
+	    PD.STATUS "status", 
+	    PD.BUSI_DT "busiDt", 
+	    PD.UPDATE_USER "updateUser", 
+	    PD.UPDATE_TIME  "updateTime"
+	    from PAYMENT_DETAIL PD
+	    LEFT JOIN INVC_INFO INV 
+	    ON INV.REC_UID =  PD.INVC_ID
+	    where 1=1
+	    <if test="relaId != null">
+	      and  PD.RELA_ID = #{relaId}
+	    </if>
+  </select>
+</mapper>

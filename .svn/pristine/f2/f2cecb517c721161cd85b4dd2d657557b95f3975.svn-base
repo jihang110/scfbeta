@@ -1,0 +1,87 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "title": "系统接口管理",
+    "searchFields": [
+      {
+        "type": "hidden",
+        "name": "isPage",
+        "value": 1
+      },
+      {
+        "type": "text",
+        "label": "接口名称",
+        "name": "interfaceName"
+      },
+      {
+        "type": "text",
+        "label": "路径",
+        "name": "path"
+      },
+      {
+        "type": "radio",
+        "name": "method",
+        "label": "方法",
+        "dict": [{"key": "", "value": "不限"}, {"key": "GET", "value": "GET"}, {"key": "POST", "value": "POST"}]
+      }
+    ],
+
+    "sourceUrl": "/interface/list",
+    "btnGroup": [
+      {
+        "name": "新增",
+        "icon": "fa fa-plus",
+        "action": "eb.app.Router.go('#interfaceList-add')"
+      }
+    ],
+    "idField": "interfaceId",
+    "columns": [
+      {
+        "title": "ID",
+        "field": "interfaceId"
+      },
+      {
+        "title": "接口名称",
+        "field": "interfaceName"
+      },
+      {
+        "title": "方法",
+        "field": "method"
+      },
+      {
+        "title": "路径",
+        "field": "path"
+      },
+      {
+        "title": "访问权限",
+        "field": "accessStatus",
+        "dict": [{"key": "0", "value": "不受限"}, {"key": "1", "value": "受限"}]
+      },
+      {
+        "title": "备注",
+        "field": "node"
+      },
+      {
+        "title": "创建时间",
+        "field": "createTime"
+      },
+      {
+        "title": "操作",
+        "actions": [
+          {
+            "name": "删除",
+            "icon": "fa fa-trash",
+            "action": "eb.app.deleteFromDataGrid({msg:'您确定要删除 @name 数据吗？', url: '/interface/delete', 'requestData': {'interfaceId': '@{interfaceId}'}})"
+          },
+          {
+            "name": "编辑",
+            "icon": "fa fa-pencil-square",
+            "action": "eb.app.Router.go('#interfaceList-edit', {'interfaceId': '@{interfaceId}'})"
+          }
+        ]
+      }
+    ]
+  }
+}

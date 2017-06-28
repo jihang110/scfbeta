@@ -1,0 +1,144 @@
+package com.ut.scf.service.test;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
+import com.ut.scf.core.dict.PageInfoBean;
+import com.ut.scf.core.util.ScfUUID;
+import com.ut.scf.reqbean.sys.UserAddReqBean;
+import com.ut.scf.reqbean.sys.UserDeptRoleBean;
+import com.ut.scf.reqbean.sys.UserSearchPageReqBean;
+import com.ut.scf.reqbean.sys.UserUpdateReqBean;
+import com.ut.scf.respbean.BaseRespBean;
+import com.ut.scf.service.sys.UserOperService;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:spring-mybatis-test.xml" })
+public class UserServiceTest {
+
+	private static final Logger log = LoggerFactory.getLogger(UserServiceTest.class);
+
+	@Autowired
+	private UserOperService userService;
+
+	@Test
+	public void LogAddTest() {
+		log.info("**********************************LogAddTest start*********************************");
+		Map<String, Object> LogparamMap = new HashMap<>();
+		LogparamMap.put("logId", ScfUUID.generate());
+		LogparamMap.put("userId", "testuserId");
+		LogparamMap.put("interfaceId", "testinterfaceId");
+		LogparamMap.put("ip", "127.0.0.1");
+		LogparamMap.put("content", "登录系统test");
+		userService.insertBizLog(LogparamMap);
+		log.info("**********************************LogAddTest end*********************************");
+	}
+
+	@Test
+	public void userAddTest() {
+		log.info("**********************************userAddTest start*********************************");
+		UserAddReqBean addUserBean = new UserAddReqBean();
+		addUserBean.setUsername("testUser");
+		addUserBean.setEmail("test@test.com");
+		addUserBean.setFixedPhone("025123");
+		addUserBean.setMobilephone("133123");
+		addUserBean.setNote("测试人员");
+		addUserBean.setPassword("670b14728ad9902aecba32e22fa4f6bd");
+		addUserBean.setRealname("测试用户");
+		addUserBean.setCorpId("CP0001");
+
+		List<UserDeptRoleBean> deptRoles = Lists.newArrayList();
+		UserDeptRoleBean userDeptRoleBean = new UserDeptRoleBean();
+		userDeptRoleBean.setDeptId("D001");
+		userDeptRoleBean.setRoleId("R001");
+		userDeptRoleBean.setIsMain("Y");
+		deptRoles.add(userDeptRoleBean);
+
+		userDeptRoleBean = new UserDeptRoleBean();
+		userDeptRoleBean.setDeptId("D001");
+		userDeptRoleBean.setRoleId("R001");
+		userDeptRoleBean.setIsMain("N");
+		deptRoles.add(userDeptRoleBean);
+		addUserBean.setDeptRoles(deptRoles);
+
+		log.info("userAddBean : " + JSON.toJSONString(addUserBean));
+		// BaseRespBean respBean = userService.insertUser(addUserBean);
+		// log.info("userAddBean : " + respBean);
+		// Assert.assertNotNull(respBean);
+		log.info("**********************************userAddTest end*********************************");
+	}
+
+	@Test
+	public void userListTest() {
+		log.info("**********************************userListTest start*********************************");
+		UserSearchPageReqBean searchPage = new UserSearchPageReqBean();
+		PageInfoBean page = new PageInfoBean();
+		page.setPageNumber(1);
+		page.setPageSize(15);
+		searchPage.setPage(page);
+		searchPage.setUsername("root");
+
+		BaseRespBean respBean = userService.userList(searchPage);
+		log.info("userList : " + respBean);
+		Assert.assertNotNull(respBean);
+		log.info("**********************************userListTest end*********************************");
+	}
+
+	@Test
+	public void userLoginTest() {
+		log.info("userLoginTest start");
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("username", "root");
+		paramMap.put("password", "670b14728ad9902aecba32e22fa4f6bd");
+		BaseRespBean respBean = userService.userLogin(paramMap);
+		log.info("userLogin : " + respBean);
+		Assert.assertNotNull(respBean);
+		log.info("userLoginTest end");
+	}
+
+	@Test
+	public void userUpdateTest() {
+		log.info("**********************************userAddTest start*********************************");
+		UserUpdateReqBean updateUserBean = new UserUpdateReqBean();
+		updateUserBean.setUserId("2c9984b45c66756e76e466756ed40000");
+		updateUserBean.setUsername("testUser2");
+		updateUserBean.setEmail("test@test.com");
+		updateUserBean.setFixedPhone("025123");
+		updateUserBean.setMobilephone("13313311");
+		updateUserBean.setNote("测试人员");
+		// updateUserBean.setPassword("670b14728ad9902aecba32e22fa4f6bd");
+		updateUserBean.setRealname("测试用户22");
+		updateUserBean.setCorpId("CP0001");
+
+		List<UserDeptRoleBean> deptRoles = Lists.newArrayList();
+		UserDeptRoleBean userDeptRoleBean = new UserDeptRoleBean();
+		userDeptRoleBean.setDeptId("D002");
+		userDeptRoleBean.setRoleId("R003");
+		userDeptRoleBean.setIsMain("Y");
+		deptRoles.add(userDeptRoleBean);
+
+		userDeptRoleBean = new UserDeptRoleBean();
+		userDeptRoleBean.setDeptId("D002");
+		userDeptRoleBean.setRoleId("R003");
+		userDeptRoleBean.setIsMain("N");
+		deptRoles.add(userDeptRoleBean);
+		updateUserBean.setDeptRoles(deptRoles);
+
+		// BaseRespBean respBean = userService.updateUser(updateUserBean);
+		// log.info("userAddBean : " + respBean);
+		// Assert.assertNotNull(respBean);
+		log.info("**********************************userAddTest end*********************************");
+	}
+}

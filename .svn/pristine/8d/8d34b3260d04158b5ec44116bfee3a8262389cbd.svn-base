@@ -1,0 +1,37 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-form",
+    "submitUrl": "/pub/product/mod",
+    "idField": "recUid",
+    "title": "编辑接口",
+    "fields": [
+      {
+        "type": "text",
+        "label": "产品ID",
+        "name": "recUid",
+        "readonly": true
+      },
+      {
+        "type": "text",
+        "label": "产品名称",
+        "name": "productNm",
+        "reg": "string",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "附件",
+        "name": "pictureText",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "产品描述",
+        "name": "productDescript",
+        "required": true
+      }
+    ]
+  }
+}

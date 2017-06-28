@@ -1,0 +1,39 @@
+package com.ut.scf.service.factor;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ut.scf.core.bpm.BpmProcessContext;
+import com.ut.scf.reqbean.factor.CancIntFeeReqBean;
+import com.ut.scf.service.bpm.BpmProcessService;
+import com.ut.scf.service.bpm.impl.BaseBpmProcessServiceImpl;
+
+/**
+ * 勾销息费service类
+ * 
+ * @author zhangyx@starutian.com
+ */
+@Service("cancIntFeeBpmService")
+public class CancIntFeeBpmProcessService extends BaseBpmProcessServiceImpl<CancIntFeeReqBean> implements BpmProcessService<CancIntFeeReqBean> {
+
+	@Autowired
+	private CancIntFeeService cancIntFeeService;
+
+	private static final String CORPINFO_APPLY_BPM = "FactorCancIntBpm";
+
+	@Override
+	protected void doAuditAfter(BpmProcessContext<CancIntFeeReqBean> context) {
+		super.doAuditAfter(context);
+		// 流程结束保存正式业务数据
+		if (context.isProcessEnd()) {
+			CancIntFeeReqBean cancIntFeeReqBean = getFormData(context);
+			cancIntFeeService.add(cancIntFeeReqBean);
+		}
+	}
+
+	@Override
+	public String getProcessDefinitionKey() {
+		return CORPINFO_APPLY_BPM;
+	}
+
+}

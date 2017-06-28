@@ -1,0 +1,23 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "sourceUrl": "/pub/corp/custList",
+    "idField": "custId",
+    "columns": [
+      {
+        "title": "客户编号",
+        "field": "custId"
+      },
+      {
+        "title": "客户名称",
+        "field": "custNm"
+      },
+      {
+        "title": "电子邮箱",
+        "field": "email"
+      }
+    ]
+  }
+}

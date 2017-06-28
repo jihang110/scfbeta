@@ -1,0 +1,31 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "sourceUrl": "/pub/sellercntrct/sellerCntLookupList",
+    "idField": "cntId",
+    "columns": [
+      {
+        "title": "协议编号",
+        "field": "cntNo"
+      },
+      {
+        "title": "公司名称",
+        "field": "corpName"
+      },
+      {
+        "title": "组织机构代码证号",
+        "field": "orgnNo"
+      },
+      {
+        "title": "产品名称",
+        "field": "productNm"
+      },
+      {
+        "title": "可用融资额度",
+        "field": "lmtBal"
+      }
+    ]
+  }
+}

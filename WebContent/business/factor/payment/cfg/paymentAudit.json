@@ -1,0 +1,103 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-workflow",
+    "baseUrl": "/factor/payment/bpm",
+    "title": "发票登记",
+    "fields": [
+      {
+        "type": "hidden",
+        "name": "productId"
+      },
+      {
+        "type": "hidden",
+        "name": "counterPartyId"
+      },
+      {
+        "type": "hidden",
+        "name": "cntId"
+      },
+      {
+        "id": "cntNo",
+        "type": "text",
+        "label": "协议编号",
+        "name": "cntNo",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "产品名称",
+        "name": "productNm",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "type": "lookup",
+        "label": "交易对手名称",
+        "route":"paymentCustForm",
+        "name": "counterPartyNm",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "id": "unpaidPayableAmt",
+        "type": "text",
+        "label": "未付应付账款总额",
+        "name": "unpaidPayableAmt",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "id": "ttlPmtAmt",
+        "type": "text",
+        "label": "本次付款总额",
+        "name": "ttlPmtAmt",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "id": "invcsList",
+        "type": "datagrid",
+        "name": "invcs",
+        "selectStrategy": "multi",
+        "columns": [
+          {
+       	  	"type": "hidden",
+            "title": "发票id",
+            "field": "recUid"
+          },
+          {
+            "title": "发票编号",
+            "field": "invcNo"
+          },
+          {
+            "title": "本次付款金额",
+            "field": "pmtAmt"
+          },
+          {
+            "title": "发票金额",
+            "field": "invAmt"
+          },
+          {
+            "title": "发票日期",
+            "field": "invcDate"
+          },
+          {
+            "title": "起算日",
+            "field": "invStartDate"
+          },
+          {
+            "title": "发票到期日",
+            "field": "invDueDate"
+          },
+          {
+            "title": "合同号",
+            "field": "cntrctNo"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "result": 0,
+  "resultMsg": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "title": "日志查询",
+    "searchFields": [
+      {
+        "type": "text",
+        "label": "用户名称",
+        "name": "username"
+      },
+      {
+        "type": "hidden",
+        "name": "corpId"
+      },
+      {
+        "type": "timepicker",
+        "subType": "date",
+        "label": "开始日期",
+        "name": "startDate"
+      },
+      {
+        "type": "timepicker",
+        "subType": "date",
+        "label": "结束日期",
+        "name": "endDate"
+      },
+      {
+        "type": "text",
+        "label": "日志类型",
+        "name": "logType"
+      }
+    ],
+
+    "sourceUrl": "/user/bizLogList",
+
+    "idField": "logId",
+    "columns": [
+      {
+        "title":"ID" ,
+        "field": "logId"
+      },
+      {
+        "title":"用户名称" ,
+        "field": "username"
+      },
+      {
+        "title":"企业名称" ,
+        "field": "corpName"
+      },
+      {
+        "title":"操作类型" ,
+        "field": "logTypeName"
+      },
+      {
+        "title":"访问ip" ,
+        "field": "ip"
+      },
+      {
+        "title":"日志操作时间" ,
+        "field": "operTime"
+      },
+      {
+        "title":"日志内容" ,
+        "field": "content"
+      }
+
+    ]
+
+  }
+}

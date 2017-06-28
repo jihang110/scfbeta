@@ -1,0 +1,93 @@
+{
+  "result": 0,
+  "resultData": {
+    "pageType": "page-form",
+    "baseUrl": "/dept",
+    "title": "机构管理",
+    "formId":"deptListForm",
+    "fields": [
+	  {
+        "type": "hidden",
+        "name": "corpId"
+      },
+      {
+        "type": "tree",
+        "label": "机构名称",
+        "name": "deptName",
+        "sourceUrl": "/dept/tree",
+        "keyField": "deptId",
+        "valueField": "deptName",
+        "idField": "deptId",
+        "pidField": "parentId",
+        "childrenField": "subDeptList",
+        "id":"deptAdd-deptId"
+      },  
+	  {
+        "type": "text",
+        "label": "机构性质",
+        "name": "deptType",
+        "reg": "string"
+      },
+      {
+        "type": "text",
+        "label": "人数",
+        "name": "staffNum",
+        "reg": "number"
+      },
+	  {
+        "type": "text",
+        "label": "主要职能",
+        "name": "function",
+        "reg": "string"
+      },
+	  {
+        "type": "text",
+        "label": "机构组织架构图",
+        "name": "orgStructurePath"
+      },
+	  {
+        "type": "text",
+        "label": "联系人",
+        "name": "contactPerson",
+        "reg": "string"
+      },
+	  {
+        "type": "text",
+        "label": "联系电话",
+        "name": "contactPhone",
+        "reg": "fixedPhone"
+      },
+	  {
+        "type": "textarea",
+        "label": "机构描述",
+        "name": "note"
+      }
+    ],
+    "btnGroup": [
+      {
+      	"id": "sys-deptadd-btn",
+        "title": "添加机构",
+        "icon": "fa fa-plus",
+        "type": "custom",
+        "action": "eb.app.Router.go('#deptList-add')"
+      },
+       {
+       		"id": "sys-deptdel-btn",
+            "title": "删除机构",
+            "icon": "fa fa-trash",
+            "type": "custom",
+            "submitUrl": "/dept/delete"            
+          },
+          {
+            "id": "sys-depted-btn",
+	        "title": "修改机构",
+	        "icon": "fa fa-pencil-square",
+	        "type": "custom",
+	        "submitUrl": "/dept/mod"       
+          }
+    ],
+
+    "script": "business/sys/js/deptList.js"
+  },
+  "resultMsg": null
+}

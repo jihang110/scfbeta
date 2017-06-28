@@ -1,0 +1,64 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "title": "息费管理",
+    "searchFields": [
+      {
+        "type": "hidden",
+        "name": "isPage",
+        "value": 1
+      },
+      {
+        "type": "text",
+        "label": "产品名称",
+        "name": "productNm"
+      }
+    ],
+
+    "sourceUrl": "/pub/intfee/list",
+    "btnGroup": [
+      {
+        "name": "配置",
+        "icon": "fa fa-plus",
+        "action": "eb.app.Router.go('#intfeeList-add')"
+      }
+    ],
+    "idField": "recUid",
+    "columns": [
+      {
+        "title": "产品ID",
+        "field": "productId"
+      },
+      {
+        "title": "产品名称",
+        "field": "productNm"
+      },
+      {
+        "title": "利率",
+        "field": "intRate"
+      },
+      {
+        "title": "费率",
+        "field": "feeRate"
+      },
+      {
+        "title": "操作",
+        "actions": [
+          {
+            "name": "删除",
+            "icon": "fa fa-trash",
+            "action": "eb.app.deleteFromDataGrid({msg:'您确定要删除 @name 数据吗？', url: '/pub/intfee/delete', 'requestData': {'recUid': '@{recUid}'}})"
+          },
+          {
+            "name": "编辑",
+            "icon": "fa fa-pencil-square",
+            "action": "eb.app.Router.go('#intfeeList-edit', {'requestData': {'recUid': '@{recUid}'}})"
+          }
+        ]
+      }
+    ], 
+    "script": "intfee/js/intfee.js"
+  }
+}

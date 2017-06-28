@@ -1,0 +1,162 @@
+package com.ut.scf.web.controller.sys;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ut.scf.core.dict.ErrorCodeEnum;
+import com.ut.scf.core.dict.PageInfoBean;
+import com.ut.scf.core.dict.ScfBizConsts;
+import com.ut.scf.core.dict.ScfConsts;
+import com.ut.scf.core.util.BeanUtil;
+import com.ut.scf.reqbean.sys.RoleAddReqBean;
+import com.ut.scf.reqbean.sys.RoleDeleteReqBean;
+import com.ut.scf.reqbean.sys.RoleInfoReqBean;
+import com.ut.scf.reqbean.sys.RoleListReqBean;
+import com.ut.scf.reqbean.sys.RoleUpdateReqBean;
+import com.ut.scf.respbean.BaseRespBean;
+import com.ut.scf.respbean.DataListRespBean;
+import com.ut.scf.respbean.PageListRespBean;
+import com.ut.scf.respbean.sys.RoleInfoRespBean;
+import com.ut.scf.service.sys.RoleService;
+import com.ut.scf.web.controller.BaseJsonController;
+
+@Controller
+public class RoleController extends BaseJsonController {
+
+	@Resource
+	private RoleService roleService;
+
+	@RequestMapping(value = "/role/add")
+	public @ResponseBody BaseRespBean addRole(@Valid @RequestBody RoleAddReqBean reqBean, HttpSession httpSession) {
+		BaseRespBean respBean = new BaseRespBean();
+		// 获取角色类型
+		int roleTypeSession = (int) httpSession.getAttribute(ScfConsts.SESSION_ROLE_TYPE);
+		log.debug("roleTypeSession: {}", roleTypeSession);
+
+		// 平台类型角色可以查看所有角色。其他类型只能查看相同类型的角色列表。
+		if (roleTypeSession != ScfBizConsts.ROLE_TYPE_PLAT && roleTypeSession != reqBean.getRoleType()) {
+			respBean.setResult(ErrorCodeEnum.ROLE_TYPE_NO_PERMISSION);
+			return respBean;
+		}
+
+		// 从session获取企业Id，优先填充session中的企业Id
+		String corpIdSession = (String) httpSession.getAttribute(ScfConsts.SESSION_CORP_ID);
+		if (StringUtils.isNotBlank(corpIdSession)) {
+			reqBean.setCorpId(corpIdSession);
+		}
+		return this.roleService.addRole(reqBean);
+	}
+
+	@RequestMapping(value = "/role/delete")
+	public @ResponseBody BaseRespBean deleteRole(@Valid @RequestBody RoleDeleteReqBean reqBean, HttpSession httpSession) {
+		BaseRespBean respBean = new BaseRespBean();
+		// 获取角色类型
+		int roleTypeSession = (int) httpSession.getAttribute(ScfConsts.SESSION_ROLE_TYPE);
+		log.debug("roleTypeSession: {}", roleTypeSession);
+
+		respBean = this.roleService.deleteRole(reqBean.getRoleId(), roleTypeSession);
+		return respBean;
+	}
+
+	@RequestMapping(value = "/role/get")
+	@ResponseBody
+	public BaseRespBean getRole(@RequestBody RoleInfoReqBean reqBean) {
+		BaseRespBean resp = new BaseRespBean();
+		RoleInfoRespBean data = roleService.getBy(reqBean.getRoleId());
+		resp.setResultData(data);
+		return resp;
+	}
+
+	@RequestMapping(value = "/role/list")
+	public @ResponseBody BaseRespBean roleList(@RequestBody @Valid RoleListReqBean reqBean, HttpSession httpSession) {
+		Map<String, Object> paramMap = BeanUtil.beanToMap(reqBean);
+		// 获取角色类型
+		int roleTypeSession = (int) httpSession.getAttribute(ScfConsts.SESSION_ROLE_TYPE);
+		String roleIdSession = (String) httpSession.getAttribute(ScfConsts.SESSION_ROLE_ID);
+		// 平台类型角色可以查看所有角色。其他类型只能查看相同类型的角色列表。
+		if (roleTypeSession != ScfBizConsts.ROLE_TYPE_PLAT) {
+			if (paramMap.get("roleType") == null) {
+				paramMap.put("roleType", roleTypeSession);
+			} else {
+				if (!roleIdSession.equals(ScfBizConsts.ROLE_ID_FACTOR_ADMIN)
+				        && roleTypeSession != Integer.parseInt((String) paramMap.get("roleType"))) {
+					BaseRespBean respBean = new BaseRespBean();
+					respBean.setResult(ErrorCodeEnum.ROLE_TYPE_NO_PERMISSION);
+					return respBean;
+				}
+			}
+		}
+		if (roleIdSession.equals(ScfBizConsts.ROLE_ID_ROOT)) {
+			paramMap.put("corpId", null);
+		}
+
+		if (paramMap.get("isPage").equals("1")) {
+			PageListRespBean pageListBean = new PageListRespBean();
+			PageInfoBean page = reqBean.getPage();
+			List<Map<String, Object>> list = this.roleService.getRoleList(paramMap, page);
+			pageListBean.putDataList(list, page);
+			return pageListBean;
+		} else {
+			DataListRespBean listBean = new DataListRespBean();
+			List<Map<String, Object>> list = this.roleService.getRoleList(paramMap);
+			listBean.putDataList(list);
+			return listBean;
+		}
+	}
+
+	@RequestMapping(value = "/role/listByCorp")
+	public @ResponseBody BaseRespBean roleListByCorp(@RequestBody @Valid RoleListReqBean reqBean, HttpSession httpSession) {
+		Map<String, Object> paramMap = BeanUtil.beanToMap(reqBean);
+		// 获取角色类型
+		int roleTypeSession = (int) httpSession.getAttribute(ScfConsts.SESSION_ROLE_TYPE);
+		String roleIdSession = (String) httpSession.getAttribute(ScfConsts.SESSION_ROLE_ID);
+		// 平台类型角色可以查看所有角色。其他类型只能查看相同类型的角色列表。
+		if (roleTypeSession != ScfBizConsts.ROLE_TYPE_PLAT) {
+			if (paramMap.get("roleType") == null) {
+				paramMap.put("roleType", roleTypeSession);
+			} else {
+				if (!roleIdSession.equals(ScfBizConsts.ROLE_ID_FACTOR_ADMIN)
+				        && roleTypeSession != Integer.parseInt((String) paramMap.get("roleType"))) {
+					BaseRespBean respBean = new BaseRespBean();
+					respBean.setResult(ErrorCodeEnum.ROLE_TYPE_NO_PERMISSION);
+					return respBean;
+				}
+			}
+		}
+		DataListRespBean respBean = new DataListRespBean();
+		List<Map<String, Object>> list = this.roleService.getRoleListByCorpId((String) paramMap.get("corpId"));
+		respBean.putDataList(list);
+		return respBean;
+	}
+
+	@RequestMapping(value = "/role/roleTypeList")
+	@ResponseBody
+	public BaseRespBean roleTypeList(HttpSession httpSession) {
+		int roleTypeSession = (int) httpSession.getAttribute("roleType");
+		DataListRespBean respBean = new DataListRespBean();
+		List<Map<String, Object>> list = this.roleService.getRoleTypeList(roleTypeSession);
+		respBean.putDataList(list);
+		return respBean;
+	}
+
+	@RequestMapping(value = "/role/mod")
+	public @ResponseBody BaseRespBean updateRole(@Valid @RequestBody RoleUpdateReqBean reqBean, HttpSession httpSession) {
+		BaseRespBean respBean = new BaseRespBean();
+		// 获取角色类型
+		int roleTypeSession = (int) httpSession.getAttribute(ScfConsts.SESSION_ROLE_TYPE);
+		log.debug("roleTypeSession: {}", roleTypeSession);
+
+		respBean = this.roleService.updateRole(reqBean, roleTypeSession);
+		return respBean;
+	}
+}

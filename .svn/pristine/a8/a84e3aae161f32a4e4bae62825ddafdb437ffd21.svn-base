@@ -1,0 +1,24 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "pageStrategy": "none",
+    "title": "流水号指定表",
+    "searchFields": [
+      {
+        "type": "text",
+        "label": "流水号表",
+        "name": "serialNm"
+      }
+    ],
+    "sourceUrl": "/serial/tablename",
+    "idField": "",
+    "columns": [
+      {
+        "title": "流水号指定表",
+        "field": "serialNm"
+      }
+    ]
+  }
+}

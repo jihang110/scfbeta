@@ -1,0 +1,67 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-form",
+    "submitUrl": "/pub/intfee/mod",
+    "idField": "recUid",
+    "title": "新增接口",
+    "fields": [
+      {
+        "type": "hidden",
+        "name": "recUid"
+      },
+      {
+        "type": "lookup",
+        "label": "产品ID",
+        "name": "productId",
+        "route": "productLookupList",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "产品名称",
+        "name": "productNm",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "type": "select",
+        "label": "扣息方式",
+        "name": "deductIntWay",
+        "id": "deductIntWay",
+        "required": true,
+        "dictName": "DISCOUNT_MODE"
+      },
+      {
+        "type": "text",
+        "label": "收息日(每月/季末)",
+        "name": "chargeDay",
+        "id": "chargeDay",
+        "readonly": true
+      },
+      {
+        "type": "text",
+        "label": "利率",
+        "name": "intRate",
+        "reg": "number",
+        "required": true
+      },
+      {
+        "type": "select",
+        "label": "扣费方式",
+        "name": "deductFeeWay",
+        "required": true,
+        "dictName": "DEDU_METHOD"
+      },
+       {
+        "type": "text",
+        "label": "费率",
+        "name": "feeRate",
+        "reg": "number",
+        "required": true
+      }
+    ],
+    "script": "business/pub/intfee/js/intfee.js"
+  }
+}

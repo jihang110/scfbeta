@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ut.scf.dao.pubmanage.IIntFeeDao">
+	<resultMap id="BaseResultMap" type="com.ut.scf.reqbean.pubmanage.IntFeeReqBean">
+		<id column="REC_UID" property="recUid" jdbcType="VARCHAR" />
+		<result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR" />
+		<result column="PRODUCT_NM" property="productNm" jdbcType="VARCHAR" />
+		<result column="DEDUCT_INT_WAY" property="deductIntWay"
+			jdbcType="VARCHAR" />
+		<result column="CHARGE_DAY" property="chargeDay" jdbcType="VARCHAR" />
+		<result column="INT_RATE" property="intRate" jdbcType="DECIMAL" />
+		<result column="DEDUCT_FEE_WAY" property="deductFeeWay"
+			jdbcType="VARCHAR" />
+		<result column="FEE_RATE" property="feeRate" jdbcType="DECIMAL" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="STATUS" property="status" jdbcType="DECIMAL" />
+		<result column="BUSI_DT" property="busiDt" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<select id="getList" parameterType="hashmap" resultMap="BaseResultMap">
+		select
+		a.REC_UID "recUid",
+		a.PRODUCT_ID "productId",
+		b.PRODUCT_NM
+		"productNm",
+		a.INT_RATE "intRate",
+		a.FEE_RATE "feeRate"
+		from INT_FEE a
+		left join PRODUCT b on a.PRODUCT_ID = b.REC_UID where
+		a.status = 1 and
+		b.status = 1
+		<if test="productNm != null">
+			and b.PRODUCT_NM like '%${productNm}%'
+		</if>
+	</select>
+	<select id="getListById" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		a.REC_UID "recUid",
+		a.PRODUCT_ID "productId",
+		b.PRODUCT_NM "productNm",
+		a.INT_RATE "intRate",
+		a.CHARGE_DAY "chargeDay",
+		a.DEDUCT_INT_WAY "deductIntWay",
+		a.DEDUCT_FEE_WAY "deductFeeWay",
+		a.FEE_RATE "feeRate"
+		from INT_FEE a
+		left join PRODUCT b on a.PRODUCT_ID = b.REC_UID where a.REC_UID = #{recUid,jdbcType=VARCHAR}
+	</select>
+
+</mapper>

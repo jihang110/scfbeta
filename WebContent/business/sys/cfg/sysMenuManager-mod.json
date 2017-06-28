@@ -1,0 +1,54 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-form",
+    "submitUrl": "/menu/mod",
+    "idField": "menuId",
+    "title": "编辑菜单",
+    "fields": [
+      {
+        "type": "hidden",
+        "name": "menuId"
+      },
+      {
+        "type": "text",
+        "label": "菜单名称",
+        "name": "menuName",
+        "required": true
+      },
+      {
+        "type": "hidden",
+        "label": "菜单等级",
+        "name": "menuLevel"
+      },
+      {
+        "type": "tree",
+        "label": "菜单",
+        "name": "parentId",
+        "selectStrategy": "single",
+        "sourceUrl": "/menu/tree",
+        "keyField": "menuId",
+        "valueField": "menuName",
+        "idField": "menuId",
+        "pidField": "parentId",
+        "childrenField": "subMenuList"
+      },
+      {
+        "type": "text",
+        "label": "菜单路径",
+        "name": "menuPath"
+      },
+      {
+        "type": "hidden",
+        "label": "菜单序列",
+        "name": "menuOrder"
+      },
+      {
+        "type": "textarea",
+        "label": "菜单描述",
+        "name": "note"
+      }
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "title": "流水号管理",
+    
+    "searchFields": [
+      {
+        "type": "text",
+        "label": "流水号表",
+        "name": "serialNm"
+      }
+      ],
+      
+    "sourceUrl": "/serial/list",
+    "btnGroup": [
+      {
+        "name": "新增",
+        "icon": "fa fa-plus",
+        "action": "eb.app.Router.go('#serialNm-add')"
+      }
+    ],
+    "idField": "serialId",
+    "columns": [
+      {
+        "title": "ID",
+        "field": "serialId"
+      },
+      {
+        "title": "流水号表",
+        "field": "serialNm"
+      },
+      {
+        "title": "流水号规则",
+        "field": "serialRule"
+      }
+
+    ]
+  }
+}

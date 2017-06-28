@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ut.scf.dao.auto.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.ut.scf.pojo.auto.Product">
+    <id column="REC_UID" jdbcType="VARCHAR" property="recUid" />
+    <result column="PRODUCT_NM" jdbcType="VARCHAR" property="productNm" />
+    <result column="PRODUCT_STS" jdbcType="VARCHAR" property="productSts" />
+    <result column="PICTURE_TEXT" jdbcType="VARCHAR" property="pictureText" />
+    <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="BUSI_DT" jdbcType="TIMESTAMP" property="busiDt" />
+    <result column="UPDATE_USER" jdbcType="VARCHAR" property="updateUser" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ut.scf.pojo.auto.Product">
+    <result column="PRODUCT_DESCRIPT" jdbcType="CLOB" property="productDescript" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    REC_UID, PRODUCT_NM, PRODUCT_STS, PICTURE_TEXT, CREATE_USER, CREATE_TIME, STATUS, 
+    BUSI_DT, UPDATE_USER, UPDATE_TIME
+  </sql>
+  <sql id="Blob_Column_List">
+    PRODUCT_DESCRIPT
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ut.scf.pojo.auto.ProductExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SCFCLOUD.PRODUCT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.ut.scf.pojo.auto.ProductExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.PRODUCT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SCFCLOUD.PRODUCT
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from SCFCLOUD.PRODUCT
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ut.scf.pojo.auto.ProductExample">
+    delete from SCFCLOUD.PRODUCT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ut.scf.pojo.auto.Product">
+    insert into SCFCLOUD.PRODUCT (REC_UID, PRODUCT_NM, PRODUCT_STS, 
+      PICTURE_TEXT, CREATE_USER, CREATE_TIME, 
+      STATUS, BUSI_DT, UPDATE_USER, 
+      UPDATE_TIME, PRODUCT_DESCRIPT)
+    values (#{recUid,jdbcType=VARCHAR}, #{productNm,jdbcType=VARCHAR}, #{productSts,jdbcType=VARCHAR}, 
+      #{pictureText,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=DECIMAL}, #{busiDt,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{productDescript,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ut.scf.pojo.auto.Product">
+    insert into SCFCLOUD.PRODUCT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recUid != null">
+        REC_UID,
+      </if>
+      <if test="productNm != null">
+        PRODUCT_NM,
+      </if>
+      <if test="productSts != null">
+        PRODUCT_STS,
+      </if>
+      <if test="pictureText != null">
+        PICTURE_TEXT,
+      </if>
+      <if test="createUser != null">
+        CREATE_USER,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="busiDt != null">
+        BUSI_DT,
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="productDescript != null">
+        PRODUCT_DESCRIPT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recUid != null">
+        #{recUid,jdbcType=VARCHAR},
+      </if>
+      <if test="productNm != null">
+        #{productNm,jdbcType=VARCHAR},
+      </if>
+      <if test="productSts != null">
+        #{productSts,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureText != null">
+        #{pictureText,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null">
+        #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productDescript != null">
+        #{productDescript,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ut.scf.pojo.auto.ProductExample" resultType="java.lang.Integer">
+    select count(*) from SCFCLOUD.PRODUCT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update SCFCLOUD.PRODUCT
+    <set>
+      <if test="record.recUid != null">
+        REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productNm != null">
+        PRODUCT_NM = #{record.productNm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productSts != null">
+        PRODUCT_STS = #{record.productSts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pictureText != null">
+        PICTURE_TEXT = #{record.pictureText,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUser != null">
+        CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.busiDt != null">
+        BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null">
+        UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.productDescript != null">
+        PRODUCT_DESCRIPT = #{record.productDescript,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update SCFCLOUD.PRODUCT
+    set REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      PRODUCT_NM = #{record.productNm,jdbcType=VARCHAR},
+      PRODUCT_STS = #{record.productSts,jdbcType=VARCHAR},
+      PICTURE_TEXT = #{record.pictureText,jdbcType=VARCHAR},
+      CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      PRODUCT_DESCRIPT = #{record.productDescript,jdbcType=CLOB}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update SCFCLOUD.PRODUCT
+    set REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      PRODUCT_NM = #{record.productNm,jdbcType=VARCHAR},
+      PRODUCT_STS = #{record.productSts,jdbcType=VARCHAR},
+      PICTURE_TEXT = #{record.pictureText,jdbcType=VARCHAR},
+      CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ut.scf.pojo.auto.Product">
+    update SCFCLOUD.PRODUCT
+    <set>
+      <if test="productNm != null">
+        PRODUCT_NM = #{productNm,jdbcType=VARCHAR},
+      </if>
+      <if test="productSts != null">
+        PRODUCT_STS = #{productSts,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureText != null">
+        PICTURE_TEXT = #{pictureText,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null">
+        BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productDescript != null">
+        PRODUCT_DESCRIPT = #{productDescript,jdbcType=CLOB},
+      </if>
+    </set>
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ut.scf.pojo.auto.Product">
+    update SCFCLOUD.PRODUCT
+    set PRODUCT_NM = #{productNm,jdbcType=VARCHAR},
+      PRODUCT_STS = #{productSts,jdbcType=VARCHAR},
+      PICTURE_TEXT = #{pictureText,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=DECIMAL},
+      BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      PRODUCT_DESCRIPT = #{productDescript,jdbcType=CLOB}
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ut.scf.pojo.auto.Product">
+    update SCFCLOUD.PRODUCT
+    set PRODUCT_NM = #{productNm,jdbcType=VARCHAR},
+      PRODUCT_STS = #{productSts,jdbcType=VARCHAR},
+      PICTURE_TEXT = #{pictureText,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=DECIMAL},
+      BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,116 @@
+package com.ut.scf.web.controller.bpm;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Task;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ut.scf.core.dict.ScfConsts;
+import com.ut.scf.reqbean.bpm.AuditHisFormDataReqBean;
+import com.ut.scf.reqbean.bpm.AuditShowReqBean;
+import com.ut.scf.reqbean.bpm.AuditSubmitReqBean;
+import com.ut.scf.respbean.BaseRespBean;
+import com.ut.scf.respbean.bpm.AuditHisFormDataRespBean;
+import com.ut.scf.respbean.bpm.AuditShowRespBean;
+import com.ut.scf.respbean.bpm.AuditSubmitRespBean;
+import com.ut.scf.respbean.bpm.BpmStartRespBean;
+import com.ut.scf.service.bpm.BpmProcessService;
+import com.ut.scf.web.controller.BaseJsonController;
+
+/**
+ * 
+ * 1、流程发起：保存数据并发起流程 <br>
+ * 2、待办任务列表-> <br>
+ * 3、显示审批页，显示业务表单，显示审批路由按钮（预留参数：下节点是否选人、选人查询表达式）-> <br>
+ * 4、提交审批意见，提交流程流转，保存业务表单数据（可选） -> <br>
+ * 5、流程审批历史列表-> <br>
+ * 6、点击某个审批历史节点，显示历史业务表单数据 <br>
+ * 7、显示流程图 <br>
+ * 
+ * @author shenying
+ *
+ */
+public abstract class BaseBpmController<FORMBEAN> extends BaseJsonController {
+
+	protected abstract BpmProcessService<FORMBEAN> getBpmProcessService();
+
+	public static final String REQ_PREFFIX = "/bpm";
+
+	@Autowired
+	protected HttpServletRequest request;
+
+	protected String getCurrentProcessor() {
+		return (String) request.getSession().getAttribute(ScfConsts.SESSION_USER_ID);
+	}
+
+	@RequestMapping(value = REQ_PREFFIX + "/start")
+	@ResponseBody
+	public BaseRespBean start(@RequestBody FORMBEAN formData) {
+		ProcessInstance procInst = getBpmProcessService().start(formData);
+		BpmStartRespBean startResp = new BpmStartRespBean();
+		startResp.setProcessInstanceId(procInst.getProcessInstanceId());
+
+		BaseRespBean resp = new BaseRespBean();
+		resp.setResultData(startResp);
+		return resp;
+	}
+
+	@RequestMapping(value = REQ_PREFFIX + "/startGo")
+	@ResponseBody
+	public BaseRespBean startFirstGo(@RequestBody FORMBEAN formData, HttpSession httpSession) {
+		Task task = getBpmProcessService().startFirstGo(formData, getCurrentProcessor());
+		BpmStartRespBean startResp = new BpmStartRespBean();
+		startResp.setProcessInstanceId(task.getProcessInstanceId());
+		startResp.setTaskId(task.getId());
+
+		BaseRespBean resp = new BaseRespBean();
+		resp.setResultData(startResp);
+		return resp;
+	}
+
+	// 显示审批页，返回业务表单数据，返回审批路由
+	@RequestMapping(value = REQ_PREFFIX + "/show")
+	@ResponseBody
+	public BaseRespBean showAuditPage(@RequestBody AuditShowReqBean auditShowReqBean) {
+		AuditShowRespBean<FORMBEAN> showResp = getBpmProcessService().showAudit(auditShowReqBean);
+		BaseRespBean resp = new BaseRespBean();
+		resp.setResultData(showResp);
+		return resp;
+	}
+
+	@RequestMapping(value = REQ_PREFFIX + "/showAndClaim")
+	@ResponseBody
+	public BaseRespBean showAuditPageAndClaim(@RequestBody AuditShowReqBean auditShowReqBean) {
+		AuditShowRespBean<FORMBEAN> showResp = getBpmProcessService()
+				.showAudit(auditShowReqBean, getCurrentProcessor());
+		BaseRespBean resp = new BaseRespBean();
+		resp.setResultData(showResp);
+		return resp;
+	}
+
+	// 提交审批意见，提交流程流转，保存业务表单数据（可选）
+	@RequestMapping(value = REQ_PREFFIX + "/submit")
+	@ResponseBody
+	public BaseRespBean submitAudit(@RequestBody AuditSubmitReqBean<FORMBEAN> auditSubmitReqBean) {
+		AuditSubmitRespBean submitResp = getBpmProcessService().doAudit(auditSubmitReqBean);
+		BaseRespBean resp = new BaseRespBean();
+		resp.setResultData(submitResp);
+		return resp;
+	}
+
+	// 点击某个审批历史节点，显示历史业务表单数据
+	@RequestMapping(value = REQ_PREFFIX + "/historyFormData")
+	@ResponseBody
+	public BaseRespBean queryAuditHistoryFormData(@RequestBody AuditHisFormDataReqBean auditHisFormDataReqBean) {
+		AuditHisFormDataRespBean<FORMBEAN> hisData = getBpmProcessService().getHisFormData(auditHisFormDataReqBean);
+		BaseRespBean resp = new BaseRespBean();
+		resp.setResultData(hisData);
+		return resp;
+	}
+
+}

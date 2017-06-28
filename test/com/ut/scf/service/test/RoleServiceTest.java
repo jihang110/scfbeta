@@ -1,0 +1,115 @@
+package com.ut.scf.service.test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.ut.scf.reqbean.sys.RoleAddReqBean;
+import com.ut.scf.reqbean.sys.RoleUpdateReqBean;
+import com.ut.scf.respbean.BaseRespBean;
+import com.ut.scf.service.sys.RoleService;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:spring-mybatis-test.xml" })
+public class RoleServiceTest {
+
+	private static final Logger log = LoggerFactory.getLogger(RoleServiceTest.class);
+
+	@Autowired
+	private RoleService roleService;
+
+	// @Test
+	// public void getRoleListTest() {
+	// log.debug("**********************************getRoleListTest start*********************************");
+	// RoleListReqBean reqBean = new RoleListReqBean();
+	// reqBean.setRoleName("管理员");
+	// reqBean.setRoleType(1);
+	// reqBean.setCorpId(null);
+	// reqBean.setIsPage(1);
+	// reqBean.setPageNumber(1);
+	// reqBean.setPageSize(10);
+	// BaseRespBean respBean = roleService.getRoleList(reqBean);
+	// log.debug("getRoleList respBean : {}", respBean);
+	// Assert.assertNotNull(respBean);
+	// log.debug("**********************************getRoleListTest end*********************************");
+	// }
+
+	@Test
+	public void addRoleTest() {
+		log.debug("**********************************addRoleTest start*********************************");
+		List<String> list = new ArrayList<String>();
+		list.add("MENU010101");
+		list.add("MENU010102");
+		list.add("MENU010103");
+
+		RoleAddReqBean reqBean = new RoleAddReqBean();
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < list.size(); i++) {        
+			sb.append(list.get(i)).append(";");    
+		}
+		reqBean.setRoleName("测试管理员");
+		reqBean.setRoleType(2);
+		reqBean.setCorpId("corp00001");
+		reqBean.setMenuIdList(sb.toString().substring(0,sb.toString().length()-1));
+		reqBean.setNote("备注");
+
+		BaseRespBean respBean = roleService.addRole(reqBean);
+		log.debug("addRole respBean : {}", respBean);
+		Assert.assertNotNull(respBean);
+		log.debug("**********************************addRoleTest end*********************************");
+	}
+
+	@Test
+	public void deleteRoleTest() {
+		log.debug("**********************************deleteRoleTest start*********************************");
+		BaseRespBean respBean = roleService.deleteRole("2c99812456d9786618f2d97866730000", 1);
+		log.debug("deleteRole respBean : {}", respBean);
+		Assert.assertNotNull(respBean);
+		log.debug("**********************************deleteRoleTest end*********************************");
+	}
+
+	@Test
+	public void testGetRoleListByCorpId() {
+		List<Map<String, Object>> list = roleService.getRoleListByCorpId("corp00001");
+		Assert.assertNotNull(list);
+	}
+
+	@Test
+	public void testGetRoleTypeList() {
+		List<Map<String, Object>> list = roleService.getRoleTypeList(2);
+		Assert.assertNotNull(list);
+	}
+
+	@Test
+	public void updateRoleTest() {
+		log.debug("**********************************updateRoleTest start*********************************");
+		List<String> list = new ArrayList<String>();
+		list.add("MENU010131");
+		list.add("MENU010122");
+		list.add("MENU010114");
+
+		RoleUpdateReqBean reqBean = new RoleUpdateReqBean();
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < list.size(); i++) {        
+			sb.append(list.get(i)).append(";");    
+		}
+		reqBean.setRoleId("2c99812456d9786618f2d97866730000");
+		reqBean.setRoleName(null);
+		reqBean.setMenuIdList(sb.toString().substring(0,sb.toString().length()-1));
+		reqBean.setNote("备注");
+
+		BaseRespBean respBean = roleService.updateRole(reqBean, 1);
+		log.debug("updateRole respBean : {}", respBean);
+		Assert.assertNotNull(respBean);
+		log.debug("**********************************updateRoleTest end*********************************");
+	}
+}

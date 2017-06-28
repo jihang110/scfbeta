@@ -1,0 +1,145 @@
+package com.ut.scf.service.factor;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.ut.scf.core.util.DozerMapper;
+import com.ut.scf.core.util.ScfUUID;
+import com.ut.scf.dao.auto.InvcInfoMapper;
+import com.ut.scf.dao.auto.LimitOccupyMapper;
+import com.ut.scf.dao.auto.LimitsMapper;
+import com.ut.scf.dao.auto.PaymentDetailMapper;
+import com.ut.scf.dao.auto.PaymentMapper;
+import com.ut.scf.dao.factor.IPaymentDao;
+import com.ut.scf.dao.factor.IPaymentDetailDao;
+import com.ut.scf.pojo.auto.InvcInfo;
+import com.ut.scf.pojo.auto.InvcInfoExample;
+import com.ut.scf.pojo.auto.LimitOccupy;
+import com.ut.scf.pojo.auto.Limits;
+import com.ut.scf.pojo.auto.Payment;
+import com.ut.scf.pojo.auto.PaymentDetail;
+import com.ut.scf.pojo.factor.InvoiceExt;
+import com.ut.scf.reqbean.factor.InvoiceReqBean;
+import com.ut.scf.reqbean.factor.PaymentDetailReqBean;
+import com.ut.scf.reqbean.factor.PaymentReqBean;
+import com.ut.scf.service.pubmanage.LimitService;
+
+/**
+ * 付款申请service类
+ * 
+ * @author zhangyx@starutian.com
+ */
+@Service
+public class PaymentService {
+
+	@Autowired
+	private PaymentMapper paymentMapper;
+
+	@Autowired
+	private PaymentDetailMapper paymentDetailMapper;
+
+	@Autowired
+	private IPaymentDao paymentDao;
+
+	@Autowired
+	private IPaymentDetailDao paymentDetailDao;
+
+	@Autowired
+	private LimitsMapper limitsMapper;
+
+	@Autowired
+	private LimitService limitService;
+
+	@Autowired
+	private InvcInfoMapper invcInfoMapper;
+
+	@Autowired
+	private LimitOccupyMapper limitOccupyMapper;
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public String add(PaymentReqBean reqBean) {
+		Payment payment = new Payment();
+		DozerMapper.copy(reqBean, payment);
+		payment.setRecUid(ScfUUID.generate());
+		paymentMapper.insert(payment);
+		for (PaymentDetailReqBean paymentDetail : reqBean.getInvcs()) {
+			PaymentDetail detail = new PaymentDetail();
+			DozerMapper.copy(paymentDetail, detail);
+			detail.setRecUid(ScfUUID.generate());
+			detail.setRelaId(payment.getRecUid());
+			detail.setInvcId(paymentDetail.getRecUid());
+			paymentDetailMapper.insert(detail);
+
+			// 更新发票状态为“已全额付款”
+			InvcInfo invc = new InvcInfo();
+			invc.setRecUid(paymentDetail.getRecUid());
+			invc.setInvStatus("5");
+			invcInfoMapper.updateByPrimaryKeySelective(invc);
+		}
+		// 新增额度占用表记录状态为归还
+		Limits limits = limitService.getLimitBy(reqBean.getCounterPartyId(), reqBean.getCntId(), "3");
+		LimitOccupy lmtocp = new LimitOccupy();
+		lmtocp.setRecUid(ScfUUID.generate());
+		lmtocp.setLmtId(limits.getRecUid());
+		lmtocp.setAmt(reqBean.getTtlPmtAmt());
+		lmtocp.setOccSts("2");// 状态:2归还
+		limitOccupyMapper.insert(lmtocp);
+		return reqBean.getRecUid();
+	}
+
+	@Transactional(readOnly = true)
+	public List<Map<String, Object>> list(Map<String, Object> paramMap) {
+		List<Map<String, Object>> paymentList = paymentDao.getList(paramMap);
+		List<Map<String, Object>> paymentDetailList = null;
+		for (Map<String, Object> map : paymentList) {
+			String relaId = map.get("recUid").toString();
+			map.put("relaId", relaId);
+			paymentDetailList = paymentDetailDao.getList(paramMap);
+		}
+
+		return paymentDetailList;
+	}
+
+	/**
+	 * 通过交易对手名称/组织机构代码 获取交易对手信息、协议编号/id、产品名称、未付应付账款总额
+	 *
+	 * @param paramMap
+	 *            查询参数 key: "counterPartyNm" 交易对手名称 key: "orgnNo" 交易对手组织机构代码
+	 * @return 交易信息
+	 */
+	@Transactional(readOnly = true)
+	public List<InvoiceExt> getCounterPartyList(Map<String, Object> params) {
+		return paymentDao.getCounterPartyList(params);
+	}
+	
+	/**
+	 * 通过合同编号等查询参数 获取发票编号、合同号、到期日等发票信息
+	 *
+	 * @param bean
+	 *            查询参数 key: "cntrctNo" 合同编号 key: "invStatus" 发票状态 key:
+	 *            "invStatusList" 发票状态List<String>
+	 * @return 发票信息
+	 */
+	@Transactional(readOnly = true)
+	public List<InvcInfo> getList(InvoiceReqBean bean) {
+		InvcInfoExample example = new InvcInfoExample();
+		InvcInfoExample.Criteria criteria = example.createCriteria();
+		if (StringUtils.isNotBlank(bean.getCntNo())) {
+			criteria.andCntNoEqualTo(bean.getCntNo());
+		}
+		if (StringUtils.isNotBlank(bean.getInvStatus())) {
+			criteria.andInvStatusEqualTo(bean.getInvStatus());
+		}
+		if (CollectionUtils.isNotEmpty(bean.getInvStatusList())) {
+			criteria.andInvStatusIn(bean.getInvStatusList());
+		}
+		return invcInfoMapper.selectByExample(example);
+	}
+}

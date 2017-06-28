@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ut.scf.dao.pubmanage.ICorpInfoDao">
+  <resultMap id="BaseResultMap" type="com.ut.scf.pojo.auto.CorpInfo" >
+    <id column="CORP_ID" property="corpId" jdbcType="VARCHAR" />
+    <result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+    <result column="CORP_TYPE" property="corpType" jdbcType="VARCHAR" />
+    <result column="SYS_TYPE" property="sysType" jdbcType="VARCHAR" />
+    <result column="IS_COUNTRY" property="isCountry" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON" property="legalPerson" jdbcType="VARCHAR" />
+    <result column="LMT_AMT" property="lmtAmt" jdbcType="DECIMAL" />
+    <result column="BUSINESS_LICENSE" property="businessLicense" jdbcType="VARCHAR" />
+    <result column="TAX_NO" property="taxNo" jdbcType="VARCHAR" />
+    <result column="OFFICE_ADDRESS" property="officeAddress" jdbcType="VARCHAR" />
+    <result column="MOB_PHONE" property="mobPhone" jdbcType="VARCHAR" />
+    <result column="LEGAL_MOB_PHONE" property="legalMobPhone" jdbcType="VARCHAR" />
+    <result column="FIXED_PHONE" property="fixedPhone" jdbcType="VARCHAR" />
+    <result column="DOMICILE_ADDR" property="domicileAddr" jdbcType="VARCHAR" />
+    <result column="POSTCODE" property="postcode" jdbcType="VARCHAR" />
+    <result column="RELA_CORP_ID" property="relaCorpId" jdbcType="VARCHAR" />
+    <result column="REG_DATE" property="regDate" jdbcType="TIMESTAMP" />
+    <result column="LOGO_URL" property="logoUrl" jdbcType="VARCHAR" />
+    <result column="SPEC_NATURAL" property="specNatural" jdbcType="VARCHAR" />
+    <result column="ORGN_NO" property="orgnNo" jdbcType="VARCHAR" />
+    <result column="NOTE" property="note" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="BUSI_DT" property="busiDt" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <select id="getList" parameterType="hashmap" resultMap="BaseResultMap">
+    select 
+ 	 CORP_ID, CORP_NAME, CORP_TYPE, SYS_TYPE, IS_COUNTRY, LEGAL_PERSON, LMT_AMT, BUSINESS_LICENSE, 
+    TAX_NO, OFFICE_ADDRESS, MOB_PHONE, LEGAL_MOB_PHONE, FIXED_PHONE, DOMICILE_ADDR, POSTCODE, 
+    RELA_CORP_ID, REG_DATE, LOGO_URL, SPEC_NATURAL, ORGN_NO, NOTE, EMAIL, CREATE_USER, 
+    CREATE_TIME, STATUS, BUSI_DT, UPDATE_USER, UPDATE_TIME
+    from SCFCLOUD.CORP_INFO where STATUS = 1
+    <if test="corpName != null">
+      and CORP_NAME like CONCAT(CONCAT('%', #{corpName}),'%')
+    </if>
+    <if test="corpType != null">
+      and CORP_TYPE = #{corpType}
+    </if>
+    <if test="orgnNo != null">
+      and ORGN_NO = #{orgnNo}
+    </if>
+  </select>
+  
+  <select id="getCustList" parameterType="hashmap" resultType="hashmap">
+    select 
+ 	 CORP_ID "custId", 
+ 	 CORP_NAME "custNm", 
+     EMAIL "email"
+    from SCFCLOUD.CORP_INFO where CORP_TYPE = 'BUYER' and STATUS = 1
+  </select>
+   
+</mapper>

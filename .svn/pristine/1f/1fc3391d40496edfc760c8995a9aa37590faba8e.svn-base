@@ -1,0 +1,198 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta content="width=device-width,initial-scale=1" name="viewport"><title>Enbrau Studio - 欢迎使用</title><link rel="stylesheet" href="third-party/bootstrap/css/bootstrap.min.css"><link rel="stylesheet" href="third-party/bootstrap/css/bootstrap-responsive.min.css"><link rel="stylesheet" href="third-party/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"><link rel="stylesheet" href="third-party/bootstrap-multiselect/css/bootstrap-multiselect.css"><link rel="stylesheet" href="third-party/bootstrap-table/bootstrap-table.css"><link rel="stylesheet" href="third-party/bootstrap-switch/bootstrap-switch.min.css"><link rel="stylesheet" href="third-party/bootstrap-toastr/toastr.min.css"><link rel="stylesheet" href="third-party/jquery-ztree/css/metroStyle/metroStyle.css"><link rel="stylesheet" href="third-party/icheck/skins/all.css"><link rel="stylesheet" href="third-party/nprogress.css"><link href="theme.css?949167d9fc56618a8940" rel="stylesheet"></head><body><div class="page-wrapper"><div class="header navbar navbar-inverse navbar-fixed-top"><div class="navbar-inner"><div class="container-fluid"><a class="btn-navbar pc"><i class="fa fa-bars" aria-hidden="true"></i></a><a class="btn-navbar" href="javascript:;" data-toggle="collapse" data-target=".nav-collapse"><i class="fa fa-bars" aria-hidden="true"></i></a><a href="#" class="brand" style="background: url('custom/images/logo.png')"></a></div></div></div><div class="page-container"><div class="page-sidebar nav-collapse collapse"><ul class="page-sidebar-menu"></ul></div><div class="page-content"><div id="page-content-area"></div></div></div><div id="cover-app-loading" class="screen-cover" style="background-color: #FFFFFF"><div style="position: fixed; top: 25%; width: 100%; text-align: center"><img src="custom/images/loading.gif"><br></div></div><div id="cover-request-loading" class="screen-cover black"><div class="info"><span class="animation" style="background: url('custom/images/ajax-loader.gif') no-repeat"></span><span class="text">Loading...</span></div></div><div id="window-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="window-modal" aria-hidden="true" data-backdrop="static"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 id="window-modal-title"></h4></div><div class="modal-body"></div><div class="modal-footer"></div></div><div id="window-modal-alert" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="window-modal-alert" aria-hidden="true" data-backdrop="static"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 id="window-modal-alert-title">系统提示</h4></div><div class="modal-body"></div><div class="modal-footer"><button class="btn eb-richbtn blue" data-dismiss="modal" aria-hidden="true">确定</button></div></div><div id="window-modal-confirm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="window-modal-confirm" aria-hidden="true" data-backdrop="static"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 id="window-modal-confirm-title">请确认</h4></div><div class="modal-body"></div><div class="modal-footer"><button class="btn eb-richbtn blue confirm" data-dismiss="modal" aria-hidden="true" onclick="$.confirm.callback()">确定</button><button class="btn eb-richbtn cancel" data-dismiss="modal" aria-hidden="true" onclick="$.confirm.cancel()">取消</button></div></div><div id="window-modal-lookup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="window-modal-loolup" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 id="window-modal-lookup-title">请选择</h4></div><div class="modal-body"></div><div class="modal-footer"><button class="btn eb-richbtn blue">确定</button><button class="btn eb-richbtn" data-dismiss="modal" aria-hidden="true">取消</button></div></div></div><script id="art-menu-item" type="text/html"> <% var name = name || menuName; %> <% var url = url || menuPath; %> <% var submenu = submenu || subMenuList; %> <li class="item<% if (isActive) { %> active<% } %><% if (isOpened) { %> open<% } %>">
+    <a href="<%= url?url:'#' %>"> <% if (icon) { %> <i class="<%= icon %>" aria-hidden="true"></i> <% } %> <span class="title"><%=name %></span> <% if (submenu && submenu.length>0) { %> <i class="arrow" aria-hidden="true"></i> <% } %> </a> <% if (submenu && submenu.length>0) { %> <ul class="sub-menu">
+        {{each submenu }}
+        {{ include 'art-menu-item' $value }}
+        {{/each}}
+    </ul> <% } %> </li></script><script id="art-form" type="text/html"><form id="<%=formId %>" class="form-horizontal eb-richform" autocomplete="off" role="form"> <%
+  var hiddenFields = [];
+  var normalFields = [];
+  var dataGrids    = [];
+
+  for (var i=0; i<fields.length; i++)
+  {
+    if (fields[i].type==='hidden')
+    {
+      hiddenFields.push(fields[i]);
+    }
+    else if (fields[i].type==='datagrid')
+    {
+      dataGrids.push(fields[i]);
+    }
+    else
+    {
+      normalFields.push(fields[i]);
+    }
+  }
+
+  for (var i=0; i<hiddenFields.length; i++)
+  {
+    include('art-hidden', hiddenFields[i]);
+  }
+%> <% if (container==='modal-window-xx') {%> <% for (var i=0; i<normalFields.length; i++) { %> <% var field = normalFields[i]; %> <div class="row-fluid">
+    <div class="span12"> <% include('art-'+field.type, field) %> </div>
+    </div> <% } %> <% } else { %> <% var rowTag = 0; %> <% for (var i=0; i<normalFields.length; i++) { %> <% var field = normalFields[i]; %> <% rowTag = (field.type!=='radio' && field.type!=='checkbox' && field.type!=='textarea' && field.type!=='tree') ? rowTag+1 : 0 %> <% if (rowTag===0 || rowTag%2!==0) { %> <!--<div class="row-fluid">--> <% } %> <div class="eb-richipt-wrapper span<%=rowTag>0?6:12 %>"> <% include('art-'+field.type, field) %> </div> <% if (rowTag%2===0 || rowTag===normalFields.length) { %> <!--</div>--> <% } %> <% } %> <% } %> <% for (var i=0; i<dataGrids.length; i++) { %> <% var grid = dataGrids[i]; %> <% var btnGroup = grid.btnGroup || []; %> <div class="eb-btn-group grid-btn-group"> <% for (var j=0; j<btnGroup.length; j++) { %> <% var btn = btnGroup[j]; %> <% btn.gridId = grid.id; %> <% include('art-button', btn); %> <% } %> </div>
+
+  <table id="<%=grid.id %>" <% if (grid.name) { %> data-grid-name="<%=grid.name %>"<% } %> <% if (grid.sourceUrl) { %> data-source-url="<%=grid.sourceUrl %>"<% } %> <% if (grid.selectStrategy) { %> data-select-strategy="<%=grid.selectStrategy %>"<% } %> ></table> <% } %> </form></script><script id="art-upload" type="text/html"></script><script id="art-tree" type="text/html"><div id="<%=id %>" class="eb-richipt eb-richipt-tree control-group<% if (styleClass) { %> styleClass<% } %>"
+  data-eb-type="tree"
+  data-eb-initval="<%=value?value:"" %>"
+  data-eb-name="<%=name %>"
+  data-readonly="<%=readonly %>"
+  data-required="<%=required %>"
+  data-reg="<%=reg %>" <% if (selectStrategy) {%> data-select-strategy="<%=selectStrategy %>"<% } %> <% if (sourceUrl) {%> data-source-url="<%=sourceUrl %>"<% } %> <% if (keyField) {%> data-key-field="<%=keyField %>"<% } %> <% if (valueField) {%> data-value-field="<%=valueField %>"<% } %> <% if (idField) {%> data-id-field="<%=idField %>"<% } %> <% if (pidField) {%> data-pid-field="<%=pidField %>"<% } %> <% if (childrenField) {%> data-children-field="<%=childrenField %>"<% } %> > <% include('art-label') %> <div class="controls">
+    <ul id="<%=id %>-treeview" class="ztree"></ul>
+    <input id="<%=id %>-value-input" type="hidden" value="<%=value %>"<%=name?" name=" + name:"" %> />
+  </div>
+</div></script><script id="art-output" type="text/html"><div id="<%=id %>" class="eb-richipt eb-richipt-output control-group<% if (styleClass) { %> styleClass<% } %>"
+  data-eb-type="output"
+  data-eb-initval="<%=value?value:"" %>"
+> <% include('art-label') %> <div class="controls">
+    <span><%=value %></span>
+  </div>
+</div></script><script id="art-lookup" type="text/html"><div id="<%=id %>" class="eb-richipt eb-richipt-lookup control-group<% if (styleClass) { %> styleClass<% } %>"
+  data-eb-type="lookup"
+  data-eb-initval="<%=value?value:"" %>"
+  data-eb-name="<%=name %>"
+  data-readonly="<%=readonly %>"
+  data-required="<%=required %>"
+  data-reg="<%=reg %>"
+  data-editable="<%=editable %>"
+> <% include('art-label') %> <div class="controls">
+    <input type="text" value="<%=value %>" <% if (name) { %>name="<%=name %>"<% } %> disabled="disabled" /> <% var button = $data; %> <% button.icon = 'fa fa-search-plus'; %> <% button.id = id+'-lookup-btn' %> <% include('art-button', button); %> </div>
+</div></script><script id="art-hidden" type="text/html"><input id="<%=id %>" type="hidden" value="<%=value %>" <% if (name) { %>name="<%=name %>"<% } %> /></script><script id="art-label" type="text/html"> <% if (label) { %><label class="control-label"><% if (required) { %><small style="color: red;">*</small><% } %><%=label%></label><% } %> </script><script id="art-text" type="text/html"><div id="<%=id %>" class="eb-richipt eb-richipt-text control-group<% if (styleClass) { %> styleClass<% } %>"
+  data-eb-type="text"
+  data-eb-initval="<%=value?value:"" %>"
+  data-eb-name="<%=name %>"
+  data-readonly="<%=readonly %>"
+  data-required="<%=required %>"
+  data-reg="<%=reg %>"
+> <% include('art-label') %> <div class="controls">
+    <input type="text" value="<%=value %>" <% if (name) { %>name="<%=name %>"<% } %> data-toggle="tooltip" data-placement="right" />
+  </div>
+</div></script><script id="art-password" type="text/html"><div id="<%=id %>" class="eb-richipt eb-richipt-text control-group<% if (styleClass) { %> styleClass<% } %>"
+  data-eb-type="password"
+  data-eb-initval="<%=value?value:"" %>"
+  data-eb-name="<%=name %>"
+  data-readonly="<%=readonly %>"
+  data-required="<%=required %>"
+  data-reg="<%=reg %>"
+> <% include('art-label') %> <div class="controls">
+      <input type="password" value="<%=value %>"<%=name?" name=" + name:"" %> data-toggle="tooltip" data-placement="right" />
+      <i class="fa fa-eye"></i>
+  </div>
+</div></script><script id="art-select" type="text/html"><div id="<%=id %>" class="eb-richipt eb-richipt-select control-group<% if (styleClass) { %> styleClass<% } %>"
+  data-eb-type="select"
+  data-eb-initval="<%=value?value:"" %>"
+  data-eb-name="<%=name %>"
+  data-readonly="<%=readonly %>"
+  data-required="<%=required %>"
+  data-reg="<%=reg %>"
+> <% include('art-label') %> <div class="controls">
+    <select<%=name?" name=" + name:"" %>> <% if (dict) { %> <% for (var i=0; i<dict.length; i++) { %> <option value="<%=dict[i].key %>"<% if (value===dict[i].key) { %> selected="selected"<% } %>><%=dict[i].value %></option> <% } %> <% } %> </select>
+  </div>
+</div></script><script id="art-multiselect" type="text/html"><div id="<%=id %>" class="eb-richipt eb-richipt-multiselect control-group<% if (styleClass) { %> styleClass<% } %>"
+  data-eb-type="multiselect"
+  data-eb-initval="<%=value?value:"" %>"
+  data-eb-name="<%=name %>"
+  data-readonly="<%=readonly %>"
+  data-required="<%=required %>"
+  data-reg="<%=reg %>"
+> <% include('art-label') %> <div class="controls">
+    <select<%=name?" name=" + name:"" %> multiple="multiple"> <% if (dict) { %> <% for (var i=0; i<dict.length; i++) { %> <option value="<%=dict[i].key %>" <% if (value) {var valArr = value.split(";"); for (var j=0; j<valArr.length; j++) {if (dict[i].key===valArr[j]) { %> selected ="selected" <% }}} %> ><%=dict[i].value %></option> <% } %> <% } %> </select>
+  </div>
+</div></script><script id="art-radio" type="text/html"><div id="<%=id %>" class="eb-richipt eb-richipt-radio control-group<% if (styleClass) { %> styleClass<% } %>"
+  data-eb-type="radio"
+  data-eb-initval="<%=value?value:"" %>"
+  data-eb-name="<%=name %>"
+  data-readonly="<%=readonly %>"
+  data-required="<%=required %>"
+  data-reg="<%=reg %>"
+> <% include('art-label') %> <div class="controls"> <% if (dict) { %> <% for (var i=0; i<dict.length; i++) { %> <label class="radio inline">
+      <input type="radio" <% if (name) { %>name="<%=name %>"<% } %> value="<%=dict[i].key %>" <% if (value===dict[i].key) { %>checked<% } %>/> <%=dict[i].value %> </label> <% } %> <% } %> </div>
+</div></script><script id="art-checkbox" type="text/html"><div <%=id %> class="eb-richipt eb-richipt-checkbox control-group<% if (styleClass) { %> styleClass<% } %>"
+  data-eb-type="checkbox"
+  data-eb-initval="<%=value?value:"" %>"
+  data-eb-name="<%=name %>"
+  data-readonly="<%=readonly %>"
+  data-required="<%=required %>"
+  data-reg="<%=reg %>"
+> <% include('art-label') %> <div class="controls"> <% if (dict) { %> <% for (var i=0; i<dict.length; i++) { %> <label class="checkbox inline">
+      <input type="checkbox" <% if (name) { %>name="<%=name %>"<% } %> value="<%=dict[i].key %>" <% if (value) {var valArr = value.split(";"); for (var j=0; j<valArr.length; j++) {if (dict[i].key===valArr[j]) { %> checked <% }}} %> /> <%=dict[i].value %> </label> <% } %> <% } %> </div>
+</div></script><script id="art-timepicker" type="text/html"><div id="<%=id %>" class="eb-richipt eb-richipt-timepicker control-group<% if (styleClass) { %> styleClass<% } %>"
+  data-eb-type="timepicker"
+  data-eb-subtype="<%=subType %>"
+  data-eb-initval="<%=value?value:"" %>"
+  data-eb-name="<%=name %>"
+  data-readonly="<%=readonly %>"
+  data-required="<%=required %>"
+  data-reg="<%=reg %>"
+> <% include('art-label') %> <div class="controls">
+    <input type="text" value="<%=value %>" <% if (name) { %>name="<%=name %>"<% } %> data-toggle="tooltip" data-placement="right" />
+    <i class="fa fa-calendar" aria-hidden="true"></i>
+  </div>
+</div></script><script id="art-textarea" type="text/html"><div id=<%=id %> class="eb-richipt eb-richipt-textarea control-group<% if (styleClass) { %> styleClass<% } %>"
+  data-eb-type="textarea"
+  data-eb-initval="<%=value?value:"" %>"
+  data-eb-name="<%=name %>"
+  data-readonly="<%=readonly %>"
+  data-required="<%=required %>"
+  data-reg="<%=reg %>"
+> <% include('art-label') %> <div class="controls">
+    <textarea <% if (name) { %>name="<%=name %>"<% } %>><%=value %></textarea>
+  </div>
+</div></script><script id="art-button" type="text/html"> <% if (type==='modal-window-dismiss') { %> <button class="btn eb-richbtn" data-dismiss="modal" aria-hidden="true"><%=title %></button> <% } else { %> <button <% if (id) { %> id="<%=id %>"<% } %> class="btn eb-richbtn<% if (type) { %> eb-richbtn-<%=type %><% } %><% if (styleClass) { %> <%=styleClass %><% } else { %> blue<% } %>" <% if (formId) { %> data-form-id="<%=formId %>"<% } %> <% if (gridId) { %> data-grid-id="<%=gridId %>"<% } %> <% if (route) { %> data-route="<%=route %>"<% } %> <% if (submitUrl) { %> data-submit-url="<%=submitUrl %>"<% } %> <% if (selectStrategy) { %> data-select-strategy="<%=selectStrategy %>"<% } %> <% if (sourceGridId) { %> data-source-grid-id="<%=sourceGridId %>"<% } %> <% if (itemIndex || itemIndex===0) { %> data-item-index="<%=itemIndex %>"<% } %> <% if (editableRoute) { %> data-editable-route="<%=editableRoute %>"<% } %> <% if (idField) { %> data-id-field="<%=idField %>"<% } %> > <% if (icon) { %><i class="<%=icon %>"></i><% } %> <%=title %> </button> <% } %> </script><script id="art-page-form" type="text/html"><div class="row-fluid">
+  <div class="eb-panel blue span12"> <% if (title) { %> <div class="eb-panel-title">
+      <div class="caption">
+        <i class="fa fa-comments"></i><%=title %> </div>
+    </div> <% } %> <div class="eb-panel-body"> <% include('art-form', {formId: formId, fields: fields, container: container}); %> <% if (container!=='modal-window') { %> <div class="btn-group"> <% for (var i=0; i<btnGroup.length; i++) { %> <% include('art-button', btnGroup[i]); %> <% } %> </div> <% } %> </div>
+  </div>
+</div></script><script id="art-page-datagrid" type="text/html"><div class="row-fluid">
+  <div class="eb-panel blue span12"> <% if (title) { %> <div class="eb-panel-title">
+      <div class="caption">
+        <i class="fa fa-comments"></i><%=title %> </div>
+    </div> <% } %> <div class="eb-panel-body"> <% if (searchFields) { %> <% include('art-form', {formId: searchFormId, fields: searchFields, styleClass: 'eb-richform-search'}); %> <%
+        var visibleSearchFieldCount = 0;
+        for (var i=0; i<searchFields.length; i++) {
+          if (searchFields[i].type!=='hidden') visibleSearchFieldCount++;
+        }
+      %> <% if (visibleSearchFieldCount>0) { %> <div class="eb-button-group right">
+        <button class="btn blue eb-richbtn eb-richbtn-search" type="button" data-datagrid-id="<%=gridId %>" data-form-id="<%=formId %>">搜索</button>
+      </div> <% } %> <% } %> <% if (btnGroup && showBtnGroup) { %> <div class="eb-button-group left together"> <% for (var i=0; i<btnGroup.length; i++) { %> <% var btn = btnGroup[i]; %> <button class="btn blue eb-richbtn" onclick="<%=btn.action %>" type="button" > <% if (btn.icon) { %><i class="<%=btn.icon %>"></i><% } %> <%=btn.name %> </button> <% } %> </div> <% } %> <table id="<%=gridId %>" class="eb-datagrid" data-source-url="<%=sourceUrl %>" data-searchform-id="<%=searchFormId %>" data-select-strategy="<%=selectStrategy?selectStrategy:'none' %>"></table>
+    </div>
+  </div>
+<div></script><script id="art-page-workflow" type="text/html"><div class="row-fluid">
+
+  <div class="eb-panel blue span12"> <% if (title) { %> <div class="eb-panel-title">
+      <div class="caption">
+        <i class="fa fa-comments"></i><%=title %> </div>
+    </div> <% } %> <div class="eb-panel-body"> <% if (directions) { %> <% for (var i=0; i<directions.length; i++) { %> <% var direction = directions[i]; %> <button class="btn green eb-richbtn eb-richbtn-wfroute" type="button"
+      data-base-url="<%=baseUrl %>"
+      data-form-id="<%=pageId %>Form"
+      data-task-id="<%=taskId %>"
+      data-direction="<%=direction.id %>"
+      data-editable-route="<%=formConfig && (formConfig.editable || (!formConfig.editable && formConfig.editableExclusion && formConfig.editableExclusion.length>0)) ? true : false %>"
+    ><%=direction.name %></button> <% } %> <% } %> </div>
+  </div>
+
+  <ul id="<%=pageId %>Tab" class="nav nav-tabs">
+  	<li class="active">
+      <a href="#<%=pageId %>Tab-form" data-toggle="tab">项目信息</a>
+  	</li>
+  	<li>
+  	  <a href="#<%=pageId %>Tab-history" data-toggle="tab">审批历史</a>
+    </li>
+  </ul>
+
+  <div id="<%=pageId %>TabContent" class="tab-content">
+  	<div class="tab-pane fade in active" id="<%=pageId %>Tab-form"> <% include('art-form', {formId: pageId+'Form', fields: fields}); %> </div>
+  	<div class="tab-pane fade" id="<%=pageId %>Tab-history">
+  	  <img src="<%=contextPath %>/bpm/graph?taskId=<%=taskId %>" style="display: block; margin: 0 auto;" />
+  	  <table id="<%=pageId %>DG-history" class="eb-datagrid"></table>
+  	</div>
+  </div>
+
+</div></script><!--[if lt IE 9]>
+  <script type="text/javascript" src="third-party/es5-shim.min.js"></script>
+  <script type="text/javascript" src="third-party/es5-sham.min.js"></script>
+  <![endif]--><script type="text/javascript" src="third-party/template-web.js"></script><script type="text/javascript" src="third-party/jquery.js"></script><script type="text/javascript" src="third-party/bootstrap/js/bootstrap.min.js"></script><script type="text/javascript" src="third-party/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script><script type="text/javascript" src="third-party/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script><script type="text/javascript" src="third-party/bootstrap-multiselect/js/bootstrap-multiselect.js"></script><script type="text/javascript" src="third-party/bootstrap-table/bootstrap-table.js"></script><script type="text/javascript" src="third-party/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script><script type="text/javascript" src="third-party/bootstrap-switch/bootstrap-switch.min.js"></script><script type="text/javascript" src="third-party/bootstrap-toastr/toastr.min.js"></script><script type="text/javascript" src="third-party/jquery-ztree/js/jquery.ztree.all.js"></script><script type="text/javascript" src="third-party/icheck/icheck.min.js"></script><script type="text/javascript" src="third-party/echarts/3.6.2/echarts.min.js"></script><script type="text/javascript" src="third-party/echarts/3.6.2/maps/china.js"></script><script type="text/javascript" src="third-party/echarts/3.6.2/themes/macarons.js"></script><!--[if lt IE 9]>
+  <script type="text/javascript" src="third-party/respond.js"></script>
+  <![endif]--><script type="text/javascript" src="application-index.js?949167d9fc56618a8940"></script></body></html>

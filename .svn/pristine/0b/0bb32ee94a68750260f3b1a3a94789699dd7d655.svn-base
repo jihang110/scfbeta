@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ut.scf.dao.sys.IDictMapDao">
+ 
+  <select id="getDictMapList" parameterType="hashMap" resultType="hashMap">
+    select
+    m.id "id", m.key "key", m.value "value", m.parent_id "parentId", m.type_id "typeId", m.note "note", m.status "status",
+    t.type_name "typeName", t.parent_id "typeParentId"
+    from SCFCLOUD.DICT_MAP m
+    left join SCFCLOUD.DICT_TYPE t
+    on m.type_id=t.type_id
+    <where>
+    	1=1 
+    	<if test="id!=null and id!='' ">
+			and m.id = #{id}
+		</if>
+		<if test="key!=null and key!='' ">
+			and m.key = #{key}
+		</if>
+		<if test="value!=null and value!='' ">
+			and m.value = #{value}
+		</if>
+		<if test="parentId!=null and parentId!='' ">
+			and m.parent_id = #{parentId}
+		</if>
+		<if test="typeId!=null and typeId!='' ">
+			and m.type_id = #{typeId}
+		</if>
+		<if test="note!=null and note!='' ">
+			and m.note = #{note}
+		</if>
+		<if test="status!=null and status!='' ">
+			and m.status = #{status}
+		</if>  
+		<if test="typeName!=null and typeName!='' ">
+			and t.type_name = #{typeName}
+		</if> 
+		<if test="typeParentId!=null and typeParentId!='' ">
+			and t.parent_id = #{typeParentId}
+		</if> 
+    </where>
+  </select>
+  
+  <select id="getAllDictMapList"  resultType="hashMap">
+    select
+    m.id "id", m.key "key", m.value "value", m.parent_id "parentId", m.type_id "typeId", m.note "note", m.status "status",
+    t.type_name "typeName", t.parent_id "typeParentId"
+    from SCFCLOUD.DICT_MAP m 
+    left join SCFCLOUD.DICT_TYPE t
+    on m.type_id=t.type_id
+  </select>
+</mapper>

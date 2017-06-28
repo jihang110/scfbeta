@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ut.scf.dao.auto.LoanMapper" >
+  <resultMap id="BaseResultMap" type="com.ut.scf.pojo.auto.Loan" >
+    <id column="REC_UID" property="recUid" jdbcType="VARCHAR" />
+    <result column="CNT_ID" property="cntId" jdbcType="VARCHAR" />
+    <result column="LMT_BAL" property="lmtBal" jdbcType="DECIMAL" />
+    <result column="LOAN_AC_ID" property="loanAcId" jdbcType="VARCHAR" />
+    <result column="MAX_LOAN_PERC" property="maxLoanPerc" jdbcType="DECIMAL" />
+    <result column="PAY_INT_TP" property="payIntTp" jdbcType="VARCHAR" />
+    <result column="ASSUME_INT_TP" property="assumeIntTp" jdbcType="VARCHAR" />
+    <result column="LOAN_RT" property="loanRt" jdbcType="DECIMAL" />
+    <result column="CHARGE_MODE" property="chargeMode" jdbcType="VARCHAR" />
+    <result column="CHARGE_BEAR" property="chargeBear" jdbcType="VARCHAR" />
+    <result column="COMM_RT" property="commRt" jdbcType="DECIMAL" />
+    <result column="GRACE_DAY" property="graceDay" jdbcType="DECIMAL" />
+    <result column="LOAN_PERC_APPLY" property="loanPercApply" jdbcType="DECIMAL" />
+    <result column="TTL_LOAN_AMT" property="ttlLoanAmt" jdbcType="DECIMAL" />
+    <result column="INT_AMT" property="intAmt" jdbcType="DECIMAL" />
+    <result column="COST_AMT" property="costAmt" jdbcType="DECIMAL" />
+    <result column="EXPECT_LOAN_AMT" property="expectLoanAmt" jdbcType="DECIMAL" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="BUSI_DT" property="busiDt" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="ACTUAL_LOAN_AMT" property="actualLoanAmt" jdbcType="DECIMAL" />
+    <result column="LOAN_DT" property="loanDt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    REC_UID, CNT_ID, LMT_BAL, LOAN_AC_ID, MAX_LOAN_PERC, PAY_INT_TP, ASSUME_INT_TP, LOAN_RT, 
+    CHARGE_MODE, CHARGE_BEAR, COMM_RT, GRACE_DAY, LOAN_PERC_APPLY, TTL_LOAN_AMT, INT_AMT, 
+    COST_AMT, EXPECT_LOAN_AMT, CREATE_USER, CREATE_TIME, STATUS, BUSI_DT, UPDATE_USER, 
+    UPDATE_TIME, ACTUAL_LOAN_AMT, LOAN_DT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ut.scf.pojo.auto.LoanExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.LOAN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.LOAN
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SCFCLOUD.LOAN
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ut.scf.pojo.auto.LoanExample" >
+    delete from SCFCLOUD.LOAN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ut.scf.pojo.auto.Loan" >
+    insert into SCFCLOUD.LOAN (REC_UID, CNT_ID, LMT_BAL, 
+      LOAN_AC_ID, MAX_LOAN_PERC, PAY_INT_TP, 
+      ASSUME_INT_TP, LOAN_RT, CHARGE_MODE, 
+      CHARGE_BEAR, COMM_RT, GRACE_DAY, 
+      LOAN_PERC_APPLY, TTL_LOAN_AMT, INT_AMT, 
+      COST_AMT, EXPECT_LOAN_AMT, CREATE_USER, 
+      CREATE_TIME, STATUS, BUSI_DT, 
+      UPDATE_USER, UPDATE_TIME, ACTUAL_LOAN_AMT, 
+      LOAN_DT)
+    values (#{recUid,jdbcType=VARCHAR}, #{cntId,jdbcType=VARCHAR}, #{lmtBal,jdbcType=DECIMAL}, 
+      #{loanAcId,jdbcType=VARCHAR}, #{maxLoanPerc,jdbcType=DECIMAL}, #{payIntTp,jdbcType=VARCHAR}, 
+      #{assumeIntTp,jdbcType=VARCHAR}, #{loanRt,jdbcType=DECIMAL}, #{chargeMode,jdbcType=VARCHAR}, 
+      #{chargeBear,jdbcType=VARCHAR}, #{commRt,jdbcType=DECIMAL}, #{graceDay,jdbcType=DECIMAL}, 
+      #{loanPercApply,jdbcType=DECIMAL}, #{ttlLoanAmt,jdbcType=DECIMAL}, #{intAmt,jdbcType=DECIMAL}, 
+      #{costAmt,jdbcType=DECIMAL}, #{expectLoanAmt,jdbcType=DECIMAL}, #{createUser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=DECIMAL}, #{busiDt,jdbcType=TIMESTAMP}, 
+      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{actualLoanAmt,jdbcType=DECIMAL}, 
+      #{loanDt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ut.scf.pojo.auto.Loan" >
+    insert into SCFCLOUD.LOAN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recUid != null" >
+        REC_UID,
+      </if>
+      <if test="cntId != null" >
+        CNT_ID,
+      </if>
+      <if test="lmtBal != null" >
+        LMT_BAL,
+      </if>
+      <if test="loanAcId != null" >
+        LOAN_AC_ID,
+      </if>
+      <if test="maxLoanPerc != null" >
+        MAX_LOAN_PERC,
+      </if>
+      <if test="payIntTp != null" >
+        PAY_INT_TP,
+      </if>
+      <if test="assumeIntTp != null" >
+        ASSUME_INT_TP,
+      </if>
+      <if test="loanRt != null" >
+        LOAN_RT,
+      </if>
+      <if test="chargeMode != null" >
+        CHARGE_MODE,
+      </if>
+      <if test="chargeBear != null" >
+        CHARGE_BEAR,
+      </if>
+      <if test="commRt != null" >
+        COMM_RT,
+      </if>
+      <if test="graceDay != null" >
+        GRACE_DAY,
+      </if>
+      <if test="loanPercApply != null" >
+        LOAN_PERC_APPLY,
+      </if>
+      <if test="ttlLoanAmt != null" >
+        TTL_LOAN_AMT,
+      </if>
+      <if test="intAmt != null" >
+        INT_AMT,
+      </if>
+      <if test="costAmt != null" >
+        COST_AMT,
+      </if>
+      <if test="expectLoanAmt != null" >
+        EXPECT_LOAN_AMT,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="busiDt != null" >
+        BUSI_DT,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="actualLoanAmt != null" >
+        ACTUAL_LOAN_AMT,
+      </if>
+      <if test="loanDt != null" >
+        LOAN_DT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recUid != null" >
+        #{recUid,jdbcType=VARCHAR},
+      </if>
+      <if test="cntId != null" >
+        #{cntId,jdbcType=VARCHAR},
+      </if>
+      <if test="lmtBal != null" >
+        #{lmtBal,jdbcType=DECIMAL},
+      </if>
+      <if test="loanAcId != null" >
+        #{loanAcId,jdbcType=VARCHAR},
+      </if>
+      <if test="maxLoanPerc != null" >
+        #{maxLoanPerc,jdbcType=DECIMAL},
+      </if>
+      <if test="payIntTp != null" >
+        #{payIntTp,jdbcType=VARCHAR},
+      </if>
+      <if test="assumeIntTp != null" >
+        #{assumeIntTp,jdbcType=VARCHAR},
+      </if>
+      <if test="loanRt != null" >
+        #{loanRt,jdbcType=DECIMAL},
+      </if>
+      <if test="chargeMode != null" >
+        #{chargeMode,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeBear != null" >
+        #{chargeBear,jdbcType=VARCHAR},
+      </if>
+      <if test="commRt != null" >
+        #{commRt,jdbcType=DECIMAL},
+      </if>
+      <if test="graceDay != null" >
+        #{graceDay,jdbcType=DECIMAL},
+      </if>
+      <if test="loanPercApply != null" >
+        #{loanPercApply,jdbcType=DECIMAL},
+      </if>
+      <if test="ttlLoanAmt != null" >
+        #{ttlLoanAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="intAmt != null" >
+        #{intAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="costAmt != null" >
+        #{costAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="expectLoanAmt != null" >
+        #{expectLoanAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null" >
+        #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualLoanAmt != null" >
+        #{actualLoanAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="loanDt != null" >
+        #{loanDt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ut.scf.pojo.auto.LoanExample" resultType="java.lang.Integer" >
+    select count(*) from SCFCLOUD.LOAN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SCFCLOUD.LOAN
+    <set >
+      <if test="record.recUid != null" >
+        REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cntId != null" >
+        CNT_ID = #{record.cntId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lmtBal != null" >
+        LMT_BAL = #{record.lmtBal,jdbcType=DECIMAL},
+      </if>
+      <if test="record.loanAcId != null" >
+        LOAN_AC_ID = #{record.loanAcId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxLoanPerc != null" >
+        MAX_LOAN_PERC = #{record.maxLoanPerc,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payIntTp != null" >
+        PAY_INT_TP = #{record.payIntTp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assumeIntTp != null" >
+        ASSUME_INT_TP = #{record.assumeIntTp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loanRt != null" >
+        LOAN_RT = #{record.loanRt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.chargeMode != null" >
+        CHARGE_MODE = #{record.chargeMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chargeBear != null" >
+        CHARGE_BEAR = #{record.chargeBear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commRt != null" >
+        COMM_RT = #{record.commRt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.graceDay != null" >
+        GRACE_DAY = #{record.graceDay,jdbcType=DECIMAL},
+      </if>
+      <if test="record.loanPercApply != null" >
+        LOAN_PERC_APPLY = #{record.loanPercApply,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ttlLoanAmt != null" >
+        TTL_LOAN_AMT = #{record.ttlLoanAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.intAmt != null" >
+        INT_AMT = #{record.intAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.costAmt != null" >
+        COST_AMT = #{record.costAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.expectLoanAmt != null" >
+        EXPECT_LOAN_AMT = #{record.expectLoanAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createUser != null" >
+        CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.busiDt != null" >
+        BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null" >
+        UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.actualLoanAmt != null" >
+        ACTUAL_LOAN_AMT = #{record.actualLoanAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.loanDt != null" >
+        LOAN_DT = #{record.loanDt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SCFCLOUD.LOAN
+    set REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      CNT_ID = #{record.cntId,jdbcType=VARCHAR},
+      LMT_BAL = #{record.lmtBal,jdbcType=DECIMAL},
+      LOAN_AC_ID = #{record.loanAcId,jdbcType=VARCHAR},
+      MAX_LOAN_PERC = #{record.maxLoanPerc,jdbcType=DECIMAL},
+      PAY_INT_TP = #{record.payIntTp,jdbcType=VARCHAR},
+      ASSUME_INT_TP = #{record.assumeIntTp,jdbcType=VARCHAR},
+      LOAN_RT = #{record.loanRt,jdbcType=DECIMAL},
+      CHARGE_MODE = #{record.chargeMode,jdbcType=VARCHAR},
+      CHARGE_BEAR = #{record.chargeBear,jdbcType=VARCHAR},
+      COMM_RT = #{record.commRt,jdbcType=DECIMAL},
+      GRACE_DAY = #{record.graceDay,jdbcType=DECIMAL},
+      LOAN_PERC_APPLY = #{record.loanPercApply,jdbcType=DECIMAL},
+      TTL_LOAN_AMT = #{record.ttlLoanAmt,jdbcType=DECIMAL},
+      INT_AMT = #{record.intAmt,jdbcType=DECIMAL},
+      COST_AMT = #{record.costAmt,jdbcType=DECIMAL},
+      EXPECT_LOAN_AMT = #{record.expectLoanAmt,jdbcType=DECIMAL},
+      CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      ACTUAL_LOAN_AMT = #{record.actualLoanAmt,jdbcType=DECIMAL},
+      LOAN_DT = #{record.loanDt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ut.scf.pojo.auto.Loan" >
+    update SCFCLOUD.LOAN
+    <set >
+      <if test="cntId != null" >
+        CNT_ID = #{cntId,jdbcType=VARCHAR},
+      </if>
+      <if test="lmtBal != null" >
+        LMT_BAL = #{lmtBal,jdbcType=DECIMAL},
+      </if>
+      <if test="loanAcId != null" >
+        LOAN_AC_ID = #{loanAcId,jdbcType=VARCHAR},
+      </if>
+      <if test="maxLoanPerc != null" >
+        MAX_LOAN_PERC = #{maxLoanPerc,jdbcType=DECIMAL},
+      </if>
+      <if test="payIntTp != null" >
+        PAY_INT_TP = #{payIntTp,jdbcType=VARCHAR},
+      </if>
+      <if test="assumeIntTp != null" >
+        ASSUME_INT_TP = #{assumeIntTp,jdbcType=VARCHAR},
+      </if>
+      <if test="loanRt != null" >
+        LOAN_RT = #{loanRt,jdbcType=DECIMAL},
+      </if>
+      <if test="chargeMode != null" >
+        CHARGE_MODE = #{chargeMode,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeBear != null" >
+        CHARGE_BEAR = #{chargeBear,jdbcType=VARCHAR},
+      </if>
+      <if test="commRt != null" >
+        COMM_RT = #{commRt,jdbcType=DECIMAL},
+      </if>
+      <if test="graceDay != null" >
+        GRACE_DAY = #{graceDay,jdbcType=DECIMAL},
+      </if>
+      <if test="loanPercApply != null" >
+        LOAN_PERC_APPLY = #{loanPercApply,jdbcType=DECIMAL},
+      </if>
+      <if test="ttlLoanAmt != null" >
+        TTL_LOAN_AMT = #{ttlLoanAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="intAmt != null" >
+        INT_AMT = #{intAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="costAmt != null" >
+        COST_AMT = #{costAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="expectLoanAmt != null" >
+        EXPECT_LOAN_AMT = #{expectLoanAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null" >
+        BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualLoanAmt != null" >
+        ACTUAL_LOAN_AMT = #{actualLoanAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="loanDt != null" >
+        LOAN_DT = #{loanDt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ut.scf.pojo.auto.Loan" >
+    update SCFCLOUD.LOAN
+    set CNT_ID = #{cntId,jdbcType=VARCHAR},
+      LMT_BAL = #{lmtBal,jdbcType=DECIMAL},
+      LOAN_AC_ID = #{loanAcId,jdbcType=VARCHAR},
+      MAX_LOAN_PERC = #{maxLoanPerc,jdbcType=DECIMAL},
+      PAY_INT_TP = #{payIntTp,jdbcType=VARCHAR},
+      ASSUME_INT_TP = #{assumeIntTp,jdbcType=VARCHAR},
+      LOAN_RT = #{loanRt,jdbcType=DECIMAL},
+      CHARGE_MODE = #{chargeMode,jdbcType=VARCHAR},
+      CHARGE_BEAR = #{chargeBear,jdbcType=VARCHAR},
+      COMM_RT = #{commRt,jdbcType=DECIMAL},
+      GRACE_DAY = #{graceDay,jdbcType=DECIMAL},
+      LOAN_PERC_APPLY = #{loanPercApply,jdbcType=DECIMAL},
+      TTL_LOAN_AMT = #{ttlLoanAmt,jdbcType=DECIMAL},
+      INT_AMT = #{intAmt,jdbcType=DECIMAL},
+      COST_AMT = #{costAmt,jdbcType=DECIMAL},
+      EXPECT_LOAN_AMT = #{expectLoanAmt,jdbcType=DECIMAL},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=DECIMAL},
+      BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      ACTUAL_LOAN_AMT = #{actualLoanAmt,jdbcType=DECIMAL},
+      LOAN_DT = #{loanDt,jdbcType=TIMESTAMP}
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </update>
+</mapper>

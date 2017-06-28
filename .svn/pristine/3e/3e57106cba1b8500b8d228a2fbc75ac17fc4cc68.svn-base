@@ -1,0 +1,89 @@
+package com.ut.scf.service.sys.impl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.stereotype.Service;
+
+import com.google.common.base.Joiner;
+import com.ut.scf.dao.auto.CorpDeptMapper;
+import com.ut.scf.dao.auto.SysRoleMapper;
+import com.ut.scf.dao.auto.SysUserDeptRoleMapper;
+import com.ut.scf.dao.sys.IUserDeptRoleDao;
+import com.ut.scf.pojo.auto.CorpDept;
+import com.ut.scf.pojo.auto.SysRole;
+import com.ut.scf.pojo.auto.SysUser;
+import com.ut.scf.pojo.auto.SysUserDeptRole;
+import com.ut.scf.pojo.auto.SysUserDeptRoleExample;
+import com.ut.scf.service.sys.IUserDeptRoleStrategyService;
+
+/**
+ * 用户机构角色关系，第二种策略<br>
+ * 用户属于一个或多个机构，<br>
+ * 用户有一个或多个角色<br>
+ * 但用户-机构-角色三者为非强绑定关系<br>
+ * 
+ * @author shenying
+ *
+ */
+@Service("userDeptRoleUnbindStrategyService")
+public class UserDeptRoleUnbindStrategyServiceImpl implements IUserDeptRoleStrategyService {
+
+	@Resource
+	private SysUserDeptRoleMapper sysUserDeptRoleMapper;
+
+	@Resource
+	private IUserDeptRoleDao userDeptRoleDao;
+
+	@Resource
+	private CorpDeptMapper corpDeptMapper;
+
+	@Resource
+	private SysRoleMapper sysRoleMapper;
+
+	@Override
+	public CorpDept getMainDeptBy(String userId) {
+		SysUserDeptRoleExample udrExample = new SysUserDeptRoleExample();
+		SysUserDeptRoleExample.Criteria udrCriteria = udrExample.createCriteria();
+		udrCriteria.andUserIdEqualTo(userId);
+		udrCriteria.andIsMainEqualTo("Y");
+		udrCriteria.andRoleIdIsNull();// 此种策略下，用户和机构关联记录的角色字段为NULl
+		List<SysUserDeptRole> udrList = sysUserDeptRoleMapper.selectByExample(udrExample);
+		return CollectionUtils.isNotEmpty(udrList) ? corpDeptMapper.selectByPrimaryKey(udrList.get(0).getDeptId())
+				: null;
+	}
+
+	@Override
+	public List<CorpDept> getDeptListBy(String userId) {
+		return userDeptRoleDao.getDeptListBy(userId);
+	}
+
+	@Override
+	public SysRole getMainRoleBy(String userId) {
+		SysUserDeptRoleExample udrExample = new SysUserDeptRoleExample();
+		SysUserDeptRoleExample.Criteria udrCriteria = udrExample.createCriteria();
+		udrCriteria.andUserIdEqualTo(userId);
+		udrCriteria.andIsMainEqualTo("Y");
+		udrCriteria.andDeptIdIsNull();// 此种策略下，用户和角色关联记录的机构字段为NULl
+		List<SysUserDeptRole> udrList = sysUserDeptRoleMapper.selectByExample(udrExample);
+		return CollectionUtils.isNotEmpty(udrList) ? sysRoleMapper.selectByPrimaryKey(udrList.get(0).getRoleId())
+				: null;
+	}
+
+	@Override
+	public List<SysRole> getRoleListBy(String userId) {
+		return userDeptRoleDao.getRoleListBy(userId);
+	}
+
+	@Override
+	public List<SysUser> getUserNamesBy(String roleIds) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("roleId", "'" + Joiner.on("','").join(roleIds.split(",")) + "'");
+		return userDeptRoleDao.getUserNamesByUnbind(param);
+	}
+
+}

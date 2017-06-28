@@ -1,0 +1,87 @@
+{
+  "result": 0,
+  "resultMsg": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "title": "角色管理",
+    "sourceUrl": "/role/list",
+    "searchFields": [
+      {
+        "type": "hidden",
+        "name": "isPage",
+        "value": 1
+      },
+   
+      {
+        "type": "text",
+        "label": "角色名称",
+        "name": "roleName"
+      },
+      {
+        "type": "select",
+        "label": "角色类型",
+        "name": "roleType",
+        "dict": [
+          {
+            "key": "1",
+            "value": "平台"
+          },
+          {
+            "key": "2",
+            "value": "保理商"
+          },
+          {
+            "key": "3",
+            "value": "券商"
+          },
+          {
+            "key": "4",
+            "value": "核心企业"
+          },
+          {
+            "key": "5",
+            "value": "供应商"
+          }
+        ]
+      }
+    ],
+
+    "btnGroup": [
+      {
+        "name": "新增",
+        "icon": "fa fa-plus",
+        "action": "eb.app.Router.go('#roleManager-add')"
+      }
+    ],
+    "idField": "roleId",
+    "columns": [
+         {
+	        "title": "角色名称",
+	        "field": "roleName"
+	      },
+	      {
+	        "title": "角色类型",
+	        "field": "roleTypeName"
+	      },
+		  {
+	        "title": "操作权限",
+	        "field": "note"
+	      },
+	      {
+	        "title": "操作",
+	        "actions": [
+	          {
+	            "name": "删除",
+	            "icon": "fa fa-trash",
+	            "action": "eb.app.deleteFromDataGrid({msg:'您确定要删除 @name 数据吗？', url: '/role/delete', 'requestData': {'roleId': '@{roleId}'}})"
+	          },
+	          {
+	            "name": "编辑",
+	            "icon": "fa fa-pencil-square",
+	            "action": "eb.app.Router.go('#roleManager-mod', {'requestData':{'roleId': '@{roleId}'}})"
+	          }
+        ]
+      }
+    ]
+  }
+}

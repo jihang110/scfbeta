@@ -1,0 +1,61 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-form",
+    "submitUrl": "/pub/custRela/bpm/startGo",
+    "pageStrategy": "none",
+    "title": "关联买卖方",
+    "fields": [
+      {
+        "type": "hidden",
+        "name": "custId"
+      },
+      {
+        "id": "buyerName",
+        "type": "lookup",
+        "label": "买方名称",
+        "route":"custRelaBuyerDetailForm",
+        "name": "corpName",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "组织机构代码证号",
+        "name": "orgnNo",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "id": "sellerList",
+        "type": "datagrid",
+        "name": "sellerList",
+        "btnGroup": [
+          {
+            "type": "lookup",
+            "title": "新增",
+            "icon": "fa fa-plus",
+            "idField": "custId",
+            "route": "custRelaSellerDetailForm"
+          }
+        ],
+        "columns": [
+          {
+        	"title": "ID",
+       		"field": "custId"
+	      },
+	      {
+	        "title": "卖方名称",
+	        "field": "corpName"
+	      },
+	      {
+	        "title": "组织机构代码证号",
+	        "field": "orgnNo"
+	      }
+        ]
+      }
+    ],
+    "script": "business/pub/custRela/js/custRelaList.js"
+  }
+}

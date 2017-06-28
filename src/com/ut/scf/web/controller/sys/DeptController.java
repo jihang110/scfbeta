@@ -1,0 +1,151 @@
+package com.ut.scf.web.controller.sys;
+
+import java.io.IOException;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ut.scf.core.dict.PageInfoBean;
+import com.ut.scf.core.dict.ScfBizConsts;
+import com.ut.scf.core.dict.ScfConsts;
+import com.ut.scf.core.util.BeanUtil;
+import com.ut.scf.reqbean.sys.DeptAddReqBean;
+import com.ut.scf.reqbean.sys.DeptDeleteReqBean;
+import com.ut.scf.reqbean.sys.DeptListReqBean;
+import com.ut.scf.reqbean.sys.DeptUpdateReqBean;
+import com.ut.scf.respbean.BaseRespBean;
+import com.ut.scf.service.sys.DeptService;
+import com.ut.scf.web.controller.BaseJsonController;
+
+/**
+ * 部门操作相关的控制类
+ * 
+ * @author sunll
+ */
+@Controller
+@RequestMapping("/dept")
+public class DeptController extends BaseJsonController {
+
+	@Resource
+	private DeptService deptService;
+
+	/**
+	 * 新增部门
+	 * 
+	 * @param httpSession
+	 * @param reqBean
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/add")
+	public @ResponseBody BaseRespBean deptAdd(HttpSession httpSession, @Valid @RequestBody DeptAddReqBean reqBean) throws IOException {
+		log.debug("[add] start .. params=" + reqBean);
+		BaseRespBean respBean = new BaseRespBean();
+
+		String corpIdSession = (String) httpSession.getAttribute(ScfConsts.SESSION_CORP_ID);
+		log.debug("corpIdSession: {}", corpIdSession);
+
+		Map<String, Object> paramMap = BeanUtil.beanToMap(reqBean);
+
+		respBean = this.deptService.addDept(paramMap);
+		log.debug("[add] end .. return=" + respBean);
+		return respBean;
+	}
+
+	/**
+	 * 删除部门
+	 * 
+	 * @param reqBean
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/delete")
+	public @ResponseBody BaseRespBean deptDelete(@Valid @RequestBody DeptDeleteReqBean reqBean) throws IOException {
+		log.debug("[delete] start .. params=" + reqBean);
+		BaseRespBean respBean = new BaseRespBean();
+
+		String deptId = reqBean.getDeptId();
+		respBean = this.deptService.deleteDept(deptId);
+		log.debug("[delete] end .. return=" + respBean);
+		return respBean;
+	}
+
+	/**
+	 * 查询部门列表
+	 * 
+	 * @param reqBean
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/list")
+	public @ResponseBody BaseRespBean deptList(HttpSession httpSession, @RequestBody DeptListReqBean reqBean) {
+		log.debug("[add] start .. params=" + reqBean);
+		BaseRespBean respBean = new BaseRespBean();
+		Map<String, Object> paramMap = BeanUtil.beanToMap(reqBean);
+		// 获取用户信息
+		String corpIdSession = (String) httpSession.getAttribute(ScfConsts.SESSION_CORP_ID);
+		log.debug("corpIdSession: {}", corpIdSession);
+		String userIdSession = (String) httpSession.getAttribute(ScfConsts.SESSION_USER_ID);
+		log.debug("userIdSession: {}", userIdSession);
+		String roleIdSession = (String) httpSession.getAttribute(ScfConsts.SESSION_ROLE_ID);
+		log.debug("roleIdSession: {}", roleIdSession);
+		int roleTypeSession = (int) httpSession.getAttribute(ScfConsts.SESSION_ROLE_TYPE);
+		log.debug("roleTypeSession: {}", roleTypeSession);
+		// 保理商类型只能查看自己的客户企业数据，平台类型不限制，其他类型只能查看自己企业数据
+		// 保理商类型下，保理商管理员可以查看所有数据，其他角色只能查看自己的业务数据
+		if (roleTypeSession == ScfBizConsts.ROLE_TYPE_FACTOR) {
+			if (!roleIdSession.equals(ScfBizConsts.ROLE_ID_FACTOR_ADMIN)) {
+				paramMap.put("createUserId", userIdSession);
+			}
+		} else if (roleTypeSession != ScfBizConsts.ROLE_TYPE_PLAT) {
+			paramMap.put("corpId", corpIdSession);
+		}
+		PageInfoBean page = reqBean.getPage();
+		respBean = deptService.getDeptList(paramMap, page);
+		log.debug("[add] end .. return=" + respBean);
+		return respBean;
+	}
+
+	/**
+	 * 获取部门树
+	 * 
+	 * @param reqBean
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/tree")
+	public @ResponseBody BaseRespBean deptTree(@RequestBody DeptListReqBean reqBean) throws Exception {
+		log.debug("[add] start .. params=" + reqBean);
+		BaseRespBean respBean = new BaseRespBean();
+
+		Map<String, Object> paramMap = BeanUtil.beanToMap(reqBean);
+		respBean = deptService.getDeptTree(paramMap);
+		log.debug("[add] end .. return=" + respBean);
+		return respBean;
+	}
+
+	/**
+	 * 修改部门
+	 * 
+	 * @param reqBean
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/mod")
+	public @ResponseBody BaseRespBean deptUpdate(@Valid @RequestBody DeptUpdateReqBean reqBean) throws IOException {
+		log.debug("[add] start .. params=" + reqBean);
+		BaseRespBean respBean = new BaseRespBean();
+
+		respBean = this.deptService.updateDept(reqBean);
+		log.debug("[add] end .. return=" + respBean);
+		return respBean;
+	}
+
+}

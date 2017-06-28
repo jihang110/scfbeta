@@ -1,0 +1,35 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "searchFields": [
+      {
+        "type": "hidden",
+        "name": "isPage",
+        "value": 1
+      },
+      {
+        "type": "text",
+        "label": "客户编号",
+        "name": "custId"
+      }
+    ],
+    "sourceUrl": "/factor/custac/iouList",
+    "idField": "acId",
+    "columns": [
+      {
+        "title": "放款帐号",
+        "field": "iouAcId"
+      },
+      {
+        "title": "放款户名",
+        "field": "iouAcNm"
+      },
+      {
+        "title": "放款开户行",
+        "field": "iouAcBkNm"
+      }
+    ]
+  }
+}

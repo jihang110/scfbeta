@@ -1,0 +1,223 @@
+<div class="row-fluid">
+    <div class="span6" style="height: 400px;overflow: auto;">
+        <ul id="sys-management-dept-tree" class="ztree"></ul>
+    </div>
+    <div id="sys-management-dept-form-wrapper" class="span6" style="height: 400px;overflow: auto;">
+
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <button id="sys-management-btn-save" class="btn eb-richbtn blue"><i class="fa fa-floppy-o" aria-hidden="true"></i>保存</button>
+        <button id="sys-management-btn-new" class="btn eb-richbtn blue" disabled><i class="fa fa-plus" aria-hidden="true"></i>新建</button>
+        <button id="sys-management-btn-delete" class="btn eb-richbtn blue" disabled><i class="fa fa-trash" aria-hidden="true"></i>删除</button>
+    </div>
+</div>
+<script type="text/javascript">
+    eb.app.deptManager =
+    {
+        prevNode: null,
+
+        nextNode: null,
+
+        targetNode: null,
+
+        ztreeObj: null,
+
+        deptSaveTimer: false,
+
+        // 更新按钮状态
+        refreshStatus: function (treeNode) {
+            eb.app.deptManager.targetNode = treeNode;
+            eb.app.deptManager.prevNode = treeNode.getPreNode();
+            eb.app.deptManager.nextNode = treeNode.getNextNode();
+
+        },
+
+        // 保存机构排序信息
+        saveDeptOrder: function () {
+
+            var getOrderData = function (nodeArr, resultArr) {
+                var resultArr = resultArr || [];
+
+                for (var i=0; i<nodeArr.length; i++)
+                {
+                    var node = nodeArr[i];
+                    resultArr.push({'deptId': node.deptId, 'deptOrder': resultArr.length});
+                    if (node.subDeptList && node.subDeptList.length>0)
+                    {
+                        resultArr = getOrderData(node.subDeptList, resultArr);
+                    }
+                }
+
+                return resultArr;
+            };
+
+            var orderData = getOrderData(eb.app.deptManager.ztreeObj.getNodes(), []);
+
+            // TODO 调用接口保存数据
+
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+            toastr['info']('机构顺序调整已经保存成功！');
+            // MOCK 保存结果 */
+        },
+
+        loadDeptForm: function (formData) {
+            var loadForm = function (formData) {
+                var cfg = {
+                    "formId": "sys-management-dept-form",
+                    "fields": [
+                        {
+                            "type": "hidden",
+                            "name": "deptId"
+                        },
+                        {
+                            "type": "hidden",
+                            "name": "corpId"
+                          },
+                    	  {
+                            "type": "text",
+                            "label": "机构性质",
+                            "name": "deptType",
+                            "reg": "string"
+                          },
+                          {
+                            "type": "text",
+                            "label": "人数",
+                            "name": "staffNum",
+                            "reg": "number"
+                          },
+                    	  {
+                            "type": "text",
+                            "label": "主要职能",
+                            "name": "function",
+                            "reg": "string"
+                          },
+                    	  {
+                            "type": "text",
+                            "label": "机构组织架构图",
+                            "name": "orgStructurePath"
+                          },
+                    	  {
+                            "type": "text",
+                            "label": "联系人",
+                            "name": "contactPerson",
+                            "reg": "string"
+                          },
+                    	  {
+                            "type": "text",
+                            "label": "联系电话",
+                            "name": "contactPhone",
+                            "reg": "fixedPhone"
+                          },
+                    	  {
+                            "type": "textarea",
+                            "label": "机构描述",
+                            "name": "note"
+                          }
+                    ]
+                };
+
+                if (formData)
+                {
+                    for (var i=0; i<cfg.fields.length; i++)
+                    {
+                        cfg.fields[i].formId = cfg.formId;
+                        //fields[i].gridId = gridId;
+                        cfg.fields[i].id = cfg.fields[i].id || 'eb-richipt-'+eb.utils.random(6);
+
+                        if (formData)
+                        {
+                            try {
+                                cfg.fields[i].value = eval("formData." + cfg.fields[i].name)
+                            } catch(e) {
+                                // no need to do anything!
+                            }
+                        }
+
+                        if (cfg.fields[i].dictName)
+                        {
+                            cfg.fields[i].dict = eb.app.cache.dicts[cfg.fields[i].dictName] || [];
+                        }
+                    }
+                }
+                var html = eb.tplengine.parse('form', cfg);
+                $('#sys-management-dept-form-wrapper').html(html);
+                $("#sys-management-dept-form").EBRichForm();
+                //return "";
+            }
+
+            loadForm(formData);
+        }
+    };
+
+    // 加载树
+    new eb.Client({
+            url: eb.settings.SERVER_CONTEXT_PATH + '/dept/tree'
+        })
+        .ifSuccess(function (response) {
+
+            eb.app.deptManager.ztreeObj = $.fn.zTree.init($('#sys-management-dept-tree'), {
+                data: {
+                    key: {
+                        title: 'deptId',
+                        checked: "ztreeItemSelected",
+                        name: 'deptName',
+                        children: 'subDeptList'
+                    },
+                    simpleData: {
+                        enable: true,
+                        idKey: 'deptId',
+                        pIdKey: 'parentId'
+                        //rootPId: null
+                    }
+                },
+                callback: {
+                    onClick: function (event, treeId, treeNode, clickFlag) {
+                        eb.app.deptManager.refreshStatus(treeNode);
+                        eb.app.deptManager.loadDeptForm(treeNode);
+
+                        $('#sys-management-btn-new').removeAttr('disabled');
+
+                        event.stopPropagation();
+                        return false;
+                    }
+                }
+            }, response.data);
+
+        })
+        .ifFail(function (response) {
+            alert('机构数据读取错误，请稍候再试！');
+        })
+        .send();
+
+
+
+    eb.app.deptManager.loadDeptForm();
+
+
+    $("#sys-management-btn-save").click(function (e) {
+  		//TODO
+    });
+
+    $("#sys-management-btn-new").click(function (e) {
+        var parentId = eb.app.deptManager.targetNode.deptId;
+        eb.app.deptManager.loadDeptForm({parentId: parentId});
+    });
+</script> 

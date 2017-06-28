@@ -1,0 +1,43 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+	 "pageStrategy": "none",
+    "title": "获取买方信息",
+    "searchFields": [
+      {
+        "type": "text",
+        "label": "买方名称",
+        "name": "buyerNm"
+      },
+      {
+        "type": "text",
+        "label": "组织机构代码证号",
+        "name": "orgnNo"
+      },
+      {
+        "type": "hidden",
+        "value": "4",
+        "name": "sysType"
+      }
+    ],
+
+    "sourceUrl": "/pub/custRela/custList",
+    "idField": "custId",
+    "columns": [
+      {
+        "title": "ID",
+        "field": "custId"
+      },
+      {
+        "title": "买方名称",
+        "field": "corpName"
+      },
+      {
+        "title": "组织机构代码证号",
+        "field": "orgnNo"
+      }
+    ]
+  }
+}

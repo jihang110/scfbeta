@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ut.scf.dao.auto.CntrctMapper" >
+  <resultMap id="BaseResultMap" type="com.ut.scf.pojo.auto.Cntrct" >
+    <id column="REC_UID" property="recUid" jdbcType="VARCHAR" />
+    <result column="CNT_NO" property="cntNo" jdbcType="VARCHAR" />
+    <result column="CNT_TP" property="cntTp" jdbcType="VARCHAR" />
+    <result column="PRODUCT_DIST_ID" property="productDistId" jdbcType="VARCHAR" />
+    <result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="PAYMENT_MODE" property="paymentMode" jdbcType="VARCHAR" />
+    <result column="AC_ID" property="acId" jdbcType="VARCHAR" />
+    <result column="COORDINATOR_NM" property="coordinatorNm" jdbcType="VARCHAR" />
+    <result column="COORDINATOR_EMAIL" property="coordinatorEmail" jdbcType="VARCHAR" />
+    <result column="RELE_LMT_AMT" property="releLmtAmt" jdbcType="DECIMAL" />
+    <result column="COUNTER_PARTY_ID" property="counterPartyId" jdbcType="VARCHAR" />
+    <result column="RECOMM" property="recomm" jdbcType="VARCHAR" />
+    <result column="ASSOC_AMT" property="assocAmt" jdbcType="DECIMAL" />
+    <result column="AMT_TP" property="amtTp" jdbcType="VARCHAR" />
+    <result column="RECOMM_STS" property="recommSts" jdbcType="VARCHAR" />
+    <result column="ATTACH_NM" property="attachNm" jdbcType="VARCHAR" />
+    <result column="ATTACH_FORMAT" property="attachFormat" jdbcType="VARCHAR" />
+    <result column="ATTACH_SIZE" property="attachSize" jdbcType="VARCHAR" />
+    <result column="MAX_LOAN_RATIO" property="maxLoanRatio" jdbcType="VARCHAR" />
+    <result column="LOANRATIO_LOCK" property="loanratioLock" jdbcType="VARCHAR" />
+    <result column="GRACE_DAYS" property="graceDays" jdbcType="DECIMAL" />
+    <result column="LOAN_DEADLINE" property="loanDeadline" jdbcType="DECIMAL" />
+    <result column="INT_WAY" property="intWay" jdbcType="VARCHAR" />
+    <result column="INT_RATE" property="intRate" jdbcType="DECIMAL" />
+    <result column="INT_PARTY" property="intParty" jdbcType="VARCHAR" />
+    <result column="DEDU_METHOD" property="deduMethod" jdbcType="VARCHAR" />
+    <result column="RATE" property="rate" jdbcType="DECIMAL" />
+    <result column="RATE_BEAR_PARTY" property="rateBearParty" jdbcType="VARCHAR" />
+    <result column="RECE_AC_ID" property="receAcId" jdbcType="VARCHAR" />
+    <result column="IOU_AC_ID" property="iouAcId" jdbcType="VARCHAR" />
+    <result column="INT_DEDUCT_AC_ID" property="intDeductAcId" jdbcType="VARCHAR" />
+    <result column="FEE_DEDUCT_AC_ID" property="feeDeductAcId" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="BUSI_DT" property="busiDt" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ut.scf.pojo.auto.Cntrct" extends="BaseResultMap" >
+    <result column="BEWRITE" property="bewrite" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    REC_UID, CNT_NO, CNT_TP, PRODUCT_DIST_ID, PRODUCT_ID, CUST_ID, PAYMENT_MODE, AC_ID, 
+    COORDINATOR_NM, COORDINATOR_EMAIL, RELE_LMT_AMT, COUNTER_PARTY_ID, RECOMM, ASSOC_AMT, 
+    AMT_TP, RECOMM_STS, ATTACH_NM, ATTACH_FORMAT, ATTACH_SIZE, MAX_LOAN_RATIO, LOANRATIO_LOCK, 
+    GRACE_DAYS, LOAN_DEADLINE, INT_WAY, INT_RATE, INT_PARTY, DEDU_METHOD, RATE, RATE_BEAR_PARTY, 
+    RECE_AC_ID, IOU_AC_ID, INT_DEDUCT_AC_ID, FEE_DEDUCT_AC_ID, CREATE_USER, CREATE_TIME, 
+    STATUS, BUSI_DT, UPDATE_USER, UPDATE_TIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    BEWRITE
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ut.scf.pojo.auto.CntrctExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SCFCLOUD.CNTRCT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ut.scf.pojo.auto.CntrctExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.CNTRCT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SCFCLOUD.CNTRCT
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SCFCLOUD.CNTRCT
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ut.scf.pojo.auto.CntrctExample" >
+    delete from SCFCLOUD.CNTRCT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ut.scf.pojo.auto.Cntrct" >
+    insert into SCFCLOUD.CNTRCT (REC_UID, CNT_NO, CNT_TP, 
+      PRODUCT_DIST_ID, PRODUCT_ID, CUST_ID, 
+      PAYMENT_MODE, AC_ID, COORDINATOR_NM, 
+      COORDINATOR_EMAIL, RELE_LMT_AMT, COUNTER_PARTY_ID, 
+      RECOMM, ASSOC_AMT, AMT_TP, 
+      RECOMM_STS, ATTACH_NM, ATTACH_FORMAT, 
+      ATTACH_SIZE, MAX_LOAN_RATIO, LOANRATIO_LOCK, 
+      GRACE_DAYS, LOAN_DEADLINE, INT_WAY, 
+      INT_RATE, INT_PARTY, DEDU_METHOD, 
+      RATE, RATE_BEAR_PARTY, RECE_AC_ID, 
+      IOU_AC_ID, INT_DEDUCT_AC_ID, FEE_DEDUCT_AC_ID, 
+      CREATE_USER, CREATE_TIME, STATUS, 
+      BUSI_DT, UPDATE_USER, UPDATE_TIME, 
+      BEWRITE)
+    values (#{recUid,jdbcType=VARCHAR}, #{cntNo,jdbcType=VARCHAR}, #{cntTp,jdbcType=VARCHAR}, 
+      #{productDistId,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, 
+      #{paymentMode,jdbcType=VARCHAR}, #{acId,jdbcType=VARCHAR}, #{coordinatorNm,jdbcType=VARCHAR}, 
+      #{coordinatorEmail,jdbcType=VARCHAR}, #{releLmtAmt,jdbcType=DECIMAL}, #{counterPartyId,jdbcType=VARCHAR}, 
+      #{recomm,jdbcType=VARCHAR}, #{assocAmt,jdbcType=DECIMAL}, #{amtTp,jdbcType=VARCHAR}, 
+      #{recommSts,jdbcType=VARCHAR}, #{attachNm,jdbcType=VARCHAR}, #{attachFormat,jdbcType=VARCHAR}, 
+      #{attachSize,jdbcType=VARCHAR}, #{maxLoanRatio,jdbcType=VARCHAR}, #{loanratioLock,jdbcType=VARCHAR}, 
+      #{graceDays,jdbcType=DECIMAL}, #{loanDeadline,jdbcType=DECIMAL}, #{intWay,jdbcType=VARCHAR}, 
+      #{intRate,jdbcType=DECIMAL}, #{intParty,jdbcType=VARCHAR}, #{deduMethod,jdbcType=VARCHAR}, 
+      #{rate,jdbcType=DECIMAL}, #{rateBearParty,jdbcType=VARCHAR}, #{receAcId,jdbcType=VARCHAR}, 
+      #{iouAcId,jdbcType=VARCHAR}, #{intDeductAcId,jdbcType=VARCHAR}, #{feeDeductAcId,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=DECIMAL}, 
+      #{busiDt,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{bewrite,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ut.scf.pojo.auto.Cntrct" >
+    insert into SCFCLOUD.CNTRCT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recUid != null" >
+        REC_UID,
+      </if>
+      <if test="cntNo != null" >
+        CNT_NO,
+      </if>
+      <if test="cntTp != null" >
+        CNT_TP,
+      </if>
+      <if test="productDistId != null" >
+        PRODUCT_DIST_ID,
+      </if>
+      <if test="productId != null" >
+        PRODUCT_ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="paymentMode != null" >
+        PAYMENT_MODE,
+      </if>
+      <if test="acId != null" >
+        AC_ID,
+      </if>
+      <if test="coordinatorNm != null" >
+        COORDINATOR_NM,
+      </if>
+      <if test="coordinatorEmail != null" >
+        COORDINATOR_EMAIL,
+      </if>
+      <if test="releLmtAmt != null" >
+        RELE_LMT_AMT,
+      </if>
+      <if test="counterPartyId != null" >
+        COUNTER_PARTY_ID,
+      </if>
+      <if test="recomm != null" >
+        RECOMM,
+      </if>
+      <if test="assocAmt != null" >
+        ASSOC_AMT,
+      </if>
+      <if test="amtTp != null" >
+        AMT_TP,
+      </if>
+      <if test="recommSts != null" >
+        RECOMM_STS,
+      </if>
+      <if test="attachNm != null" >
+        ATTACH_NM,
+      </if>
+      <if test="attachFormat != null" >
+        ATTACH_FORMAT,
+      </if>
+      <if test="attachSize != null" >
+        ATTACH_SIZE,
+      </if>
+      <if test="maxLoanRatio != null" >
+        MAX_LOAN_RATIO,
+      </if>
+      <if test="loanratioLock != null" >
+        LOANRATIO_LOCK,
+      </if>
+      <if test="graceDays != null" >
+        GRACE_DAYS,
+      </if>
+      <if test="loanDeadline != null" >
+        LOAN_DEADLINE,
+      </if>
+      <if test="intWay != null" >
+        INT_WAY,
+      </if>
+      <if test="intRate != null" >
+        INT_RATE,
+      </if>
+      <if test="intParty != null" >
+        INT_PARTY,
+      </if>
+      <if test="deduMethod != null" >
+        DEDU_METHOD,
+      </if>
+      <if test="rate != null" >
+        RATE,
+      </if>
+      <if test="rateBearParty != null" >
+        RATE_BEAR_PARTY,
+      </if>
+      <if test="receAcId != null" >
+        RECE_AC_ID,
+      </if>
+      <if test="iouAcId != null" >
+        IOU_AC_ID,
+      </if>
+      <if test="intDeductAcId != null" >
+        INT_DEDUCT_AC_ID,
+      </if>
+      <if test="feeDeductAcId != null" >
+        FEE_DEDUCT_AC_ID,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="busiDt != null" >
+        BUSI_DT,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="bewrite != null" >
+        BEWRITE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recUid != null" >
+        #{recUid,jdbcType=VARCHAR},
+      </if>
+      <if test="cntNo != null" >
+        #{cntNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cntTp != null" >
+        #{cntTp,jdbcType=VARCHAR},
+      </if>
+      <if test="productDistId != null" >
+        #{productDistId,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentMode != null" >
+        #{paymentMode,jdbcType=VARCHAR},
+      </if>
+      <if test="acId != null" >
+        #{acId,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinatorNm != null" >
+        #{coordinatorNm,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinatorEmail != null" >
+        #{coordinatorEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="releLmtAmt != null" >
+        #{releLmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="counterPartyId != null" >
+        #{counterPartyId,jdbcType=VARCHAR},
+      </if>
+      <if test="recomm != null" >
+        #{recomm,jdbcType=VARCHAR},
+      </if>
+      <if test="assocAmt != null" >
+        #{assocAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="amtTp != null" >
+        #{amtTp,jdbcType=VARCHAR},
+      </if>
+      <if test="recommSts != null" >
+        #{recommSts,jdbcType=VARCHAR},
+      </if>
+      <if test="attachNm != null" >
+        #{attachNm,jdbcType=VARCHAR},
+      </if>
+      <if test="attachFormat != null" >
+        #{attachFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="attachSize != null" >
+        #{attachSize,jdbcType=VARCHAR},
+      </if>
+      <if test="maxLoanRatio != null" >
+        #{maxLoanRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="loanratioLock != null" >
+        #{loanratioLock,jdbcType=VARCHAR},
+      </if>
+      <if test="graceDays != null" >
+        #{graceDays,jdbcType=DECIMAL},
+      </if>
+      <if test="loanDeadline != null" >
+        #{loanDeadline,jdbcType=DECIMAL},
+      </if>
+      <if test="intWay != null" >
+        #{intWay,jdbcType=VARCHAR},
+      </if>
+      <if test="intRate != null" >
+        #{intRate,jdbcType=DECIMAL},
+      </if>
+      <if test="intParty != null" >
+        #{intParty,jdbcType=VARCHAR},
+      </if>
+      <if test="deduMethod != null" >
+        #{deduMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="rateBearParty != null" >
+        #{rateBearParty,jdbcType=VARCHAR},
+      </if>
+      <if test="receAcId != null" >
+        #{receAcId,jdbcType=VARCHAR},
+      </if>
+      <if test="iouAcId != null" >
+        #{iouAcId,jdbcType=VARCHAR},
+      </if>
+      <if test="intDeductAcId != null" >
+        #{intDeductAcId,jdbcType=VARCHAR},
+      </if>
+      <if test="feeDeductAcId != null" >
+        #{feeDeductAcId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null" >
+        #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bewrite != null" >
+        #{bewrite,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ut.scf.pojo.auto.CntrctExample" resultType="java.lang.Integer" >
+    select count(*) from SCFCLOUD.CNTRCT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SCFCLOUD.CNTRCT
+    <set >
+      <if test="record.recUid != null" >
+        REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cntNo != null" >
+        CNT_NO = #{record.cntNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cntTp != null" >
+        CNT_TP = #{record.cntTp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productDistId != null" >
+        PRODUCT_DIST_ID = #{record.productDistId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null" >
+        PRODUCT_ID = #{record.productId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custId != null" >
+        CUST_ID = #{record.custId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentMode != null" >
+        PAYMENT_MODE = #{record.paymentMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acId != null" >
+        AC_ID = #{record.acId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coordinatorNm != null" >
+        COORDINATOR_NM = #{record.coordinatorNm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coordinatorEmail != null" >
+        COORDINATOR_EMAIL = #{record.coordinatorEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.releLmtAmt != null" >
+        RELE_LMT_AMT = #{record.releLmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.counterPartyId != null" >
+        COUNTER_PARTY_ID = #{record.counterPartyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recomm != null" >
+        RECOMM = #{record.recomm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assocAmt != null" >
+        ASSOC_AMT = #{record.assocAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.amtTp != null" >
+        AMT_TP = #{record.amtTp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recommSts != null" >
+        RECOMM_STS = #{record.recommSts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attachNm != null" >
+        ATTACH_NM = #{record.attachNm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attachFormat != null" >
+        ATTACH_FORMAT = #{record.attachFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attachSize != null" >
+        ATTACH_SIZE = #{record.attachSize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxLoanRatio != null" >
+        MAX_LOAN_RATIO = #{record.maxLoanRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loanratioLock != null" >
+        LOANRATIO_LOCK = #{record.loanratioLock,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graceDays != null" >
+        GRACE_DAYS = #{record.graceDays,jdbcType=DECIMAL},
+      </if>
+      <if test="record.loanDeadline != null" >
+        LOAN_DEADLINE = #{record.loanDeadline,jdbcType=DECIMAL},
+      </if>
+      <if test="record.intWay != null" >
+        INT_WAY = #{record.intWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.intRate != null" >
+        INT_RATE = #{record.intRate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.intParty != null" >
+        INT_PARTY = #{record.intParty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deduMethod != null" >
+        DEDU_METHOD = #{record.deduMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rate != null" >
+        RATE = #{record.rate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rateBearParty != null" >
+        RATE_BEAR_PARTY = #{record.rateBearParty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receAcId != null" >
+        RECE_AC_ID = #{record.receAcId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iouAcId != null" >
+        IOU_AC_ID = #{record.iouAcId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.intDeductAcId != null" >
+        INT_DEDUCT_AC_ID = #{record.intDeductAcId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feeDeductAcId != null" >
+        FEE_DEDUCT_AC_ID = #{record.feeDeductAcId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUser != null" >
+        CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.busiDt != null" >
+        BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null" >
+        UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bewrite != null" >
+        BEWRITE = #{record.bewrite,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update SCFCLOUD.CNTRCT
+    set REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      CNT_NO = #{record.cntNo,jdbcType=VARCHAR},
+      CNT_TP = #{record.cntTp,jdbcType=VARCHAR},
+      PRODUCT_DIST_ID = #{record.productDistId,jdbcType=VARCHAR},
+      PRODUCT_ID = #{record.productId,jdbcType=VARCHAR},
+      CUST_ID = #{record.custId,jdbcType=VARCHAR},
+      PAYMENT_MODE = #{record.paymentMode,jdbcType=VARCHAR},
+      AC_ID = #{record.acId,jdbcType=VARCHAR},
+      COORDINATOR_NM = #{record.coordinatorNm,jdbcType=VARCHAR},
+      COORDINATOR_EMAIL = #{record.coordinatorEmail,jdbcType=VARCHAR},
+      RELE_LMT_AMT = #{record.releLmtAmt,jdbcType=DECIMAL},
+      COUNTER_PARTY_ID = #{record.counterPartyId,jdbcType=VARCHAR},
+      RECOMM = #{record.recomm,jdbcType=VARCHAR},
+      ASSOC_AMT = #{record.assocAmt,jdbcType=DECIMAL},
+      AMT_TP = #{record.amtTp,jdbcType=VARCHAR},
+      RECOMM_STS = #{record.recommSts,jdbcType=VARCHAR},
+      ATTACH_NM = #{record.attachNm,jdbcType=VARCHAR},
+      ATTACH_FORMAT = #{record.attachFormat,jdbcType=VARCHAR},
+      ATTACH_SIZE = #{record.attachSize,jdbcType=VARCHAR},
+      MAX_LOAN_RATIO = #{record.maxLoanRatio,jdbcType=VARCHAR},
+      LOANRATIO_LOCK = #{record.loanratioLock,jdbcType=VARCHAR},
+      GRACE_DAYS = #{record.graceDays,jdbcType=DECIMAL},
+      LOAN_DEADLINE = #{record.loanDeadline,jdbcType=DECIMAL},
+      INT_WAY = #{record.intWay,jdbcType=VARCHAR},
+      INT_RATE = #{record.intRate,jdbcType=DECIMAL},
+      INT_PARTY = #{record.intParty,jdbcType=VARCHAR},
+      DEDU_METHOD = #{record.deduMethod,jdbcType=VARCHAR},
+      RATE = #{record.rate,jdbcType=DECIMAL},
+      RATE_BEAR_PARTY = #{record.rateBearParty,jdbcType=VARCHAR},
+      RECE_AC_ID = #{record.receAcId,jdbcType=VARCHAR},
+      IOU_AC_ID = #{record.iouAcId,jdbcType=VARCHAR},
+      INT_DEDUCT_AC_ID = #{record.intDeductAcId,jdbcType=VARCHAR},
+      FEE_DEDUCT_AC_ID = #{record.feeDeductAcId,jdbcType=VARCHAR},
+      CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      BEWRITE = #{record.bewrite,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SCFCLOUD.CNTRCT
+    set REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      CNT_NO = #{record.cntNo,jdbcType=VARCHAR},
+      CNT_TP = #{record.cntTp,jdbcType=VARCHAR},
+      PRODUCT_DIST_ID = #{record.productDistId,jdbcType=VARCHAR},
+      PRODUCT_ID = #{record.productId,jdbcType=VARCHAR},
+      CUST_ID = #{record.custId,jdbcType=VARCHAR},
+      PAYMENT_MODE = #{record.paymentMode,jdbcType=VARCHAR},
+      AC_ID = #{record.acId,jdbcType=VARCHAR},
+      COORDINATOR_NM = #{record.coordinatorNm,jdbcType=VARCHAR},
+      COORDINATOR_EMAIL = #{record.coordinatorEmail,jdbcType=VARCHAR},
+      RELE_LMT_AMT = #{record.releLmtAmt,jdbcType=DECIMAL},
+      COUNTER_PARTY_ID = #{record.counterPartyId,jdbcType=VARCHAR},
+      RECOMM = #{record.recomm,jdbcType=VARCHAR},
+      ASSOC_AMT = #{record.assocAmt,jdbcType=DECIMAL},
+      AMT_TP = #{record.amtTp,jdbcType=VARCHAR},
+      RECOMM_STS = #{record.recommSts,jdbcType=VARCHAR},
+      ATTACH_NM = #{record.attachNm,jdbcType=VARCHAR},
+      ATTACH_FORMAT = #{record.attachFormat,jdbcType=VARCHAR},
+      ATTACH_SIZE = #{record.attachSize,jdbcType=VARCHAR},
+      MAX_LOAN_RATIO = #{record.maxLoanRatio,jdbcType=VARCHAR},
+      LOANRATIO_LOCK = #{record.loanratioLock,jdbcType=VARCHAR},
+      GRACE_DAYS = #{record.graceDays,jdbcType=DECIMAL},
+      LOAN_DEADLINE = #{record.loanDeadline,jdbcType=DECIMAL},
+      INT_WAY = #{record.intWay,jdbcType=VARCHAR},
+      INT_RATE = #{record.intRate,jdbcType=DECIMAL},
+      INT_PARTY = #{record.intParty,jdbcType=VARCHAR},
+      DEDU_METHOD = #{record.deduMethod,jdbcType=VARCHAR},
+      RATE = #{record.rate,jdbcType=DECIMAL},
+      RATE_BEAR_PARTY = #{record.rateBearParty,jdbcType=VARCHAR},
+      RECE_AC_ID = #{record.receAcId,jdbcType=VARCHAR},
+      IOU_AC_ID = #{record.iouAcId,jdbcType=VARCHAR},
+      INT_DEDUCT_AC_ID = #{record.intDeductAcId,jdbcType=VARCHAR},
+      FEE_DEDUCT_AC_ID = #{record.feeDeductAcId,jdbcType=VARCHAR},
+      CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ut.scf.pojo.auto.Cntrct" >
+    update SCFCLOUD.CNTRCT
+    <set >
+      <if test="cntNo != null" >
+        CNT_NO = #{cntNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cntTp != null" >
+        CNT_TP = #{cntTp,jdbcType=VARCHAR},
+      </if>
+      <if test="productDistId != null" >
+        PRODUCT_DIST_ID = #{productDistId,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        PRODUCT_ID = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentMode != null" >
+        PAYMENT_MODE = #{paymentMode,jdbcType=VARCHAR},
+      </if>
+      <if test="acId != null" >
+        AC_ID = #{acId,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinatorNm != null" >
+        COORDINATOR_NM = #{coordinatorNm,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinatorEmail != null" >
+        COORDINATOR_EMAIL = #{coordinatorEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="releLmtAmt != null" >
+        RELE_LMT_AMT = #{releLmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="counterPartyId != null" >
+        COUNTER_PARTY_ID = #{counterPartyId,jdbcType=VARCHAR},
+      </if>
+      <if test="recomm != null" >
+        RECOMM = #{recomm,jdbcType=VARCHAR},
+      </if>
+      <if test="assocAmt != null" >
+        ASSOC_AMT = #{assocAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="amtTp != null" >
+        AMT_TP = #{amtTp,jdbcType=VARCHAR},
+      </if>
+      <if test="recommSts != null" >
+        RECOMM_STS = #{recommSts,jdbcType=VARCHAR},
+      </if>
+      <if test="attachNm != null" >
+        ATTACH_NM = #{attachNm,jdbcType=VARCHAR},
+      </if>
+      <if test="attachFormat != null" >
+        ATTACH_FORMAT = #{attachFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="attachSize != null" >
+        ATTACH_SIZE = #{attachSize,jdbcType=VARCHAR},
+      </if>
+      <if test="maxLoanRatio != null" >
+        MAX_LOAN_RATIO = #{maxLoanRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="loanratioLock != null" >
+        LOANRATIO_LOCK = #{loanratioLock,jdbcType=VARCHAR},
+      </if>
+      <if test="graceDays != null" >
+        GRACE_DAYS = #{graceDays,jdbcType=DECIMAL},
+      </if>
+      <if test="loanDeadline != null" >
+        LOAN_DEADLINE = #{loanDeadline,jdbcType=DECIMAL},
+      </if>
+      <if test="intWay != null" >
+        INT_WAY = #{intWay,jdbcType=VARCHAR},
+      </if>
+      <if test="intRate != null" >
+        INT_RATE = #{intRate,jdbcType=DECIMAL},
+      </if>
+      <if test="intParty != null" >
+        INT_PARTY = #{intParty,jdbcType=VARCHAR},
+      </if>
+      <if test="deduMethod != null" >
+        DEDU_METHOD = #{deduMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null" >
+        RATE = #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="rateBearParty != null" >
+        RATE_BEAR_PARTY = #{rateBearParty,jdbcType=VARCHAR},
+      </if>
+      <if test="receAcId != null" >
+        RECE_AC_ID = #{receAcId,jdbcType=VARCHAR},
+      </if>
+      <if test="iouAcId != null" >
+        IOU_AC_ID = #{iouAcId,jdbcType=VARCHAR},
+      </if>
+      <if test="intDeductAcId != null" >
+        INT_DEDUCT_AC_ID = #{intDeductAcId,jdbcType=VARCHAR},
+      </if>
+      <if test="feeDeductAcId != null" >
+        FEE_DEDUCT_AC_ID = #{feeDeductAcId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null" >
+        BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bewrite != null" >
+        BEWRITE = #{bewrite,jdbcType=CLOB},
+      </if>
+    </set>
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ut.scf.pojo.auto.Cntrct" >
+    update SCFCLOUD.CNTRCT
+    set CNT_NO = #{cntNo,jdbcType=VARCHAR},
+      CNT_TP = #{cntTp,jdbcType=VARCHAR},
+      PRODUCT_DIST_ID = #{productDistId,jdbcType=VARCHAR},
+      PRODUCT_ID = #{productId,jdbcType=VARCHAR},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      PAYMENT_MODE = #{paymentMode,jdbcType=VARCHAR},
+      AC_ID = #{acId,jdbcType=VARCHAR},
+      COORDINATOR_NM = #{coordinatorNm,jdbcType=VARCHAR},
+      COORDINATOR_EMAIL = #{coordinatorEmail,jdbcType=VARCHAR},
+      RELE_LMT_AMT = #{releLmtAmt,jdbcType=DECIMAL},
+      COUNTER_PARTY_ID = #{counterPartyId,jdbcType=VARCHAR},
+      RECOMM = #{recomm,jdbcType=VARCHAR},
+      ASSOC_AMT = #{assocAmt,jdbcType=DECIMAL},
+      AMT_TP = #{amtTp,jdbcType=VARCHAR},
+      RECOMM_STS = #{recommSts,jdbcType=VARCHAR},
+      ATTACH_NM = #{attachNm,jdbcType=VARCHAR},
+      ATTACH_FORMAT = #{attachFormat,jdbcType=VARCHAR},
+      ATTACH_SIZE = #{attachSize,jdbcType=VARCHAR},
+      MAX_LOAN_RATIO = #{maxLoanRatio,jdbcType=VARCHAR},
+      LOANRATIO_LOCK = #{loanratioLock,jdbcType=VARCHAR},
+      GRACE_DAYS = #{graceDays,jdbcType=DECIMAL},
+      LOAN_DEADLINE = #{loanDeadline,jdbcType=DECIMAL},
+      INT_WAY = #{intWay,jdbcType=VARCHAR},
+      INT_RATE = #{intRate,jdbcType=DECIMAL},
+      INT_PARTY = #{intParty,jdbcType=VARCHAR},
+      DEDU_METHOD = #{deduMethod,jdbcType=VARCHAR},
+      RATE = #{rate,jdbcType=DECIMAL},
+      RATE_BEAR_PARTY = #{rateBearParty,jdbcType=VARCHAR},
+      RECE_AC_ID = #{receAcId,jdbcType=VARCHAR},
+      IOU_AC_ID = #{iouAcId,jdbcType=VARCHAR},
+      INT_DEDUCT_AC_ID = #{intDeductAcId,jdbcType=VARCHAR},
+      FEE_DEDUCT_AC_ID = #{feeDeductAcId,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=DECIMAL},
+      BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      BEWRITE = #{bewrite,jdbcType=CLOB}
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ut.scf.pojo.auto.Cntrct" >
+    update SCFCLOUD.CNTRCT
+    set CNT_NO = #{cntNo,jdbcType=VARCHAR},
+      CNT_TP = #{cntTp,jdbcType=VARCHAR},
+      PRODUCT_DIST_ID = #{productDistId,jdbcType=VARCHAR},
+      PRODUCT_ID = #{productId,jdbcType=VARCHAR},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      PAYMENT_MODE = #{paymentMode,jdbcType=VARCHAR},
+      AC_ID = #{acId,jdbcType=VARCHAR},
+      COORDINATOR_NM = #{coordinatorNm,jdbcType=VARCHAR},
+      COORDINATOR_EMAIL = #{coordinatorEmail,jdbcType=VARCHAR},
+      RELE_LMT_AMT = #{releLmtAmt,jdbcType=DECIMAL},
+      COUNTER_PARTY_ID = #{counterPartyId,jdbcType=VARCHAR},
+      RECOMM = #{recomm,jdbcType=VARCHAR},
+      ASSOC_AMT = #{assocAmt,jdbcType=DECIMAL},
+      AMT_TP = #{amtTp,jdbcType=VARCHAR},
+      RECOMM_STS = #{recommSts,jdbcType=VARCHAR},
+      ATTACH_NM = #{attachNm,jdbcType=VARCHAR},
+      ATTACH_FORMAT = #{attachFormat,jdbcType=VARCHAR},
+      ATTACH_SIZE = #{attachSize,jdbcType=VARCHAR},
+      MAX_LOAN_RATIO = #{maxLoanRatio,jdbcType=VARCHAR},
+      LOANRATIO_LOCK = #{loanratioLock,jdbcType=VARCHAR},
+      GRACE_DAYS = #{graceDays,jdbcType=DECIMAL},
+      LOAN_DEADLINE = #{loanDeadline,jdbcType=DECIMAL},
+      INT_WAY = #{intWay,jdbcType=VARCHAR},
+      INT_RATE = #{intRate,jdbcType=DECIMAL},
+      INT_PARTY = #{intParty,jdbcType=VARCHAR},
+      DEDU_METHOD = #{deduMethod,jdbcType=VARCHAR},
+      RATE = #{rate,jdbcType=DECIMAL},
+      RATE_BEAR_PARTY = #{rateBearParty,jdbcType=VARCHAR},
+      RECE_AC_ID = #{receAcId,jdbcType=VARCHAR},
+      IOU_AC_ID = #{iouAcId,jdbcType=VARCHAR},
+      INT_DEDUCT_AC_ID = #{intDeductAcId,jdbcType=VARCHAR},
+      FEE_DEDUCT_AC_ID = #{feeDeductAcId,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=DECIMAL},
+      BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </update>
+</mapper>

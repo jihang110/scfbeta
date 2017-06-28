@@ -1,0 +1,13 @@
+package com.ut.scf.dao.sys;
+
+import java.util.List;
+import java.util.Map;
+
+import com.ut.scf.reqbean.sys.MenuMoveReqBean;
+
+public interface IMenuDao {
+
+	List<Map<String, Object>> menuListByRoleId(String roleId);
+
+	int updateMenuByMove(List<MenuMoveReqBean> list);
+}

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ut.scf.dao.auto.ProductDistributionMapper" >
+  <resultMap id="BaseResultMap" type="com.ut.scf.pojo.auto.ProductDistribution" >
+    <id column="REC_UID" property="recUid" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="RELE_LMT_AMT" property="releLmtAmt" jdbcType="DECIMAL" />
+    <result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR" />
+    <result column="PRODUCT_LMT" property="productLmt" jdbcType="DECIMAL" />
+    <result column="LMT_MOL" property="lmtMol" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="BUSI_DT" property="busiDt" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    REC_UID, CUST_ID, RELE_LMT_AMT, PRODUCT_ID, PRODUCT_LMT, LMT_MOL, CREATE_USER, CREATE_TIME, 
+    STATUS, BUSI_DT, UPDATE_USER, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ut.scf.pojo.auto.ProductDistributionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.PRODUCT_DISTRIBUTION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.PRODUCT_DISTRIBUTION
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SCFCLOUD.PRODUCT_DISTRIBUTION
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ut.scf.pojo.auto.ProductDistributionExample" >
+    delete from SCFCLOUD.PRODUCT_DISTRIBUTION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ut.scf.pojo.auto.ProductDistribution" >
+    insert into SCFCLOUD.PRODUCT_DISTRIBUTION (REC_UID, CUST_ID, RELE_LMT_AMT, 
+      PRODUCT_ID, PRODUCT_LMT, LMT_MOL, 
+      CREATE_USER, CREATE_TIME, STATUS, 
+      BUSI_DT, UPDATE_USER, UPDATE_TIME
+      )
+    values (#{recUid,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{releLmtAmt,jdbcType=DECIMAL}, 
+      #{productId,jdbcType=VARCHAR}, #{productLmt,jdbcType=DECIMAL}, #{lmtMol,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=DECIMAL}, 
+      #{busiDt,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ut.scf.pojo.auto.ProductDistribution" >
+    insert into SCFCLOUD.PRODUCT_DISTRIBUTION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recUid != null" >
+        REC_UID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="releLmtAmt != null" >
+        RELE_LMT_AMT,
+      </if>
+      <if test="productId != null" >
+        PRODUCT_ID,
+      </if>
+      <if test="productLmt != null" >
+        PRODUCT_LMT,
+      </if>
+      <if test="lmtMol != null" >
+        LMT_MOL,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="busiDt != null" >
+        BUSI_DT,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recUid != null" >
+        #{recUid,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="releLmtAmt != null" >
+        #{releLmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="productLmt != null" >
+        #{productLmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lmtMol != null" >
+        #{lmtMol,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null" >
+        #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ut.scf.pojo.auto.ProductDistributionExample" resultType="java.lang.Integer" >
+    select count(*) from SCFCLOUD.PRODUCT_DISTRIBUTION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SCFCLOUD.PRODUCT_DISTRIBUTION
+    <set >
+      <if test="record.recUid != null" >
+        REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custId != null" >
+        CUST_ID = #{record.custId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.releLmtAmt != null" >
+        RELE_LMT_AMT = #{record.releLmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productId != null" >
+        PRODUCT_ID = #{record.productId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productLmt != null" >
+        PRODUCT_LMT = #{record.productLmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.lmtMol != null" >
+        LMT_MOL = #{record.lmtMol,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUser != null" >
+        CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.busiDt != null" >
+        BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null" >
+        UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SCFCLOUD.PRODUCT_DISTRIBUTION
+    set REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      CUST_ID = #{record.custId,jdbcType=VARCHAR},
+      RELE_LMT_AMT = #{record.releLmtAmt,jdbcType=DECIMAL},
+      PRODUCT_ID = #{record.productId,jdbcType=VARCHAR},
+      PRODUCT_LMT = #{record.productLmt,jdbcType=DECIMAL},
+      LMT_MOL = #{record.lmtMol,jdbcType=VARCHAR},
+      CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ut.scf.pojo.auto.ProductDistribution" >
+    update SCFCLOUD.PRODUCT_DISTRIBUTION
+    <set >
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="releLmtAmt != null" >
+        RELE_LMT_AMT = #{releLmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="productId != null" >
+        PRODUCT_ID = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="productLmt != null" >
+        PRODUCT_LMT = #{productLmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lmtMol != null" >
+        LMT_MOL = #{lmtMol,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null" >
+        BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ut.scf.pojo.auto.ProductDistribution" >
+    update SCFCLOUD.PRODUCT_DISTRIBUTION
+    set CUST_ID = #{custId,jdbcType=VARCHAR},
+      RELE_LMT_AMT = #{releLmtAmt,jdbcType=DECIMAL},
+      PRODUCT_ID = #{productId,jdbcType=VARCHAR},
+      PRODUCT_LMT = #{productLmt,jdbcType=DECIMAL},
+      LMT_MOL = #{lmtMol,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=DECIMAL},
+      BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </update>
+</mapper>

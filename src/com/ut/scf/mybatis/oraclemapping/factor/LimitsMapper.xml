@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ut.scf.dao.factor.ILimitsDao">
+  
+  <!-- 按关联额度记录ID查询父级的产品额度和授信额度 -->
+  <select id="getParentLimitBy" parameterType="string" resultType="com.ut.scf.pojo.auto.Limits">
+	select 
+	  rec_uid         recUid     ,
+	  parent_id       parentId   ,
+	  corp_id         corpId     ,
+	  cnt_id          cntId      ,
+	  lmt_tp          lmtTp      ,
+	  lmt_due_dt      lmtDueDt  ,
+	  lmt_sts         lmtSts     ,
+	  lmt_using_tp    lmtUsingTp,
+	  lmt_amt         lmtAmt     ,
+	  create_user     createUser ,
+	  create_time     createTime ,
+	  status          status      ,
+	  busi_dt         busiDt     ,
+	  update_user     updateUser ,
+	  update_time     updateTime 	
+	from LIMITS t	  
+	 where t.rec_uid != #{lmtId} and t.lmt_tp in ('1', '2')	   
+	 start with t.rec_uid = #{lmtId} connect by t.rec_uid = prior t.parent_id	
+  </select>
+  
+  	<!-- 按关联额度记录ID更新占用状态，逐级向上更新产品额度和授信额度的占用状态 -->
+    <update id="updateOccStsByAssLmt">
+		update LIMIT_OCCUPY y set y.occ_sts = #{afterSts} where y.occ_sts = #{beforeSts}
+   		and y.lmt_id in (select t.rec_uid from LIMITS t start with t.rec_uid = #{lmtId} connect by t.rec_uid = prior t.parent_id)
+    </update>  
+   
+</mapper>

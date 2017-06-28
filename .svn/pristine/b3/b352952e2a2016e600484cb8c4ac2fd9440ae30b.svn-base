@@ -1,0 +1,305 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-form",
+    "submitUrl": "/pub/sellercntrct/bpm/startGo",
+    "idField": "recUid",
+    "title": "卖方录入接口",
+    "fields": [
+      {
+        "type": "hidden",
+        "name": "recUid"
+      },
+       {
+        "type": "text",
+        "label": "协议编号",
+        "name": "cntNo",
+        "required": true
+      },
+       {
+        "type": "text",
+        "label": "产品名称",
+        "name": "productNm",
+        "readonly": true,
+        "required": true
+      },
+       {
+        "type": "text",
+        "label": "卖方名称",
+        "name": "counterPartyNm",
+        "readonly": true,
+        "required": true
+      },
+       {
+        "type": "text",
+        "label": "营业执照",
+        "name": "businessLicense",
+        "required": true
+      },
+       {
+        "type": "text",
+        "label": "公司地址",
+        "name": "officeAddress",
+        "required": true
+      },
+       {
+        "type": "text",
+        "label": "联系方式",
+        "name": "mobPhone",
+        "required": true
+      },
+       {
+        "type": "text",
+        "label": "固定电话",
+        "name": "fixedPhone",
+        "required": true
+      },
+       {
+        "type": "text",
+        "label": "法人代表",
+        "name": "legalPerson",
+        "required": true
+      },
+       {
+        "type": "text",
+        "label": "法人电话",
+        "name": "legalMobPhone",
+        "required": true
+      },
+       {
+        "type": "text",
+        "label": "公司地址",
+        "name": "domicileAddr",
+        "required": true
+      },
+       {
+        "type": "text",
+        "label": "电子邮箱",
+        "name": "email",
+        "required": true
+      },
+       {
+        "type": "text",
+        "label": "邮编",
+        "name": "postcode",
+        "required": true
+      },
+       {
+        "type": "text",
+        "label": "买方名称",
+        "name": "custNm",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "type": "select",
+        "label": "额度模式",
+        "name": "lmtMol",
+        "required": true,
+        "readonly": true,
+        "dictName": "LIMIT_MODE"
+      },
+       {
+        "type": "text",
+        "label": "关联额度",
+        "name": "assocAmt",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "type": "select",
+        "label": "额度类型",
+        "name": "amtTp",
+        "required": true,
+        "readonly": true,
+        "dictName": "AMT_TP"
+      },
+       {
+        "type": "text",
+        "label": "最大融资比例",
+        "name": "maxLoanRatio",
+        "required": true
+      },
+      {
+       "type": "radio",
+        "label": "是否锁定融资比例",
+        "name": "loanratioLock",
+        "required": true,
+        "dictName": "LOANRATIO_LOCK"
+      },
+      {
+        "type": "text",
+        "label": "宽限天数",
+        "name": "graceDays",
+        "required": true
+      },
+       {
+        "type": "text",
+        "label": "融资截止日",
+        "name": "loanDeadline",
+        "required": true
+      },
+       {
+        "type": "select",
+        "label": "结息方式",
+        "name": "intWay",
+        "required": true,
+        "dictName": "INT_WAY"
+      },
+       {
+        "type": "text",
+        "label": "利率",
+        "name": "intRate",
+        "required": true
+      },
+      {
+        "type": "select",
+        "label": "利息承担人",
+        "name": "intParty",
+        "required": true,
+        "dictName": "INT_PARTY"
+      },
+      {
+        "type": "select",
+        "label": "扣费方式",
+        "name": "deduMethod",
+        "required": true,
+        "dictName": "DEDU_METHOD"
+      },
+      {
+        "type": "text",
+        "label": "费率",
+        "name": "rate",
+        "required": true
+      },
+      {
+        "type": "select",
+        "label": "费用承当方",
+        "name": "rateBearParty",
+        "required": true,
+        "dictName": "RATE_BEAR_PARTY"
+      },
+      {
+        "type": "lookup",
+        "label": "回款账号",
+        "name": "receAcId",
+        "id": "receAcId",
+        "route": "custAcReceList",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "回款户名",
+        "name": "receAcNm",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "回款开户行",
+        "name": "receAcBkNm",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "type": "lookup",
+        "label": "放款账号",
+        "name": "iouAcId",
+        "id": "iouAcId",
+        "route": "custAcIouList",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "放款户名",
+        "name": "iouAcNm",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "放款开户行",
+        "name": "iouAcBkNm",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "type": "lookup",
+        "label": "利息扣收账号",
+        "name": "intDeductAcId",
+        "id": "intDeductAcId",
+        "route": "custAcIntDeductList",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "利息扣收户名",
+        "name": "intDeductAcNm",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "利息扣收开户行",
+        "name": "intDeductAcBkNm",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "type": "lookup",
+        "label": "费用扣收账号",
+        "name": "feeDeductAcId",
+        "id": "feeDeductAcId",
+        "route": "custAcFeeDeductList",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "费用扣收户名",
+        "name": "feeDeductAcNm",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "费用扣收开户行",
+        "name": "feeDeductAcBkNm",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "type": "datagrid",
+        "name": "upLoadList",
+        "id": "upLoadList",
+        "btnGroup": [
+          {
+            "type": "grid-form-win",
+            "title": "上传",
+            "icon": "fa fa-plus",
+            "route": "cntrctDetailForm"
+          }
+        ],
+        "idField": "recUid",
+        "columns": [
+          {
+            "title": "附件名称",
+            "field": "attachNm"
+          },
+          {
+            "title": "文件格式",
+            "field": "attachFormat"
+          },
+          {
+            "title": "文件大小",
+            "field": "attachSize"
+          },
+          {
+            "title": "描述",
+            "field": "bewrite"
+          }
+        ]
+      }
+    ]
+  }
+}

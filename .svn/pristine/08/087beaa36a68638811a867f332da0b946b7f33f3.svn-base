@@ -1,0 +1,53 @@
+{
+  "result": 0,
+  "resultData": {
+    "pageType": "page-form",
+    "submitUrl": "/serial/add",
+    "title": "新增流水号",
+    "fields": [
+      {
+        "type": "lookup",
+        "label": "流水号表",
+        "name": "serialNm",
+        "id": "serialNm",
+        "route":"getAllTableList",
+        "required": true
+      },
+      {
+        "type": "checkbox",
+        "label": "流水号规则",
+        "dict": [{"value":"组织机构代码", "key":"$ORG$"}, {"value":"模块（一）", "key":"$MOD$"}, {"value":"模块（二）", "key":"$TRX$"},{"value":"日期", "key":"$YYYYMMDD$"},{"value":"流水号递增号", "key":"[####]"}],
+        "name": "Rule"
+      },
+      {
+        "type": "text",
+        "label": "模块（一）",
+        "name": "modOne",
+        "id":"modOne",
+        "readonly":true
+      },
+      {
+        "type": "text",
+        "label": "模块（二）",
+        "name": "modTwo",
+        "id": "modTwo"
+      },
+      {
+        "type": "select",
+        "label": "分隔符",
+        "name": "separator",
+        "id": "separator",
+        "dict": [{"key": "1", "value": "不使用分隔符"}, {"key": "2", "value": "-"},{"key": "3", "value": "_"},{"key": "4", "value": ":"},{"key": "5", "value": "空格"}]
+      },
+      {
+        "type": "text",
+        "label": "规则预览信息",
+        "id": "serialRule",
+        "name": "serialRule"
+      }
+
+    ],
+     "script": "business/sys/js/serialNm.js"
+  },
+  "msg": null
+}

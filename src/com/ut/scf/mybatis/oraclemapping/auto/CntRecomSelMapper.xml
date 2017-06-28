@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ut.scf.dao.auto.CntRecomSelMapper" >
+  <resultMap id="BaseResultMap" type="com.ut.scf.pojo.auto.CntRecomSel" >
+    <result column="REC_UID" property="recUid" jdbcType="VARCHAR" />
+    <result column="CNT_NO" property="cntNo" jdbcType="VARCHAR" />
+    <result column="COUNTER_PARTY_ID" property="counterPartyId" jdbcType="VARCHAR" />
+    <result column="ASSOC_AMT" property="assocAmt" jdbcType="DECIMAL" />
+    <result column="AMT_TP" property="amtTp" jdbcType="VARCHAR" />
+    <result column="RECOMM_STS" property="recommSts" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="BUSI_DT" property="busiDt" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    REC_UID, CNT_NO, COUNTER_PARTY_ID, ASSOC_AMT, AMT_TP, RECOMM_STS, CREATE_USER, CREATE_TIME, 
+    STATUS, BUSI_DT, UPDATE_USER, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ut.scf.pojo.auto.CntRecomSelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.CNT_RECOM_SEL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ut.scf.pojo.auto.CntRecomSelExample" >
+    delete from SCFCLOUD.CNT_RECOM_SEL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ut.scf.pojo.auto.CntRecomSel" >
+    insert into SCFCLOUD.CNT_RECOM_SEL (REC_UID, CNT_NO, COUNTER_PARTY_ID, 
+      ASSOC_AMT, AMT_TP, RECOMM_STS, 
+      CREATE_USER, CREATE_TIME, STATUS, 
+      BUSI_DT, UPDATE_USER, UPDATE_TIME
+      )
+    values (#{recUid,jdbcType=VARCHAR}, #{cntNo,jdbcType=VARCHAR}, #{counterPartyId,jdbcType=VARCHAR}, 
+      #{assocAmt,jdbcType=DECIMAL}, #{amtTp,jdbcType=VARCHAR}, #{recommSts,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=DECIMAL}, 
+      #{busiDt,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ut.scf.pojo.auto.CntRecomSel" >
+    insert into SCFCLOUD.CNT_RECOM_SEL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recUid != null" >
+        REC_UID,
+      </if>
+      <if test="cntNo != null" >
+        CNT_NO,
+      </if>
+      <if test="counterPartyId != null" >
+        COUNTER_PARTY_ID,
+      </if>
+      <if test="assocAmt != null" >
+        ASSOC_AMT,
+      </if>
+      <if test="amtTp != null" >
+        AMT_TP,
+      </if>
+      <if test="recommSts != null" >
+        RECOMM_STS,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="busiDt != null" >
+        BUSI_DT,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recUid != null" >
+        #{recUid,jdbcType=VARCHAR},
+      </if>
+      <if test="cntNo != null" >
+        #{cntNo,jdbcType=VARCHAR},
+      </if>
+      <if test="counterPartyId != null" >
+        #{counterPartyId,jdbcType=VARCHAR},
+      </if>
+      <if test="assocAmt != null" >
+        #{assocAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="amtTp != null" >
+        #{amtTp,jdbcType=VARCHAR},
+      </if>
+      <if test="recommSts != null" >
+        #{recommSts,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null" >
+        #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ut.scf.pojo.auto.CntRecomSelExample" resultType="java.lang.Integer" >
+    select count(*) from SCFCLOUD.CNT_RECOM_SEL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SCFCLOUD.CNT_RECOM_SEL
+    <set >
+      <if test="record.recUid != null" >
+        REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cntNo != null" >
+        CNT_NO = #{record.cntNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.counterPartyId != null" >
+        COUNTER_PARTY_ID = #{record.counterPartyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assocAmt != null" >
+        ASSOC_AMT = #{record.assocAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.amtTp != null" >
+        AMT_TP = #{record.amtTp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recommSts != null" >
+        RECOMM_STS = #{record.recommSts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUser != null" >
+        CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.busiDt != null" >
+        BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null" >
+        UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SCFCLOUD.CNT_RECOM_SEL
+    set REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      CNT_NO = #{record.cntNo,jdbcType=VARCHAR},
+      COUNTER_PARTY_ID = #{record.counterPartyId,jdbcType=VARCHAR},
+      ASSOC_AMT = #{record.assocAmt,jdbcType=DECIMAL},
+      AMT_TP = #{record.amtTp,jdbcType=VARCHAR},
+      RECOMM_STS = #{record.recommSts,jdbcType=VARCHAR},
+      CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

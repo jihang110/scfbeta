@@ -1,0 +1,716 @@
+package com.ut.scf.reqbean.factor;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+
+/**
+ * 标题、简要说明. <br>
+ * 类详细说明.
+ * <p>
+ * Copyright: Copyright (c) 2017年6月16日 下午2:48:31
+ * <p>
+ * Company: 南京信雅达友田信息技术有限公司
+ * <p>
+ * @author wuk@starutian.com
+ * @version 1.0.0
+ */
+public class SellerCntrctReqBean {
+
+	/**
+	 * ID
+	 */
+	private String recUid;
+
+	/**
+	 * 协议编号
+	 */
+	private String cntNo;
+
+	/**
+	 * 产品名称
+	 */
+	private String productNm;
+	
+	/**
+     * 交易对手名称
+     */
+    private String counterPartyNm;
+    
+    /**
+     * 营业执照号
+     */
+    private String businessLicense;
+    /**
+     * 公司地址
+     */
+    private String officeAddress;
+    /**
+     * 联系方式
+     */
+    private String mobPhone;
+    /**
+     * 固定电话
+     */
+    private String fixedPhone;
+    /**
+     * 法人代表
+     */
+    private String legalPerson;
+    /**
+     * 法人电话
+     */
+    private String legalMobPhone;
+    /**
+     * 邮编
+     */
+    private String postcode;
+    /**
+     * 电子邮箱
+     */
+    private String email;
+    
+    /**
+	 * 买方名称
+	 */
+	private String custNm;
+	/**
+	 * 买方ID
+	 */
+	private String custId;
+
+	/**
+	 * 额度模式
+	 */
+	private String lmtMol;
+	/**
+	 * 关联额度
+	 */
+	private BigDecimal assocAmt;
+	/**
+	 * 额度类型
+	 */
+	private String amtTp;
+	/**
+	 * 最大融资比例
+	 */
+	private String maxLoanRatio;
+	/**
+	 * 是否锁定融资比例  0 是   1 否
+	 */
+	private String loanratioLock;
+	/**
+	 * 宽限天数
+	 */
+	private Integer graceDays;
+	/**
+	 * 融资截止日
+	 */
+	private Date loanDeadline;
+	
+	/**
+	 * 结息方式 0.按季结息 1.按月结息 2.到期利随本清 3.预收利息，到期结息
+	 */
+	private String intWay;
+	/**
+     * 利率
+     */
+    private BigDecimal intRate;
+    /**
+     * 利息承担人  ：卖方承担 买方承担
+     */
+    private String intParty;
+    /**
+     * 扣费方式    0.转让应收账款时支付费用 1.获得融资款项时支付费用 2.从费用承担方的息费扣收账户中扣收费用
+     */
+    private String deduMethod;
+    /**
+     * 费率
+     */
+    private BigDecimal rate;
+
+    /**
+     * 费用承当方
+     */
+    private String rateBearParty;
+    /**
+     * 回款账号
+     */
+    private String receAcId;
+    /**
+     * 回款户名
+     */
+    private String receAcNm;
+    /**
+     * 回款开户行
+     */
+    private String receAcBkNm;
+
+    /**
+     * 放款账号
+     */
+    private String iouAcId;
+    /**
+     * 放款户名
+     */
+    private String iouAcNm;
+    /**
+     * 放款开户行
+     */
+    private String iouAcBkNm;
+
+    /**
+     * 利息扣收账号
+     */
+    private String intDeductAcId;
+    /**
+     * 利息扣收户名
+     */
+    private String intDeductAcNm;
+    /**
+     * 利息扣收开户行
+     */
+    private String intDeductAcBkNm;
+
+    /**
+     * 费用扣收账号
+     */
+    private String feeDeductAcId;
+    /**
+     * 费用扣收户名
+     */
+    private String feeDeductAcNm;
+    /**
+     * 费用扣收开户行
+     */
+    private String feeDeductAcBkNm;
+    /**
+	 * 附件名称
+	 */
+	private String attachNm;
+
+	/**
+	 * 文件格式
+	 */
+	private String attachFormat;
+
+	/**
+	 * 文件大小
+	 */
+	private String attachSize;
+
+	/**
+	 * 描述
+	 */
+	private String bewrite;
+	
+	private String createUser;
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	private Date createTime;
+
+	private Short status;
+
+	private Date busiDt;
+
+	private String updateUser;
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	private Date updateTime;
+
+	
+    public String getRecUid() {
+    	return recUid;
+    }
+
+	
+    public void setRecUid(String recUid) {
+    	this.recUid = recUid;
+    }
+
+	
+    
+    public String getCustId() {
+    	return custId;
+    }
+
+
+	
+    public void setCustId(String custId) {
+    	this.custId = custId;
+    }
+
+
+	public String getCntNo() {
+    	return cntNo;
+    }
+
+	
+    public void setCntNo(String cntNo) {
+    	this.cntNo = cntNo;
+    }
+
+	
+    public String getProductNm() {
+    	return productNm;
+    }
+
+	
+    public void setProductNm(String productNm) {
+    	this.productNm = productNm;
+    }
+
+	
+    public String getCounterPartyNm() {
+    	return counterPartyNm;
+    }
+
+	
+    public void setCounterPartyNm(String counterPartyNm) {
+    	this.counterPartyNm = counterPartyNm;
+    }
+
+	
+    public String getBusinessLicense() {
+    	return businessLicense;
+    }
+
+	
+    public void setBusinessLicense(String businessLicense) {
+    	this.businessLicense = businessLicense;
+    }
+
+	
+    public String getOfficeAddress() {
+    	return officeAddress;
+    }
+
+	
+    public void setOfficeAddress(String officeAddress) {
+    	this.officeAddress = officeAddress;
+    }
+
+	
+    public String getMobPhone() {
+    	return mobPhone;
+    }
+
+	
+    public void setMobPhone(String mobPhone) {
+    	this.mobPhone = mobPhone;
+    }
+
+	
+    public String getFixedPhone() {
+    	return fixedPhone;
+    }
+
+	
+    public void setFixedPhone(String fixedPhone) {
+    	this.fixedPhone = fixedPhone;
+    }
+
+	
+    public String getLegalPerson() {
+    	return legalPerson;
+    }
+
+	
+    public void setLegalPerson(String legalPerson) {
+    	this.legalPerson = legalPerson;
+    }
+
+	
+    public String getLegalMobPhone() {
+    	return legalMobPhone;
+    }
+
+	
+    public void setLegalMobPhone(String legalMobPhone) {
+    	this.legalMobPhone = legalMobPhone;
+    }
+
+	
+    public String getPostcode() {
+    	return postcode;
+    }
+
+	
+    public void setPostcode(String postcode) {
+    	this.postcode = postcode;
+    }
+
+	
+    public String getEmail() {
+    	return email;
+    }
+
+	
+    public void setEmail(String email) {
+    	this.email = email;
+    }
+
+	
+    public String getCustNm() {
+    	return custNm;
+    }
+
+	
+    public void setCustNm(String custNm) {
+    	this.custNm = custNm;
+    }
+
+	
+    public String getLmtMol() {
+    	return lmtMol;
+    }
+
+	
+    public void setLmtMol(String lmtMol) {
+    	this.lmtMol = lmtMol;
+    }
+
+	
+    public BigDecimal getAssocAmt() {
+    	return assocAmt;
+    }
+
+	
+    public void setAssocAmt(BigDecimal assocAmt) {
+    	this.assocAmt = assocAmt;
+    }
+
+	
+    public String getAmtTp() {
+    	return amtTp;
+    }
+
+	
+    public void setAmtTp(String amtTp) {
+    	this.amtTp = amtTp;
+    }
+
+	
+    public String getMaxLoanRatio() {
+    	return maxLoanRatio;
+    }
+
+	
+    public void setMaxLoanRatio(String maxLoanRatio) {
+    	this.maxLoanRatio = maxLoanRatio;
+    }
+
+	
+    public String getLoanratioLock() {
+    	return loanratioLock;
+    }
+
+	
+    public void setLoanratioLock(String loanratioLock) {
+    	this.loanratioLock = loanratioLock;
+    }
+
+	
+    public Integer getGraceDays() {
+    	return graceDays;
+    }
+
+	
+    public void setGraceDays(Integer graceDays) {
+    	this.graceDays = graceDays;
+    }
+
+	
+    public Date getLoanDeadline() {
+    	return loanDeadline;
+    }
+
+	
+    public void setLoanDeadline(Date loanDeadline) {
+    	this.loanDeadline = loanDeadline;
+    }
+
+	
+    public String getIntWay() {
+    	return intWay;
+    }
+
+	
+    public void setIntWay(String intWay) {
+    	this.intWay = intWay;
+    }
+
+	
+    public BigDecimal getIntRate() {
+    	return intRate;
+    }
+
+	
+    public void setIntRate(BigDecimal intRate) {
+    	this.intRate = intRate;
+    }
+
+	
+    public String getIntParty() {
+    	return intParty;
+    }
+
+	
+    public void setIntParty(String intParty) {
+    	this.intParty = intParty;
+    }
+
+	
+    public String getDeduMethod() {
+    	return deduMethod;
+    }
+
+	
+    public void setDeduMethod(String deduMethod) {
+    	this.deduMethod = deduMethod;
+    }
+
+	
+    public BigDecimal getRate() {
+    	return rate;
+    }
+
+	
+    public void setRate(BigDecimal rate) {
+    	this.rate = rate;
+    }
+
+	
+    public String getRateBearParty() {
+    	return rateBearParty;
+    }
+
+	
+    public void setRateBearParty(String rateBearParty) {
+    	this.rateBearParty = rateBearParty;
+    }
+
+	
+    public String getReceAcId() {
+    	return receAcId;
+    }
+
+	
+    public void setReceAcId(String receAcId) {
+    	this.receAcId = receAcId;
+    }
+
+	
+    public String getReceAcNm() {
+    	return receAcNm;
+    }
+
+	
+    public void setReceAcNm(String receAcNm) {
+    	this.receAcNm = receAcNm;
+    }
+
+	
+    public String getReceAcBkNm() {
+    	return receAcBkNm;
+    }
+
+	
+    public void setReceAcBkNm(String receAcBkNm) {
+    	this.receAcBkNm = receAcBkNm;
+    }
+
+	
+    public String getIouAcId() {
+    	return iouAcId;
+    }
+
+	
+    public void setIouAcId(String iouAcId) {
+    	this.iouAcId = iouAcId;
+    }
+
+	
+    public String getIouAcNm() {
+    	return iouAcNm;
+    }
+
+	
+    public void setIouAcNm(String iouAcNm) {
+    	this.iouAcNm = iouAcNm;
+    }
+
+	
+    public String getIouAcBkNm() {
+    	return iouAcBkNm;
+    }
+
+	
+    public void setIouAcBkNm(String iouAcBkNm) {
+    	this.iouAcBkNm = iouAcBkNm;
+    }
+
+	
+    public String getIntDeductAcId() {
+    	return intDeductAcId;
+    }
+
+	
+    public void setIntDeductAcId(String intDeductAcId) {
+    	this.intDeductAcId = intDeductAcId;
+    }
+
+	
+    public String getIntDeductAcNm() {
+    	return intDeductAcNm;
+    }
+
+	
+    public void setIntDeductAcNm(String intDeductAcNm) {
+    	this.intDeductAcNm = intDeductAcNm;
+    }
+
+	
+    public String getIntDeductAcBkNm() {
+    	return intDeductAcBkNm;
+    }
+
+	
+    public void setIntDeductAcBkNm(String intDeductAcBkNm) {
+    	this.intDeductAcBkNm = intDeductAcBkNm;
+    }
+
+	
+    public String getFeeDeductAcId() {
+    	return feeDeductAcId;
+    }
+
+	
+    public void setFeeDeductAcId(String feeDeductAcId) {
+    	this.feeDeductAcId = feeDeductAcId;
+    }
+
+	
+    public String getFeeDeductAcNm() {
+    	return feeDeductAcNm;
+    }
+
+	
+    public void setFeeDeductAcNm(String feeDeductAcNm) {
+    	this.feeDeductAcNm = feeDeductAcNm;
+    }
+
+	
+    public String getFeeDeductAcBkNm() {
+    	return feeDeductAcBkNm;
+    }
+
+	
+    public void setFeeDeductAcBkNm(String feeDeductAcBkNm) {
+    	this.feeDeductAcBkNm = feeDeductAcBkNm;
+    }
+
+	
+    public String getAttachNm() {
+    	return attachNm;
+    }
+
+	
+    public void setAttachNm(String attachNm) {
+    	this.attachNm = attachNm;
+    }
+
+	
+    public String getAttachFormat() {
+    	return attachFormat;
+    }
+
+	
+    public void setAttachFormat(String attachFormat) {
+    	this.attachFormat = attachFormat;
+    }
+
+	
+    public String getAttachSize() {
+    	return attachSize;
+    }
+
+	
+    public void setAttachSize(String attachSize) {
+    	this.attachSize = attachSize;
+    }
+
+	
+    public String getBewrite() {
+    	return bewrite;
+    }
+
+	
+    public void setBewrite(String bewrite) {
+    	this.bewrite = bewrite;
+    }
+
+	
+    public String getCreateUser() {
+    	return createUser;
+    }
+
+	
+    public void setCreateUser(String createUser) {
+    	this.createUser = createUser;
+    }
+
+	
+    public Date getCreateTime() {
+    	return createTime;
+    }
+
+	
+    public void setCreateTime(Date createTime) {
+    	this.createTime = createTime;
+    }
+
+	
+    public Short getStatus() {
+    	return status;
+    }
+
+	
+    public void setStatus(Short status) {
+    	this.status = status;
+    }
+
+	
+    public Date getBusiDt() {
+    	return busiDt;
+    }
+
+	
+    public void setBusiDt(Date busiDt) {
+    	this.busiDt = busiDt;
+    }
+
+	
+    public String getUpdateUser() {
+    	return updateUser;
+    }
+
+	
+    public void setUpdateUser(String updateUser) {
+    	this.updateUser = updateUser;
+    }
+
+	
+    public Date getUpdateTime() {
+    	return updateTime;
+    }
+
+	
+    public void setUpdateTime(Date updateTime) {
+    	this.updateTime = updateTime;
+    }
+	
+	
+}

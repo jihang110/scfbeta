@@ -1,0 +1,57 @@
+package com.ut.scf.service.sys;
+
+import java.util.List;
+
+import com.ut.scf.pojo.auto.CorpDept;
+import com.ut.scf.pojo.auto.SysRole;
+import com.ut.scf.pojo.auto.SysUser;
+
+/**
+ * 用户机构角色关系策略
+ * 
+ * @author shenying
+ *
+ */
+public interface IUserDeptRoleStrategyService {
+
+	/**
+	 * 查询用户主部门
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	CorpDept getMainDeptBy(String userId);
+
+	/**
+	 * 查询用户所属部门
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	List<CorpDept> getDeptListBy(String userId);
+
+	/**
+	 * 查询用户主角色
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	SysRole getMainRoleBy(String userId);
+
+	/**
+	 * 查询用户的所有角色
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	List<SysRole> getRoleListBy(String userId);
+
+	/**
+	 * 按角色查询用户列表
+	 * 
+	 * @param roleIds 类似ROLE000003,ROLE000005,ROLE000006,ROLE000007,以逗号分隔的角色串
+	 * @return
+	 */
+	List<SysUser> getUserNamesBy(String roleIds);
+
+}

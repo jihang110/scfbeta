@@ -1,0 +1,6 @@
+<form id="workflow-comment-form">
+    <div class="form-control">
+    	<!-- 审批意见name需要添加默认前缀: vc_ -->
+        <textarea name="vc_comment" style="width: 515px;"></textarea>
+    </div>
+</form>

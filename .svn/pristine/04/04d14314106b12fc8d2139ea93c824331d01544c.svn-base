@@ -1,0 +1,240 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-workflow",
+    "baseUrl": "/factor/loan/bpm",
+    "idField": "recUid",
+    "fields": [
+      {
+        "type": "hidden",
+        "name": "recUid"
+      },
+      {
+        "type": "hidden",
+        "name": "limitRecUid"
+      },      
+      {
+      	"id": "hid-loan-cntId",
+        "type": "hidden",
+        "name": "cntId"
+      },
+      {
+        "type": "hidden",
+        "name": "productId"
+      },
+      {
+        "type": "hidden",
+        "name": "loanAcId"
+      },
+      {
+      	"id": "hid-loan-loanDeadline",
+        "type": "hidden",
+        "name": "loanDeadline"
+      },
+      {
+        "type": "text",
+        "label": "客户ID",
+        "name": "corpId",
+        "required": true
+      },
+      {
+      	"id": "lkp-loan-cntNo",
+        "type": "lookup",
+        "label": "协议编号",
+        "name": "cntNo",
+        "route": "sellerCntLookupList",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "产品名称",
+        "name": "productNm",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "交易对手名称",
+        "name": "corpName",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "可用融资额度",
+        "name": "lmtBal",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "放款账号",
+        "name": "loanAcctNo",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "户名",
+        "name": "loanAcctName",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "开户行",
+        "name": "loanBankName",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "最大融资比例",
+        "name": "maxLoanPerc",
+        "required": true
+      },
+      {
+        "type": "select",
+        "label": "扣息方式",
+        "name": "payIntTp",
+        "required": true,
+        "dictName":"DISCOUNT_MODE"
+      },
+      {
+        "type": "select",
+        "label": "利息承担方",
+        "name": "assumeIntTp",
+        "required": true,
+        "dictName":"RATE_BEAR_PARTY"
+      },
+      {
+        "type": "text",
+        "label": "利率",
+        "name": "loanRt",
+        "required": true
+      },
+      {
+        "type": "select",
+        "label": "扣费方式",
+        "name": "chargeMode",
+        "required": true,
+        "dictName":"DEDU_METHOD"
+      },
+      {
+        "type": "select",
+        "label": "费用承担方",
+        "name": "chargeBear",
+        "required": true,
+        "dictName":"RATE_BEAR_PARTY"
+      },
+      {
+        "type": "text",
+        "label": "费率",
+        "name": "commRt",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "宽限天数",
+        "name": "graceDay",
+        "required": true
+      },
+      {
+      	"id": "ipt-loan-loanPercApply",
+        "type": "text",
+        "label": "申请融资比例",
+        "name": "loanPercApply",
+        "required": true
+      },
+      {
+      	"id": "ipt-loan-ttlLoanAmt",
+        "type": "text",
+        "label": "本次融资总额",
+        "name": "ttlLoanAmt",
+        "required": true
+      },
+      {
+      	"id": "ipt-loan-intAmt",
+        "type": "text",
+        "label": "利息总额",
+        "name": "intAmt",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "费用总额",
+        "name": "costAmt",
+        "required": true,
+        "value": "0"
+      },
+      {
+      	"id": "ipt-loan-expectLoanAmt",
+        "type": "text",
+        "label": "预计放款金额",
+        "name": "expectLoanAmt",
+        "required": true
+      },
+      {
+      	"id": "ipt-loan-actualLoanAmt",
+        "type": "text",
+        "label": "实际放款金额",
+        "name": "actualLoanAmt",
+        "required": true
+      },
+      
+      {
+        "type": "datagrid",
+        "id":"dl-loan-invlist",
+        "name": "detailList",
+        "idField": "recUid",
+        "columns": [
+          {
+            "title": "发票编号",
+            "field": "invcNo"
+          },
+          {
+            "title": "可融资金额",
+            "field": "invLoanAval"
+          },
+          {
+            "title": "发票融资金额",
+            "field": "invLoanAmt"
+          },
+          {
+            "title": "融资申请日",
+            "field": "loanValDt"
+          },
+          {
+            "title": "融资到期日",
+            "field": "loanDueDt"
+          },
+          {
+            "title": "利息",
+            "field": "intAmt"
+          },
+          {
+            "title": "费用",
+            "field": "fee"
+          },
+          {
+            "title": "发票金额",
+            "field": "invAmt"
+          },
+          {
+            "title": "发票日期",
+            "field": "invcDate"
+          },
+          {
+            "title": "起算日",
+            "field": "invStartDate"
+          },
+          {
+            "title": "发票到期日",
+            "field": "invDueDate"
+          },
+          {
+            "title": "合同号",
+            "field": "cntrctNo"
+          }
+        ]
+      }
+      
+    ],
+    "script": "business/factor/loan/js/loanAudit.js"
+  }
+}

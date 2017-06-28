@@ -1,0 +1,50 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-form",
+    "idField": "recUid",
+    "fields": [
+       {
+        "type": "hidden",
+        "name": "recUid"
+       },
+       {
+        "type": "text",
+        "label": "可分配产品额度",
+        "name": "productLmtDis",
+        "required": true
+      },
+      {
+        "type": "select",
+        "label": "是否推荐",
+        "name": "recommSts",
+        "id": "recommSts",
+        "dictName": "RECOMM_LIST",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "卖方名称",
+        "name": "counterPartyNm",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "关联额度",
+        "name": "assocAmt",
+        "required": true
+      },
+      {
+        "type": "select",
+        "label": "额度类型",
+        "name": "amtTp",
+        "id": "amtTp",
+        "dictName": "AMT_TP",
+        "required": true
+      }
+    ],
+    "script": "business/pub/cntrct/js/recommForm.js"
+  }
+}

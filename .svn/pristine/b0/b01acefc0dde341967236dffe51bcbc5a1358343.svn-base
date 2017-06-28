@@ -1,0 +1,42 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "pageStrategy": "none",
+    "title": "获取付款人信息",
+    "searchFields": [
+      {
+        "type": "text",
+        "label": "付款人名称",
+        "name": "counterPartyNm"
+      },
+      {
+        "type": "text",
+        "label": "组织机构代码证号",
+        "name": "orgnNo"
+      }
+    ],
+    "sourceUrl": "/factor/cancIntFee/counter",
+    "idField": "cntId",
+    "columns": [
+      {
+        "title": "付款人名称",
+        "field": "payerNm"
+      },
+      {
+        "title": "组织机构代码证号",
+        "field": "orgNo"
+      },
+      {
+        "title": "待结算总额",
+        "field": "settlementTotalAmt"
+      },
+      {
+        "title": "结算类型",
+        "field": "settlementTp",
+        "dict": [{"key": "0", "value": "结算利息"}, {"key": "1", "value": "结算费用"}]
+      }
+    ]
+  }
+}

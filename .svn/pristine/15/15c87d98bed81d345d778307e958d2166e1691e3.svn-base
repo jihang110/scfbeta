@@ -1,0 +1,35 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "searchFields": [
+      {
+        "type": "hidden",
+        "name": "isPage",
+        "value": 1
+      },
+      {
+        "type": "text",
+        "label": "客户编号",
+        "name": "custId"
+      }
+    ],
+    "sourceUrl": "/factor/custac/feeDeductList",
+    "idField": "acId",
+    "columns": [
+      {
+        "title": "费用扣收帐号",
+        "field": "feeDeductAcId"
+      },
+      {
+        "title": "费用扣收户名",
+        "field": "feeDeductAcNm"
+      },
+      {
+        "title": "费用扣收开户行",
+        "field": "feeDeductAcBkNm"
+      }
+    ]
+  }
+}

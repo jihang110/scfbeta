@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ut.scf.dao.sys.IMenuDao" >
+ 
+  <select id="menuListByRoleId" resultType="hashmap" parameterType="java.lang.String" >
+    select m.menu_id menuId, m.menu_name menuName, m.menu_level menuLevel,
+    m.parent_id parentId, m.menu_path menuPath, m.menu_order menuOrder, m.note, m.icon
+    from sys_role_menu rm join sys_menu m on rm.menu_id=m.menu_id
+    where rm.role_id = #{roleId,jdbcType=VARCHAR} and m.status=1
+    order by m.menu_level,m.menu_order
+  </select>
+  
+  	<update id="updateMenuByMove" parameterType="list">
+  		UPDATE sys_menu
+  		SET menu_order = CASE menu_id
+  			<foreach collection="list" item="item" index="index">
+  				WHEN N'${item.menuId}' THEN '${item.order}'
+  			</foreach>
+  		END WHERE menu_id IN 
+  		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+  			'${item.menuId}'
+  		</foreach>
+  	</update>
+</mapper>

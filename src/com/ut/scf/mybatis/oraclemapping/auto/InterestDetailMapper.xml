@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ut.scf.dao.auto.InterestDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.ut.scf.pojo.auto.InterestDetail" >
+    <id column="REC_UID" property="recUid" jdbcType="VARCHAR" />
+    <result column="RELA_ID" property="relaId" jdbcType="VARCHAR" />
+    <result column="INVC_NO" property="invcNo" jdbcType="VARCHAR" />
+    <result column="COUNTER_PARTY_NM" property="counterPartyNm" jdbcType="VARCHAR" />
+    <result column="SETTLEMENT_AMT" property="settlementAmt" jdbcType="DECIMAL" />
+    <result column="BILL_STS" property="billSts" jdbcType="VARCHAR" />
+    <result column="INT_PAY_STS" property="intPaySts" jdbcType="VARCHAR" />
+    <result column="COST_PAY_STS" property="costPaySts" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="BUSI_DT" property="busiDt" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    REC_UID, RELA_ID, INVC_NO, COUNTER_PARTY_NM, SETTLEMENT_AMT, BILL_STS, INT_PAY_STS, 
+    COST_PAY_STS, CREATE_USER, CREATE_TIME, STATUS, BUSI_DT, UPDATE_USER, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ut.scf.pojo.auto.InterestDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.INTEREST_DETAIL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.INTEREST_DETAIL
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SCFCLOUD.INTEREST_DETAIL
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ut.scf.pojo.auto.InterestDetailExample" >
+    delete from SCFCLOUD.INTEREST_DETAIL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ut.scf.pojo.auto.InterestDetail" >
+    insert into SCFCLOUD.INTEREST_DETAIL (REC_UID, RELA_ID, INVC_NO, 
+      COUNTER_PARTY_NM, SETTLEMENT_AMT, BILL_STS, 
+      INT_PAY_STS, COST_PAY_STS, CREATE_USER, 
+      CREATE_TIME, STATUS, BUSI_DT, 
+      UPDATE_USER, UPDATE_TIME)
+    values (#{recUid,jdbcType=VARCHAR}, #{relaId,jdbcType=VARCHAR}, #{invcNo,jdbcType=VARCHAR}, 
+      #{counterPartyNm,jdbcType=VARCHAR}, #{settlementAmt,jdbcType=DECIMAL}, #{billSts,jdbcType=VARCHAR}, 
+      #{intPaySts,jdbcType=VARCHAR}, #{costPaySts,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=DECIMAL}, #{busiDt,jdbcType=TIMESTAMP}, 
+      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ut.scf.pojo.auto.InterestDetail" >
+    insert into SCFCLOUD.INTEREST_DETAIL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recUid != null" >
+        REC_UID,
+      </if>
+      <if test="relaId != null" >
+        RELA_ID,
+      </if>
+      <if test="invcNo != null" >
+        INVC_NO,
+      </if>
+      <if test="counterPartyNm != null" >
+        COUNTER_PARTY_NM,
+      </if>
+      <if test="settlementAmt != null" >
+        SETTLEMENT_AMT,
+      </if>
+      <if test="billSts != null" >
+        BILL_STS,
+      </if>
+      <if test="intPaySts != null" >
+        INT_PAY_STS,
+      </if>
+      <if test="costPaySts != null" >
+        COST_PAY_STS,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="busiDt != null" >
+        BUSI_DT,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recUid != null" >
+        #{recUid,jdbcType=VARCHAR},
+      </if>
+      <if test="relaId != null" >
+        #{relaId,jdbcType=VARCHAR},
+      </if>
+      <if test="invcNo != null" >
+        #{invcNo,jdbcType=VARCHAR},
+      </if>
+      <if test="counterPartyNm != null" >
+        #{counterPartyNm,jdbcType=VARCHAR},
+      </if>
+      <if test="settlementAmt != null" >
+        #{settlementAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="billSts != null" >
+        #{billSts,jdbcType=VARCHAR},
+      </if>
+      <if test="intPaySts != null" >
+        #{intPaySts,jdbcType=VARCHAR},
+      </if>
+      <if test="costPaySts != null" >
+        #{costPaySts,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null" >
+        #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ut.scf.pojo.auto.InterestDetailExample" resultType="java.lang.Integer" >
+    select count(*) from SCFCLOUD.INTEREST_DETAIL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SCFCLOUD.INTEREST_DETAIL
+    <set >
+      <if test="record.recUid != null" >
+        REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relaId != null" >
+        RELA_ID = #{record.relaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invcNo != null" >
+        INVC_NO = #{record.invcNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.counterPartyNm != null" >
+        COUNTER_PARTY_NM = #{record.counterPartyNm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.settlementAmt != null" >
+        SETTLEMENT_AMT = #{record.settlementAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.billSts != null" >
+        BILL_STS = #{record.billSts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.intPaySts != null" >
+        INT_PAY_STS = #{record.intPaySts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.costPaySts != null" >
+        COST_PAY_STS = #{record.costPaySts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUser != null" >
+        CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.busiDt != null" >
+        BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null" >
+        UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SCFCLOUD.INTEREST_DETAIL
+    set REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      RELA_ID = #{record.relaId,jdbcType=VARCHAR},
+      INVC_NO = #{record.invcNo,jdbcType=VARCHAR},
+      COUNTER_PARTY_NM = #{record.counterPartyNm,jdbcType=VARCHAR},
+      SETTLEMENT_AMT = #{record.settlementAmt,jdbcType=DECIMAL},
+      BILL_STS = #{record.billSts,jdbcType=VARCHAR},
+      INT_PAY_STS = #{record.intPaySts,jdbcType=VARCHAR},
+      COST_PAY_STS = #{record.costPaySts,jdbcType=VARCHAR},
+      CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ut.scf.pojo.auto.InterestDetail" >
+    update SCFCLOUD.INTEREST_DETAIL
+    <set >
+      <if test="relaId != null" >
+        RELA_ID = #{relaId,jdbcType=VARCHAR},
+      </if>
+      <if test="invcNo != null" >
+        INVC_NO = #{invcNo,jdbcType=VARCHAR},
+      </if>
+      <if test="counterPartyNm != null" >
+        COUNTER_PARTY_NM = #{counterPartyNm,jdbcType=VARCHAR},
+      </if>
+      <if test="settlementAmt != null" >
+        SETTLEMENT_AMT = #{settlementAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="billSts != null" >
+        BILL_STS = #{billSts,jdbcType=VARCHAR},
+      </if>
+      <if test="intPaySts != null" >
+        INT_PAY_STS = #{intPaySts,jdbcType=VARCHAR},
+      </if>
+      <if test="costPaySts != null" >
+        COST_PAY_STS = #{costPaySts,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null" >
+        BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ut.scf.pojo.auto.InterestDetail" >
+    update SCFCLOUD.INTEREST_DETAIL
+    set RELA_ID = #{relaId,jdbcType=VARCHAR},
+      INVC_NO = #{invcNo,jdbcType=VARCHAR},
+      COUNTER_PARTY_NM = #{counterPartyNm,jdbcType=VARCHAR},
+      SETTLEMENT_AMT = #{settlementAmt,jdbcType=DECIMAL},
+      BILL_STS = #{billSts,jdbcType=VARCHAR},
+      INT_PAY_STS = #{intPaySts,jdbcType=VARCHAR},
+      COST_PAY_STS = #{costPaySts,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=DECIMAL},
+      BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </update>
+</mapper>

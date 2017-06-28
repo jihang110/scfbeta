@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ut.scf.dao.factor.ICntrctDao">
+  <resultMap id="BaseResultMap" type="com.ut.scf.respbean.factor.SellerCntRespBean" >
+    <id column="REC_UID" property="cntId" jdbcType="VARCHAR" />
+    <result column="CNT_NO" property="cntNo" jdbcType="VARCHAR" />
+    <result column="MAX_LOAN_RATIO" property="maxLoanPerc" jdbcType="VARCHAR" />
+    <result column="LOAN_DEADLINE" property="loanDeadline" jdbcType="NUMERIC" />
+    <result column="GRACE_DAYS" property="graceDay" jdbcType="NUMERIC" />
+    <result column="INT_RATE" property="loanRt" jdbcType="DECIMAL" />
+    <result column="RATE" property="commRt" jdbcType="DECIMAL" />
+    <result column="ASSOC_AMT" property="assocAmt" jdbcType="DECIMAL" />
+    <result column="AVL_LMT_BAL" property="lmtBal" jdbcType="DECIMAL" />
+    <result column="cust_id" property="corpId" jdbcType="VARCHAR" />
+    <result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+    <result column="ORGN_NO" property="orgnNo" jdbcType="VARCHAR" />
+    <result column="PRODUCT_NM" property="productNm" jdbcType="VARCHAR" />
+    <result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR" />
+    <result column="ac_nm" property="loanAcctName" jdbcType="VARCHAR" />
+    <result column="ac_bk_nm" property="loanBankName" jdbcType="VARCHAR" />
+    <result column="ac_no" property="loanAcctNo" jdbcType="VARCHAR" />
+    <result column="ac_uid" property="loanAcId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- 融资申请，查询卖方协议列表 -->
+  <!-- 可用融资额度 = 可用关联额度(暂) -->
+  <!-- 可用关联额度余额 x.avl_lmt_bal = 额度表关联额度 - 额度占用表已占用的额度 -->
+  <select id="getSellerCntList" parameterType="string" resultMap="BaseResultMap">
+	select cnt.rec_uid,cnt.CNT_NO,cnt.MAX_LOAN_RATIO,cnt.LOAN_DEADLINE,cnt.GRACE_DAYS,cnt.INT_RATE,cnt.RATE,cnt.ASSOC_AMT,
+	cnt.cust_id,c.corp_name,c.orgn_no,p.product_nm,p.rec_uid product_id,a.ac_nm,a.ac_bk_nm,a.ac_no,a.ac_uid,x.avl_lmt_bal avl_lmt_bal
+	from CNTRCT cnt,CORP_INFO c,PRODUCT p,
+	(select ac.ac_nm,ac.ac_bk_nm,ac.ac_no,ac.cust_id,ac.rec_uid ac_uid from CUST_AC ac where ac.ac_tp like '%1%') a,
+    (
+      select z.*,z.lmt_amt-z.ttl_occ_amt avl_lmt_bal from (
+	      select t.corp_id,t.cnt_id,t.lmt_amt,
+	      nvl((select sum(amt) from LIMIT_OCCUPY y where y.lmt_id=t.rec_uid and y.occ_sts in (0,1)),0) ttl_occ_amt
+	      from LIMITS t where t.lmt_tp='3' and t.lmt_sts='0'    
+      ) z 
+    ) x  	
+	where cnt.product_id=p.rec_uid and cnt.counter_party_id=c.corp_id and cnt.cust_id=a.cust_id(+)
+	and cnt.rec_uid=x.cnt_id and cnt.cust_id=x.corp_id
+	and CNT_TP='2' and cnt.STATUS='1' and cnt.cust_id= #{corpId}
+  </select>
+   
+  <select id="countAcctIdUsed" parameterType="string" resultType="integer">
+   	select count(1) from CNTRCT t where AC_ID=#{acctId} or RECE_AC_ID=#{acctId} or IOU_AC_ID=#{acctId} or INT_DEDUCT_AC_ID=#{acctId} or FEE_DEDUCT_AC_ID=#{acctId} 
+  </select> 	
+   
+</mapper>

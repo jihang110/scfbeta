@@ -1,0 +1,45 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-form",
+    "baseUrl": "/interface",
+    "idField": "interfaceId",
+    "title": "新增/编辑接口",
+    "fields": [
+      {
+        "type": "hidden",
+        "name": "interfaceId"
+      },
+      {
+        "type": "text",
+        "label": "接口名称",
+        "name": "interfaceName",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "接口路径",
+        "name": "path",
+        "required": true
+      },
+      {
+        "type": "select",
+        "label": "请求方法",
+        "name": "method",
+        "dict": [{"key": "GET", "value": "GET"}, {"key": "POST", "value": "POST"}]
+      },
+      {
+        "type": "select",
+        "label": "访问权限",
+        "name": "accessStatus",
+        "dict": [{"key": "0", "value": "不受限"}, {"key": "1", "value": "受限"}]
+      },
+      {
+        "type": "textarea",
+        "label": "备注",
+        "name": "note"
+      }
+    ]
+  }
+}

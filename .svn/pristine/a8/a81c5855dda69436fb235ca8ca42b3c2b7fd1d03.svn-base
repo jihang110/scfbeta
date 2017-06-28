@@ -1,0 +1,45 @@
+package com.ut.scf.service.test;
+
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.time.DateUtils;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.ut.scf.core.dict.ScfCacheDict;
+import com.ut.scf.core.dict.ScfConsts;
+import com.ut.scf.pojo.auto.Interests;
+import com.ut.scf.service.factor.InterestsService;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:spring-mybatis-test.xml" })
+public class InterestsServiceTest {
+
+	@Autowired
+	private InterestsService interestsService;
+
+	@Test
+	public void test() throws Exception {
+		String nextBizDate = "2017-6-29";
+		Date intDate = DateUtils.parseDate(nextBizDate, ScfConsts.DATE_FORMAT);
+		ScfCacheDict.sysConfigMap.put(ScfConsts.BUSI_DT, nextBizDate);
+		
+		List<Interests> intList = interestsService.getInterests(intDate);
+		for (Interests ints : intList) {
+			interestsService.doProcess(intDate, ints);
+		}
+	}
+
+//	public static void main(String[] args) {
+//		BigDecimal loanAmt = new BigDecimal(98000);
+//		BigDecimal rate = new BigDecimal(0.04);
+//		BigDecimal curIntAmt = loanAmt.multiply(rate).multiply(new BigDecimal(2));
+//
+//		BigDecimal curIntAmt2 = curIntAmt.divide(new BigDecimal(360), 4, BigDecimal.ROUND_HALF_UP);
+//		System.out.println(curIntAmt2);
+//	}
+}

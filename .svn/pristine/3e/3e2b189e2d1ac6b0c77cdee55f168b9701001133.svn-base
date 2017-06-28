@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ut.scf.dao.auto.CorpInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ut.scf.pojo.auto.CorpInfo" >
+    <id column="CORP_ID" property="corpId" jdbcType="VARCHAR" />
+    <result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+    <result column="CORP_TYPE" property="corpType" jdbcType="VARCHAR" />
+    <result column="SYS_TYPE" property="sysType" jdbcType="VARCHAR" />
+    <result column="IS_COUNTRY" property="isCountry" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON" property="legalPerson" jdbcType="VARCHAR" />
+    <result column="LMT_AMT" property="lmtAmt" jdbcType="DECIMAL" />
+    <result column="BUSINESS_LICENSE" property="businessLicense" jdbcType="VARCHAR" />
+    <result column="TAX_NO" property="taxNo" jdbcType="VARCHAR" />
+    <result column="OFFICE_ADDRESS" property="officeAddress" jdbcType="VARCHAR" />
+    <result column="MOB_PHONE" property="mobPhone" jdbcType="VARCHAR" />
+    <result column="LEGAL_MOB_PHONE" property="legalMobPhone" jdbcType="VARCHAR" />
+    <result column="FIXED_PHONE" property="fixedPhone" jdbcType="VARCHAR" />
+    <result column="DOMICILE_ADDR" property="domicileAddr" jdbcType="VARCHAR" />
+    <result column="POSTCODE" property="postcode" jdbcType="VARCHAR" />
+    <result column="RELA_CORP_ID" property="relaCorpId" jdbcType="VARCHAR" />
+    <result column="REG_DATE" property="regDate" jdbcType="TIMESTAMP" />
+    <result column="LOGO_URL" property="logoUrl" jdbcType="VARCHAR" />
+    <result column="SPEC_NATURAL" property="specNatural" jdbcType="VARCHAR" />
+    <result column="ORGN_NO" property="orgnNo" jdbcType="VARCHAR" />
+    <result column="NOTE" property="note" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="BUSI_DT" property="busiDt" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CORP_ID, CORP_NAME, CORP_TYPE, SYS_TYPE, IS_COUNTRY, LEGAL_PERSON, LMT_AMT, BUSINESS_LICENSE, 
+    TAX_NO, OFFICE_ADDRESS, MOB_PHONE, LEGAL_MOB_PHONE, FIXED_PHONE, DOMICILE_ADDR, POSTCODE, 
+    RELA_CORP_ID, REG_DATE, LOGO_URL, SPEC_NATURAL, ORGN_NO, NOTE, EMAIL, CREATE_USER, 
+    CREATE_TIME, STATUS, BUSI_DT, UPDATE_USER, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ut.scf.pojo.auto.CorpInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.CORP_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.CORP_INFO
+    where CORP_ID = #{corpId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SCFCLOUD.CORP_INFO
+    where CORP_ID = #{corpId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ut.scf.pojo.auto.CorpInfoExample" >
+    delete from SCFCLOUD.CORP_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ut.scf.pojo.auto.CorpInfo" >
+    insert into SCFCLOUD.CORP_INFO (CORP_ID, CORP_NAME, CORP_TYPE, 
+      SYS_TYPE, IS_COUNTRY, LEGAL_PERSON, 
+      LMT_AMT, BUSINESS_LICENSE, TAX_NO, 
+      OFFICE_ADDRESS, MOB_PHONE, LEGAL_MOB_PHONE, 
+      FIXED_PHONE, DOMICILE_ADDR, POSTCODE, 
+      RELA_CORP_ID, REG_DATE, LOGO_URL, 
+      SPEC_NATURAL, ORGN_NO, NOTE, 
+      EMAIL, CREATE_USER, CREATE_TIME, 
+      STATUS, BUSI_DT, UPDATE_USER, 
+      UPDATE_TIME)
+    values (#{corpId,jdbcType=VARCHAR}, #{corpName,jdbcType=VARCHAR}, #{corpType,jdbcType=VARCHAR}, 
+      #{sysType,jdbcType=VARCHAR}, #{isCountry,jdbcType=VARCHAR}, #{legalPerson,jdbcType=VARCHAR}, 
+      #{lmtAmt,jdbcType=DECIMAL}, #{businessLicense,jdbcType=VARCHAR}, #{taxNo,jdbcType=VARCHAR}, 
+      #{officeAddress,jdbcType=VARCHAR}, #{mobPhone,jdbcType=VARCHAR}, #{legalMobPhone,jdbcType=VARCHAR}, 
+      #{fixedPhone,jdbcType=VARCHAR}, #{domicileAddr,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR}, 
+      #{relaCorpId,jdbcType=VARCHAR}, #{regDate,jdbcType=TIMESTAMP}, #{logoUrl,jdbcType=VARCHAR}, 
+      #{specNatural,jdbcType=VARCHAR}, #{orgnNo,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=DECIMAL}, #{busiDt,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ut.scf.pojo.auto.CorpInfo" >
+    insert into SCFCLOUD.CORP_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="corpId != null" >
+        CORP_ID,
+      </if>
+      <if test="corpName != null" >
+        CORP_NAME,
+      </if>
+      <if test="corpType != null" >
+        CORP_TYPE,
+      </if>
+      <if test="sysType != null" >
+        SYS_TYPE,
+      </if>
+      <if test="isCountry != null" >
+        IS_COUNTRY,
+      </if>
+      <if test="legalPerson != null" >
+        LEGAL_PERSON,
+      </if>
+      <if test="lmtAmt != null" >
+        LMT_AMT,
+      </if>
+      <if test="businessLicense != null" >
+        BUSINESS_LICENSE,
+      </if>
+      <if test="taxNo != null" >
+        TAX_NO,
+      </if>
+      <if test="officeAddress != null" >
+        OFFICE_ADDRESS,
+      </if>
+      <if test="mobPhone != null" >
+        MOB_PHONE,
+      </if>
+      <if test="legalMobPhone != null" >
+        LEGAL_MOB_PHONE,
+      </if>
+      <if test="fixedPhone != null" >
+        FIXED_PHONE,
+      </if>
+      <if test="domicileAddr != null" >
+        DOMICILE_ADDR,
+      </if>
+      <if test="postcode != null" >
+        POSTCODE,
+      </if>
+      <if test="relaCorpId != null" >
+        RELA_CORP_ID,
+      </if>
+      <if test="regDate != null" >
+        REG_DATE,
+      </if>
+      <if test="logoUrl != null" >
+        LOGO_URL,
+      </if>
+      <if test="specNatural != null" >
+        SPEC_NATURAL,
+      </if>
+      <if test="orgnNo != null" >
+        ORGN_NO,
+      </if>
+      <if test="note != null" >
+        NOTE,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="busiDt != null" >
+        BUSI_DT,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="corpId != null" >
+        #{corpId,jdbcType=VARCHAR},
+      </if>
+      <if test="corpName != null" >
+        #{corpName,jdbcType=VARCHAR},
+      </if>
+      <if test="corpType != null" >
+        #{corpType,jdbcType=VARCHAR},
+      </if>
+      <if test="sysType != null" >
+        #{sysType,jdbcType=VARCHAR},
+      </if>
+      <if test="isCountry != null" >
+        #{isCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null" >
+        #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="lmtAmt != null" >
+        #{lmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="businessLicense != null" >
+        #{businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="taxNo != null" >
+        #{taxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="officeAddress != null" >
+        #{officeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="mobPhone != null" >
+        #{mobPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="legalMobPhone != null" >
+        #{legalMobPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedPhone != null" >
+        #{fixedPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="domicileAddr != null" >
+        #{domicileAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="relaCorpId != null" >
+        #{relaCorpId,jdbcType=VARCHAR},
+      </if>
+      <if test="regDate != null" >
+        #{regDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logoUrl != null" >
+        #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="specNatural != null" >
+        #{specNatural,jdbcType=VARCHAR},
+      </if>
+      <if test="orgnNo != null" >
+        #{orgnNo,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null" >
+        #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ut.scf.pojo.auto.CorpInfoExample" resultType="java.lang.Integer" >
+    select count(*) from SCFCLOUD.CORP_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SCFCLOUD.CORP_INFO
+    <set >
+      <if test="record.corpId != null" >
+        CORP_ID = #{record.corpId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpName != null" >
+        CORP_NAME = #{record.corpName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpType != null" >
+        CORP_TYPE = #{record.corpType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysType != null" >
+        SYS_TYPE = #{record.sysType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isCountry != null" >
+        IS_COUNTRY = #{record.isCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.legalPerson != null" >
+        LEGAL_PERSON = #{record.legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lmtAmt != null" >
+        LMT_AMT = #{record.lmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.businessLicense != null" >
+        BUSINESS_LICENSE = #{record.businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxNo != null" >
+        TAX_NO = #{record.taxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.officeAddress != null" >
+        OFFICE_ADDRESS = #{record.officeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobPhone != null" >
+        MOB_PHONE = #{record.mobPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.legalMobPhone != null" >
+        LEGAL_MOB_PHONE = #{record.legalMobPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixedPhone != null" >
+        FIXED_PHONE = #{record.fixedPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.domicileAddr != null" >
+        DOMICILE_ADDR = #{record.domicileAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postcode != null" >
+        POSTCODE = #{record.postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relaCorpId != null" >
+        RELA_CORP_ID = #{record.relaCorpId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regDate != null" >
+        REG_DATE = #{record.regDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.logoUrl != null" >
+        LOGO_URL = #{record.logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specNatural != null" >
+        SPEC_NATURAL = #{record.specNatural,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgnNo != null" >
+        ORGN_NO = #{record.orgnNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.note != null" >
+        NOTE = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUser != null" >
+        CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.busiDt != null" >
+        BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null" >
+        UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SCFCLOUD.CORP_INFO
+    set CORP_ID = #{record.corpId,jdbcType=VARCHAR},
+      CORP_NAME = #{record.corpName,jdbcType=VARCHAR},
+      CORP_TYPE = #{record.corpType,jdbcType=VARCHAR},
+      SYS_TYPE = #{record.sysType,jdbcType=VARCHAR},
+      IS_COUNTRY = #{record.isCountry,jdbcType=VARCHAR},
+      LEGAL_PERSON = #{record.legalPerson,jdbcType=VARCHAR},
+      LMT_AMT = #{record.lmtAmt,jdbcType=DECIMAL},
+      BUSINESS_LICENSE = #{record.businessLicense,jdbcType=VARCHAR},
+      TAX_NO = #{record.taxNo,jdbcType=VARCHAR},
+      OFFICE_ADDRESS = #{record.officeAddress,jdbcType=VARCHAR},
+      MOB_PHONE = #{record.mobPhone,jdbcType=VARCHAR},
+      LEGAL_MOB_PHONE = #{record.legalMobPhone,jdbcType=VARCHAR},
+      FIXED_PHONE = #{record.fixedPhone,jdbcType=VARCHAR},
+      DOMICILE_ADDR = #{record.domicileAddr,jdbcType=VARCHAR},
+      POSTCODE = #{record.postcode,jdbcType=VARCHAR},
+      RELA_CORP_ID = #{record.relaCorpId,jdbcType=VARCHAR},
+      REG_DATE = #{record.regDate,jdbcType=TIMESTAMP},
+      LOGO_URL = #{record.logoUrl,jdbcType=VARCHAR},
+      SPEC_NATURAL = #{record.specNatural,jdbcType=VARCHAR},
+      ORGN_NO = #{record.orgnNo,jdbcType=VARCHAR},
+      NOTE = #{record.note,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ut.scf.pojo.auto.CorpInfo" >
+    update SCFCLOUD.CORP_INFO
+    <set >
+      <if test="corpName != null" >
+        CORP_NAME = #{corpName,jdbcType=VARCHAR},
+      </if>
+      <if test="corpType != null" >
+        CORP_TYPE = #{corpType,jdbcType=VARCHAR},
+      </if>
+      <if test="sysType != null" >
+        SYS_TYPE = #{sysType,jdbcType=VARCHAR},
+      </if>
+      <if test="isCountry != null" >
+        IS_COUNTRY = #{isCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null" >
+        LEGAL_PERSON = #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="lmtAmt != null" >
+        LMT_AMT = #{lmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="businessLicense != null" >
+        BUSINESS_LICENSE = #{businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="taxNo != null" >
+        TAX_NO = #{taxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="officeAddress != null" >
+        OFFICE_ADDRESS = #{officeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="mobPhone != null" >
+        MOB_PHONE = #{mobPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="legalMobPhone != null" >
+        LEGAL_MOB_PHONE = #{legalMobPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedPhone != null" >
+        FIXED_PHONE = #{fixedPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="domicileAddr != null" >
+        DOMICILE_ADDR = #{domicileAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        POSTCODE = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="relaCorpId != null" >
+        RELA_CORP_ID = #{relaCorpId,jdbcType=VARCHAR},
+      </if>
+      <if test="regDate != null" >
+        REG_DATE = #{regDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logoUrl != null" >
+        LOGO_URL = #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="specNatural != null" >
+        SPEC_NATURAL = #{specNatural,jdbcType=VARCHAR},
+      </if>
+      <if test="orgnNo != null" >
+        ORGN_NO = #{orgnNo,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        NOTE = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null" >
+        BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CORP_ID = #{corpId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ut.scf.pojo.auto.CorpInfo" >
+    update SCFCLOUD.CORP_INFO
+    set CORP_NAME = #{corpName,jdbcType=VARCHAR},
+      CORP_TYPE = #{corpType,jdbcType=VARCHAR},
+      SYS_TYPE = #{sysType,jdbcType=VARCHAR},
+      IS_COUNTRY = #{isCountry,jdbcType=VARCHAR},
+      LEGAL_PERSON = #{legalPerson,jdbcType=VARCHAR},
+      LMT_AMT = #{lmtAmt,jdbcType=DECIMAL},
+      BUSINESS_LICENSE = #{businessLicense,jdbcType=VARCHAR},
+      TAX_NO = #{taxNo,jdbcType=VARCHAR},
+      OFFICE_ADDRESS = #{officeAddress,jdbcType=VARCHAR},
+      MOB_PHONE = #{mobPhone,jdbcType=VARCHAR},
+      LEGAL_MOB_PHONE = #{legalMobPhone,jdbcType=VARCHAR},
+      FIXED_PHONE = #{fixedPhone,jdbcType=VARCHAR},
+      DOMICILE_ADDR = #{domicileAddr,jdbcType=VARCHAR},
+      POSTCODE = #{postcode,jdbcType=VARCHAR},
+      RELA_CORP_ID = #{relaCorpId,jdbcType=VARCHAR},
+      REG_DATE = #{regDate,jdbcType=TIMESTAMP},
+      LOGO_URL = #{logoUrl,jdbcType=VARCHAR},
+      SPEC_NATURAL = #{specNatural,jdbcType=VARCHAR},
+      ORGN_NO = #{orgnNo,jdbcType=VARCHAR},
+      NOTE = #{note,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=DECIMAL},
+      BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where CORP_ID = #{corpId,jdbcType=VARCHAR}
+  </update>
+</mapper>

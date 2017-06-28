@@ -1,0 +1,58 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-workflow",
+    "baseUrl": "/pub/custRela/bpm",
+
+    "title": "关联买卖方",
+    "fields": [
+      {
+        "type": "hidden",
+        "name": "custId"
+      },
+      {
+        "id": "buyerName",
+        "type": "lookup",
+        "label": "买方名称",
+        "route":"custRelaBuyerDetailForm",
+        "name": "corpName",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "组织机构代码证号",
+        "name": "orgnNo",
+        "required": true
+      },
+      {
+        "id": "sellerList",
+        "type": "datagrid",
+        "name": "sellerList",
+        "btnGroup": [
+          {
+            "type": "lookup",
+            "title": "新增",
+            "icon": "fa fa-plus",
+            "idField": "custId",
+            "route": "custRelaSellerDetailForm"
+          }
+        ],
+        "columns": [
+          {
+        	"title": "ID",
+       		"field": "custId"
+	      },
+	      {
+	        "title": "卖方名称",
+	        "field": "corpName"
+	      },
+	      {
+	        "title": "组织机构代码证号",
+	        "field": "orgnNo"
+	      }
+        ]
+      }
+    ]
+  }
+}

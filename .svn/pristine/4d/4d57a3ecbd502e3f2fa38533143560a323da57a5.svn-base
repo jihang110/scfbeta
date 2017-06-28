@@ -1,0 +1,187 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-form",
+    "submitUrl": "/pub/buyercntrct/bpm/startGo",
+    "idField": "recUid",
+    "title": "录入接口",
+    "fields": [
+      {
+        "type": "hidden",
+        "name": "recUid"
+      },
+       {
+        "type": "text",
+        "label": "协议编号",
+        "name": "cntNo",
+        "required": true
+      },
+      {
+        "type": "hidden",
+        "name": "productId"
+      },
+      {
+        "type": "lookup",
+        "label": "产品名称",
+        "name": "productNm",
+        "id": "productNm",
+        "route": "prdtdistList",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "买方编号",
+        "readonly": true,
+        "name": "custId",
+        "id": "custId"
+      },
+       {
+        "type": "lookup",
+        "label": "买方名称",
+        "name": "custNm",
+        "id":"custNm",
+        "route": "corpCustList",
+        "required": true
+      },
+       {
+        "type": "text",
+        "label": "电子邮箱",
+        "reg": "email",
+        "name": "email",
+        "required": true
+      },
+       {
+        "type": "text",
+        "label": "产品额度",
+        "name": "productLmt",
+        "readonly": true
+      },
+      {
+        "type": "select",
+        "label": "额度模式",
+        "name": "lmtMol",
+        "readonly": true,
+        "dictName": "LIMIT_MODE"
+      },
+      {
+        "type": "select",
+        "label": "付款方式",
+        "name": "paymentMode",
+        "required": true,
+        "dictName": "PAYMENT_MODE"
+      },
+      {
+        "type": "lookup",
+        "label": "付款帐号",
+        "name": "acId",
+        "id": "acId",
+        "route": "custAcPayList",
+        "required": true
+      },
+      {
+        "type": "text",
+        "label": "户名",
+        "name": "acNm",
+        "readonly": true
+      },
+      {
+        "type": "text",
+        "label": "开户行",
+        "name": "acBkNm",
+        "readonly": true
+      },
+      {
+        "type": "select",
+        "label": "是否需要协调人",
+        "name": "coordinator",
+        "id": "coordinator",
+        "required": true,
+        "dictName": "LOANRATIO_LOCK"
+      },
+      {
+        "type": "text",
+        "label": "协调人名称",
+        "name": "coordinatorNm",
+        "id": "coordinatorNm",
+        "required": false
+      },
+      {
+        "type": "text",
+        "label": "电子邮箱",
+        "name": "coordinatorEmail",
+        "id": "coordinatorEmail",
+        "reg": "email",
+        "required": false
+      },
+      {
+        "type": "datagrid",
+        "name": "sellerCommList",
+        "id": "sellerCommList",
+        "idField": "recUid",
+        "columns": [
+          {
+            "title": "卖方名称",
+            "field": "counterPartyNm"
+          },
+          {
+            "title": "关联额度",
+            "field": "assocAmt"
+          },
+          {
+            "title": "额度类型",
+            "field": "amtTp",
+            "dictName": "AMT_TP"
+          },
+          {
+            "title": "推荐状态",
+            "field": "recommSts"
+          },
+          {
+	        "title": "操作",
+	        "actions": [
+	          {
+				"name": "推荐",
+				"icon": "fa fa-trash",
+				"action": "eb.app.openItemForm(@{DATAINDEX}, 'buyerCntrctList-edit', 'sellerCommList');"
+			  }
+	        ]
+	      }
+        ]
+      },
+      {
+        "type": "datagrid",
+        "name": "upLoadList",
+        "id": "upLoadList",
+        "btnGroup": [
+          {
+            "type": "grid-form-win",
+            "title": "上传",
+            "icon": "fa fa-plus",
+            "route": "cntrctDetailForm"
+          }
+        ],
+        "idField": "recUid",
+        "columns": [
+          {
+            "title": "附件名称",
+            "field": "attachNm"
+          },
+          {
+            "title": "文件格式",
+            "field": "attachFormat"
+          },
+          {
+            "title": "文件大小",
+            "field": "attachSize"
+          },
+          {
+            "title": "描述",
+            "field": "bewrite"
+          }
+        ]
+      }
+    ],
+    "script": "business/pub/cntrct/js/buyerCntrctForm.js"
+  }
+}

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ut.scf.dao.pubmanage.ICustRelaDao">
+  <resultMap id="BaseResultMap" type="com.ut.scf.reqbean.pubmanage.CorpToCust">
+    <result column="CORP_ID" jdbcType="VARCHAR" property="custId" />
+    <result column="CORP_NAME" jdbcType="VARCHAR" property="corpName" />
+     <result column="ORGN_NO" jdbcType="VARCHAR" property="orgnNo" />
+    <result column="COUNTER_PARTY_ID" jdbcType="VARCHAR" property="custId" />
+    <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="BUSI_DT" jdbcType="TIMESTAMP" property="busiDt" />
+    <result column="UPDATE_USER" jdbcType="VARCHAR" property="updateUser" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <select id="getList" parameterType="hashmap" resultMap="BaseResultMap" >
+    select CR.COUNTER_PARTY_ID  ,
+       CI.CORP_NAME   ,
+       CI.ORGN_NO     ,
+       CR.CREATE_USER ,
+       CR.CREATE_TIME ,
+       CR.STATUS      ,
+       CR.BUSI_DT    ,
+       CR.UPDATE_USER ,
+       CR.UPDATE_TIME 
+	  from CUST_RELA CR
+	    LEFT JOIN CORP_INFO CI
+	    ON CR.COUNTER_PARTY_ID = CI.CORP_ID
+	    LEFT JOIN CORP_INFO CF
+	    ON CR.CUST_ID = CF.CORP_ID
+    where 1=1
+    <if test="custId != null">
+      and CF.CUST_ID = #{custId}
+    </if>
+    <if test="buyerNm != null">
+      and CF.CORP_NAME LIKE CONCAT(CONCAT('%', #{buyerNm}),'%')
+    </if>
+    <if test="sysType != null">
+      and CF.SYS_TYPE = #{sysType}
+    </if>
+  </select>
+   
+  <select id="checkRelaById" parameterType="hashmap" resultType="java.lang.Integer">
+    select count(*) 
+    from CUST_RELA CR
+    LEFT JOIN CORP_INFO CI 
+    ON CR.COUNTER_PARTY_ID = CI.CORP_ID
+    where 1=1
+    <if test="custId != null">
+       and CR.CUST_ID = #{custId}
+    </if>
+    <if test="counterPartyId != null">
+       and CR.COUNTER_PARTY_ID = #{counterPartyId}
+    </if>
+  </select>
+  
+   <select id="getRelaedCusts" parameterType="hashmap" resultType="java.lang.String">
+    select CR.Counter_Party_Id
+    from CNTRCT CR
+    where CR.STATUS=1
+    <if test="custId != null">
+       and CR.CUST_ID = #{custId}
+    </if>
+  </select>
+  
+  <select id="getCustList" parameterType="hashmap" resultMap="BaseResultMap" >
+    select CI.CORP_ID,
+       CI.CORP_NAME,
+       CI.ORGN_NO,
+       CI.CREATE_USER ,
+       CI.CREATE_TIME ,
+       CI.STATUS      ,
+       CI.BUSI_DT     ,
+       CI.UPDATE_USER ,
+       CI.UPDATE_TIME 
+	  from CORP_INFO CI
+    where 1=1
+    <if test="custId != null">
+      and CI.CORP_ID = #{custId}
+    </if>
+    <if test="buyerNm!= null">
+      and CI.CORP_NAME LIKE CONCAT(CONCAT('%', #{buyerNm}),'%')
+    </if>
+     <if test="sellerNm!= null">
+      and CI.CORP_NAME LIKE CONCAT(CONCAT('%', #{sellerNm}),'%')
+    </if>
+    <if test="orgnNum!= null">
+      and CI.ORGN_NO LIKE CONCAT(CONCAT('%', #{orgnNum}),'%')
+    </if>
+    <if test="sysType != null">
+      and CI.SYS_TYPE = #{sysType}
+    </if>
+    
+  </select>
+  
+  <select id="getCountList" parameterType="hashmap" resultType="hashmap" >
+    select  DI.CORP_NAME "counterPartyNm",
+    	DI.CORP_ID     "custId",
+    	DI.ORGN_NO     "orgnNo"
+	  from CUST_RELA CI left join corp_info DI on CI.COUNTER_PARTY_ID = DI.CORP_ID
+    where CI.STATUS = 1
+    <if test="sellerNm!= null">
+      and DI.CORP_NAME LIKE CONCAT(CONCAT('%', #{sellerNm}),'%')
+    </if>
+    <if test="custId!= null">
+      and CI.CUST_ID = #{custId}
+    </if>
+  </select>
+</mapper>

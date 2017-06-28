@@ -1,0 +1,96 @@
+package com.ut.scf.web.listener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.ut.scf.core.dict.ScfCacheDict;
+import com.ut.scf.core.util.BeanUtil;
+import com.ut.scf.core.util.ScfdatabaseType;
+import com.ut.scf.pojo.auto.SysFuncInterface;
+import com.ut.scf.service.sys.CorpService;
+import com.ut.scf.service.sys.DictMapService;
+import com.ut.scf.service.sys.UserOperService;
+
+public class DictCacheListener implements ServletContextListener {
+
+	private static final Logger log = LoggerFactory.getLogger(DictCacheListener.class);
+
+	@Override
+	public void contextDestroyed(ServletContextEvent sce) {
+	}
+
+	@Override
+	public void contextInitialized(ServletContextEvent sce) {
+		log.debug("++++++++++++++++++　　数据字典缓存开始　　+++++++++++++++++++++");
+
+		WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(sce.getServletContext());
+		UserOperService userService = webApplicationContext.getBean(UserOperService.class);
+		DictMapService dictMapService = webApplicationContext.getBean(DictMapService.class);
+
+		BeanUtil.setDataType(webApplicationContext.getBean(ScfdatabaseType.class).getDatasource());
+		// 功能接口字典缓存
+		List<SysFuncInterface> interfaceList = userService.getAllInterFace();
+		for (SysFuncInterface sysFuncInterface : interfaceList) {
+			ScfCacheDict.interfaceMap.put(sysFuncInterface.getInterfaceId(), sysFuncInterface);
+		}
+
+		// 上传文件路径字典缓存
+		List<com.ut.scf.pojo.auto.UploadFilePath> filePathList = userService.getAllUploadFilePath();
+		for (com.ut.scf.pojo.auto.UploadFilePath uploadFilePath : filePathList) {
+			ScfCacheDict.uploadFilePathMap.put(uploadFilePath.getPathId(), uploadFilePath);
+		}
+
+		// 关联企业Id缓存
+		CorpService corpService = webApplicationContext.getBean(CorpService.class);
+		List<Map<String, String>> relaCorpIdList = corpService.getAllRelaCorp();
+		for (Map<String, String> relaCorp : relaCorpIdList) {
+			ScfCacheDict.relaCorpIdMap.put(relaCorp.get("corpId"), relaCorp.get("relaCorpId"));
+		}
+
+		// 系统配置字典缓存
+		List<Map<String, Object>> sysConfigList = userService.getAllSysConfig();
+		for (Map<String, Object> sc : sysConfigList) {
+			ScfCacheDict.sysConfigMap.put((String) sc.get("itemKey"), (String) sc.get("itemValue"));
+		}
+
+		// 用户可访问的客户企业Id列表缓存
+		// List<Map<String, Object>> userCorpList =
+		// userService.getAllUserCorpJurisdiction();
+		// for (Map<String, Object> userCorp : userCorpList) {
+		// String userId = userCorp.get("userId").toString();
+		// String corpIds = userCorp.get("corpIds").toString();
+		// if (StringUtils.isNotBlank(corpIds)) {
+		// String[] corpIdArr = corpIds.split(",");
+		// ScfCacheDict.userCorpMap.put(userId, Arrays.asList(corpIdArr));
+		// }
+		//
+		// }
+
+		// 数据字典表缓存
+		List<Map<String, String>> sysDictList = dictMapService.getAllDictMapList();
+		Map<String, List<Map<String, String>>> resultMap = new HashMap<>();
+		for (Map<String, String> sysDict : sysDictList) {
+			String typeId = sysDict.get("typeId");
+			List<Map<String, String>> valueList = new ArrayList<>();
+			if (resultMap.containsKey(typeId)) {
+				valueList = resultMap.get(typeId);
+			}
+			valueList.add(sysDict);
+			resultMap.put(typeId, valueList);
+		}
+		ScfCacheDict.sysDictMap.putAll(resultMap);
+
+		log.debug("++++++++++++++++++　　数据字典缓存结束　　+++++++++++++++++++++");
+	}
+
+}

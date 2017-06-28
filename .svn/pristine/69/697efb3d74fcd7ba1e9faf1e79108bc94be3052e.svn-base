@@ -1,0 +1,47 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "title": "流程待办列表",
+
+    "sourceUrl": "/bpm/task/todoList",
+    "idField": "taskId",
+    "columns": [
+      {
+        "title": "任务ID",
+        "field": "taskId"
+      },
+      {
+        "title": "任务类型",
+        "field": "processDefinitionName"
+      },
+      {
+        "title": "任务名称",
+        "field": "processInstanceName"
+      },
+      {
+        "title": "最新处理人",
+        "field": "lastProcessor"
+      },
+      {
+        "title": "最新处理时间",
+        "field": "lastProcessTime"
+      },
+      {
+        "title": "创建时间",
+        "field": "processCreateTime"
+      },
+      {
+        "title": "操作",
+        "actions": [
+          {
+            "name": "办理",
+            "icon": "fa fa-pencil-square-o",
+            "action": "eb.app.Router.go('#workflowTodoList-@{processDefinitionKey}', {'requestData': {taskId: '@{taskId}'}})"
+          }
+        ]
+      }
+    ]
+  }
+}

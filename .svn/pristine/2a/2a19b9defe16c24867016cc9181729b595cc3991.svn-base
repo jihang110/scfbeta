@@ -1,0 +1,202 @@
+package com.ut.scf.respbean.factor;
+
+import java.math.BigDecimal;
+
+/**
+ * 卖方协议lookup列表
+ * 
+ * @author shenying
+ *
+ */
+public class SellerCntRespBean {
+
+	private String cntId;
+
+	/**
+	 * 协议编号
+	 */
+	private String cntNo;
+
+	private String corpId;
+
+	private String corpName;
+
+	private String orgnNo;
+
+	private String productNm;
+
+	private String productId;
+
+	// 户名
+	private String loanAcctName;
+
+	// 开户行
+	private String loanBankName;
+
+	// 放款账号
+	private String loanAcctNo;
+
+	// 放款账号recUid
+	private String loanAcId;
+
+	// 最大融资比例
+	private String maxLoanPerc;
+
+	// 融资截止日
+	private long loanDeadline;
+	// 宽限天数
+	private long graceDay;
+	// 利率
+	private BigDecimal loanRt;
+	// 费率
+	private BigDecimal commRt;
+	// 关联额度
+	private BigDecimal assocAmt;
+	// 可用融资额度
+	private BigDecimal lmtBal;
+
+	public BigDecimal getLmtBal() {
+		return lmtBal;
+	}
+
+	public void setLmtBal(BigDecimal lmtBal) {
+		this.lmtBal = lmtBal;
+	}
+
+	public BigDecimal getAssocAmt() {
+		return assocAmt;
+	}
+
+	public void setAssocAmt(BigDecimal assocAmt) {
+		this.assocAmt = assocAmt;
+	}
+
+	public BigDecimal getLoanRt() {
+		return loanRt;
+	}
+
+	public void setLoanRt(BigDecimal loanRt) {
+		this.loanRt = loanRt;
+	}
+
+	public BigDecimal getCommRt() {
+		return commRt;
+	}
+
+	public void setCommRt(BigDecimal commRt) {
+		this.commRt = commRt;
+	}
+
+	public long getGraceDay() {
+		return graceDay;
+	}
+
+	public void setGraceDay(long graceDay) {
+		this.graceDay = graceDay;
+	}
+
+	public long getLoanDeadline() {
+		return loanDeadline;
+	}
+
+	public void setLoanDeadline(long loanDeadline) {
+		this.loanDeadline = loanDeadline;
+	}
+
+	public String getMaxLoanPerc() {
+		return maxLoanPerc;
+	}
+
+	public void setMaxLoanPerc(String maxLoanPerc) {
+		this.maxLoanPerc = maxLoanPerc;
+	}
+
+	public String getLoanAcId() {
+		return loanAcId;
+	}
+
+	public void setLoanAcId(String loanAcId) {
+		this.loanAcId = loanAcId;
+	}
+
+	public String getLoanAcctName() {
+		return loanAcctName;
+	}
+
+	public void setLoanAcctName(String loanAcctName) {
+		this.loanAcctName = loanAcctName;
+	}
+
+	public String getLoanBankName() {
+		return loanBankName;
+	}
+
+	public void setLoanBankName(String loanBankName) {
+		this.loanBankName = loanBankName;
+	}
+
+	public String getLoanAcctNo() {
+		return loanAcctNo;
+	}
+
+	public void setLoanAcctNo(String loanAcctNo) {
+		this.loanAcctNo = loanAcctNo;
+	}
+
+	public String getCorpId() {
+		return corpId;
+	}
+
+	public void setCorpId(String corpId) {
+		this.corpId = corpId;
+	}
+
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+
+	public String getCntId() {
+		return cntId;
+	}
+
+	public void setCntId(String cntId) {
+		this.cntId = cntId;
+	}
+
+	public String getCntNo() {
+		return cntNo;
+	}
+
+	public void setCntNo(String cntNo) {
+		this.cntNo = cntNo;
+	}
+
+	public String getCorpName() {
+		return corpName;
+	}
+
+	public void setCorpName(String corpName) {
+		this.corpName = corpName;
+	}
+
+	public String getOrgnNo() {
+		return orgnNo;
+	}
+
+	public void setOrgnNo(String orgnNo) {
+		this.orgnNo = orgnNo;
+	}
+
+	public String getProductNm() {
+		return productNm;
+	}
+
+	public void setProductNm(String productNm) {
+		this.productNm = productNm;
+	}
+
+}

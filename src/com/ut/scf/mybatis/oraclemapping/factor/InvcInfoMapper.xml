@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ut.scf.dao.factor.IInvcInfoDao">
+  <resultMap id="BaseResultMap" type="com.ut.scf.respbean.factor.InvcInfoRespBean" >
+    <id column="REC_UID" property="invcId" jdbcType="VARCHAR" />
+    <result column="INVC_NO" property="invcNo" jdbcType="VARCHAR" />
+    <result column="INV_DUE_DATE" property="invDueDate" jdbcType="DATE" />
+    <result column="INV_AMT" property="invAmt" jdbcType="NUMERIC" />
+    <result column="INVC_DATE" property="invcDate" jdbcType="DATE" />
+    <result column="INV_START_DATE" property="invStartDate" jdbcType="DATE" />
+    <result column="CNTRCT_NO" property="cntrctNo" jdbcType="VARCHAR" />
+    <result column="INV_LOAN_AVAL" property="invLoanAval" jdbcType="DECIMAL" />
+    <result column="INV_LOAN_AMT" property="invLoanAmt" jdbcType="DECIMAL" />
+    <result column="LOAN_VAL_DT" property="loanValDt" jdbcType="VARCHAR" />
+    <result column="LOAN_DUE_DT" property="loanDueDt" jdbcType="VARCHAR" />
+    <result column="INT_AMT" property="intAmt" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <!-- 按协议和发票状态查询发票列表 -->
+  <select id="getInvcListBy" parameterType="string" resultMap="BaseResultMap">
+	select i.rec_uid,i.invc_no,i.inv_due_date,i.inv_amt,i.invc_date,i.inv_start_date,i.cntrct_no,
+	i.inv_amt * c.max_loan_ratio / 100 INV_LOAN_AVAL,i.inv_amt * c.max_loan_ratio / 100 inv_loan_amt,
+	(select item_value from sys_config where item_key='busi_date') LOAN_VAL_DT,i.inv_due_date + c.GRACE_DAYS LOAN_DUE_DT,
+	round((i.inv_amt * c.max_loan_ratio / 100) * c.INT_RATE * (i.inv_due_date + c.GRACE_DAYS - to_date((select item_value from sys_config where item_key = 'busi_date'),'yyyy-MM-dd'))/360,4) INT_AMT
+	from INVC_BATCH b,INVC_INFO i,CNTRCT c
+	where b.rec_uid=i.reg_btc_id and b.cnt_id=c.rec_uid and i.inv_status=#{invStatus} and b.cnt_id=#{cntId}
+  </select>
+
+    <select id="getList" parameterType="HashMap" resultType="HashMap" >
+        select
+        P.REC_UID "recUid",
+        P.INVC_NO "invcNo",
+        P.CNTRCT_NO "cntrctNo",
+        P.INVC_DATE "invcDate",
+        P.INV_START_DATE "invStartDate",
+        P.INV_DUE_DATE "invDueDate",
+        P.INV_AMT "invAmt",
+        P.INV_STATUS "invStatus",
+        P.CREATE_USER "createUser",
+        P.CREATE_TIME "createTime",
+        P.STATUS "status",
+        P.BUSI_DT "busiDt",
+        P.UPDATE_USER "updateUser",
+        P.UPDATE_TIME  "updateTime"
+        from INVC_INFO P
+        where P.STATUS = 1
+        <if test="regBtcId != null">
+            and P.REG_BTC_ID = #{regBtcId}
+        </if>
+        <if test="cnfBtcId != null">
+            and P.CNF_BTC_ID = #{cnfBtcId}
+        </if>
+        <if test="transBtcId != null">
+            and P.TRANS_BTC_ID = #{transBtcId}
+        </if>
+        <if test="invStatus != null">
+            and P.INV_STATUS = #{invStatus}
+        </if>
+        <if test="invStatusMore != null">
+            and P.INV_STATUS
+            <foreach collection="invStatusMore" open="IN (" close=")" separator="," item="item">
+                #{item}
+            </foreach>
+        </if>
+        <if test="cntNo != null">
+            and P.CNTRCT_NO = #{cntNo}
+        </if>
+    </select>
+
+    <resultMap id="invoiceExt" type="com.ut.scf.pojo.factor.InvoiceExt">
+        <id column="REC_UID" jdbcType="VARCHAR" property="cntId" />
+        <result column="CORP_NAME" jdbcType="VARCHAR" property="counterPartyNm" />
+        <result column="ORGN_NO" jdbcType="VARCHAR" property="orgnNo" />
+        <result column="CNT_NO" jdbcType="VARCHAR" property="cntNo" />
+        <result column="PRODUCT_NM" jdbcType="VARCHAR" property="productNm" />
+        <result column="DEDU_METHOD" jdbcType="VARCHAR" property="deduMethod" />
+        <result column="RATE_BEAR_PARTY" jdbcType="VARCHAR" property="rateBearParty" />
+        <result column="RATE" jdbcType="DECIMAL" property="rate" />
+        <result column="SUM_INV_AMT" jdbcType="DECIMAL" property="sumInvAmt" />
+        <result column="RATE_BEAR_PARTY" jdbcType="VARCHAR" property="rateBearParty" />
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="STATUS" jdbcType="DECIMAL" property="status" />
+        <result column="BUSI_DT" jdbcType="TIMESTAMP" property="busiDt" />
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="updateUser" />
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+
+    <select id="getCounterPartyList" parameterType="HashMap" resultMap="invoiceExt">
+        select
+        CI.CORP_NAME CORP_NAME,
+        CI.ORGN_NO ORGN_NO,
+        CN.CNT_NO CNT_NO,
+        CN.REC_UID REC_UID,
+        PR.PRODUCT_NM PRODUCT_NM,
+        CN.DEDU_METHOD DEDU_METHOD,
+        CN.RATE_BEAR_PARTY RATE_BEAR_PARTY,
+        CN.RATE RATE,
+        TMP.SUM_INV_AMT SUM_INV_AMT,
+        CI.CREATE_USER CREATE_USER,
+        CI.CREATE_TIME CREATE_TIME,
+        CI.STATUS STATUS,
+        CI.BUSI_DT BUSI_DT,
+        CI.UPDATE_USER UPDATE_USER,
+        CI.UPDATE_TIME  UPDATE_TIME
+        from  CORP_INFO CI
+        LEFT JOIN  CNTRCT CN
+        ON CN.COUNTER_PARTY_ID = CI.CORP_ID
+        LEFT JOIN PRODUCT PR
+        ON PR.REC_UID = CN.PRODUCT_ID
+        LEFT JOIN (
+        select II.CNTRCT_NO "CNT_NO", SUM(II.INV_AMT) AS SUM_INV_AMT
+        from INVC_INFO II
+        LEFT JOIN CNTRCT CN
+        ON CN.CNT_NO = II.CNTRCT_NO
+        WHERE II.STATUS = 1 and CN.STATUS = 1
+        <if test="invStatus != null">
+            and II.INV_STATUS = #{invStatus, jdbcType=VARCHAR}
+        </if>
+        <if test="invStatusMore != null">
+            and II.INV_STATUS
+            <foreach collection="invStatusMore" open="IN (" close=")" separator="," item="item">
+                #{item}
+            </foreach>
+        </if>
+        GROUP BY II.CNTRCT_NO) TMP
+        ON TMP.CNT_NO = CN.CNT_NO
+        where CI.STATUS = 1 and CN.STATUS = 1 and PR.STATUS = 1
+        <if test="counterPartyNm != null">
+            and CI.CORP_NAME LIKE  CONCAT(CONCAT('%', #{counterPartyNm}),'%')
+        </if>
+        <if test="orgnNo != null">
+            and CI.ORGN_NO LIKE CONCAT(CONCAT('%', #{orgnNo}),'%')
+        </if>
+    </select>
+
+    <select id="getInvcListByCorpId" parameterType="String" resultType="com.ut.scf.respbean.factor.CancIntFeeDetailRespBean">
+        SELECT II.INVC_NO invcNo, II.REC_UID invcId, CI.CORP_NAME counterPartyNm, CI.CORP_ID counterPartyId
+        <if test="type == 0">
+            , IE.TTL_INT_AMT settlementAmt
+        </if>
+        <if test="type == 1">
+            , IE.FEE_TOTAL_AMT settlementAmt
+        </if>
+        FROM INVC_INFO II
+        <if test="type == 0">
+            JOIN INTERESTS IE ON IE.INVC_ID = II.REC_UID
+        </if>
+        <if test="type == 1">
+            JOIN FEE IE ON IE.INVC_ID = II.REC_UID
+        </if>
+        LEFT JOIN CORP_INFO CI ON IE.BEARER_ID = CI.CORP_ID
+        WHERE II.STATUS = 1 AND CI.STATUS = 1
+        <if test="type != ''">
+            AND IE.STATUS = 1
+        </if>
+        AND CI.CORP_ID = #{corpId} AND II.INV_STATUS = #{invStatus}
+    </select>
+</mapper>

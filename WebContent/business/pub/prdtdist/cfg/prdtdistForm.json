@@ -1,0 +1,105 @@
+{
+	"result": 0,
+	"resultNote": "Frontend CFG!",
+	"resultData": 
+	{
+		"pageType": "page-form",
+		"submitUrl": "/pub/prdtdist/bpm/startGo",
+		"idField": "custId",
+		"title": "新增/编辑",
+		"fields": 
+		[
+			{
+				"type": "hidden",
+				"name": "corpId"
+			},
+
+			{
+				"type": "lookup",
+				"label": "客户名称",
+				"name": "corpName",
+				"route": "corpLookupList",
+				"required": true
+			},
+
+			{
+				"type": "text",
+				"label": "组织机构代码证号",
+				"name": "orgnNo",
+				"required": true,
+				"readonly": true
+			},
+
+			{
+				"id": "txt-prdtdist-lmtAmt",
+				"type": "text",
+				"label": "授信额度",
+				"name": "lmtAmt",
+				"required": true,
+				"readonly": true
+			},
+
+			{
+				"id": "txt-prdtdist-releLmtAmt",
+				"type": "text",
+				"label": "分配授信额度",
+				"name": "releLmtAmt",
+				"readonly": true
+			},
+
+			{
+				"type": "datagrid",
+				"id": "dg-prdtdist-prdDistList",
+				"name": "prdDistList",
+				"required": true,
+				"btnGroup": 
+				[
+					{
+						"type": "grid-form-win",
+						"title": "新增",
+						"icon": "fa fa-plus",
+						"route": "prdtdistDetailForm"
+					}
+				],
+
+				"idField": "recUid",
+				"columns": 
+				[
+					{
+						"title": "产品名称",
+						"field": "productNm"
+					},
+
+					{
+						"title": "产品额度",
+						"field": "productLmt"
+					},
+
+					{
+						"title": "额度模式",
+						"field": "lmtMol",
+						"dictName": "LIMIT_MODE"
+					},
+
+					{
+						"title": "操作",
+						"actions": 
+						[
+							{
+								"name": "删除",
+								"icon": "fa fa-trash",
+								"action": "$('#dg-prdtdist-prdDistList').EBDataGrid('delData', {index: @{DATAINDEX}})"
+							},
+
+							{
+								"name": "编辑",
+								"icon": "fa fa-trash",
+								"action": "eb.app.openItemForm(@{DATAINDEX}, 'prdtdistDetailForm', 'dg-prdtdist-prdDistList')"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

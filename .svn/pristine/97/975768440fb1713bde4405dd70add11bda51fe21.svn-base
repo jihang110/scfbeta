@@ -1,0 +1,43 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "sourceUrl": "/pub/corp/lookupList",
+    "idField": "corpId",
+    "searchFields": [
+      {
+        "type": "hidden",
+        "name": "isPage",
+        "value": 1
+      },
+      {
+        "type": "text",
+        "label": "客户名称",
+        "name": "corpName"
+      }
+    ],
+    "columns": [
+      {
+        "title": "ID",
+        "field": "corpId"
+      },
+      {
+        "title": "客户名称",
+        "field": "corpName"
+      },
+      {
+        "title": "联系方式",
+        "field": "mobPhone"
+      },
+      {
+        "title": "组织机构代码证号",
+        "field": "orgnNo"
+      },
+      {
+        "title": "公司地址",
+        "field": "officeAddress"
+      }
+    ]
+  }
+}

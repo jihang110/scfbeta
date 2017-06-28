@@ -1,0 +1,65 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "title": "卖方协议录入",
+    "searchFields": [
+      {
+        "type": "hidden",
+        "name": "isPage",
+        "value": 1
+      },
+      {
+        "type": "text",
+        "label": "买方名称",
+        "name": "custNm"
+      },
+      {
+        "type": "text",
+        "label": "卖方名称",
+        "name": "counterPartyNm"
+      }
+    ],
+
+    "sourceUrl": "/pub/sellercntrct/list",
+    "idField": "recUid",
+    "columns": [
+      {
+        "title": "ID",
+        "field": "recUid"
+      },
+      {
+        "title": "产品名称",
+        "field": "productNm"
+      },
+      {
+        "title": "卖方名称",
+        "field": "counterPartyNm"
+      },
+      {
+        "title": "组织机构代码证号",
+        "field": "selOrgnNo"
+      },
+      {
+        "title": "买方名称",
+        "field": "custNm"
+      },
+      {
+        "title": "组织机构代码证号",
+        "field": "buyOrgnNo"
+      },
+      {
+        "title": "操作",
+        "actions": [
+          {
+            "name": "签约",
+            "icon": "fa fa-pencil-square",
+            "action": "eb.app.Router.go('#sellerCntrctList-edit', {'requestData':{'recUid': '@{recUid}'}})"
+          }
+        ]
+      }
+    ], 
+    "script": "pub/cntrct/js/sellerCntrctForm.js"
+  }
+}

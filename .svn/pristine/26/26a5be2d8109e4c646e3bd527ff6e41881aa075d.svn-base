@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ut.scf.dao.serial.SelectTable">
+ <resultMap id="BaseResultMap" type="com.ut.scf.pojo.serial.UserTables">
+    <id column="table_name" jdbcType="VARCHAR" property="serialNm" />
+  </resultMap>
+  <select id="getAllTable"  parameterType="hashmap" resultMap="BaseResultMap">
+	SELECT table_name "serialNm" FROM USER_TABLES where 1=1
+    <if test="serialNm != null">
+        and table_name like '%${serialNm}%'
+      </if>
+  </select>
+
+</mapper>

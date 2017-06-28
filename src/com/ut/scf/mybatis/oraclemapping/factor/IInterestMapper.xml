@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ut.scf.dao.factor.IInterestDao">
+    <select id="getCorpNotSettlement" parameterType="HashMap" resultType="com.ut.scf.pojo.factor.InterestExt">
+        SELECT CORP_NAME payerNm, CORP_ID payerId, ORGN_NO orgNo, AMT settlementTotalAmt, 0 AS settlementTp
+        FROM (
+            SELECT BEARER_ID, "SUM"(INT_AMT) AMT
+            FROM INTEREST_FLOW IEF LEFT JOIN INTERESTS IE ON IEF.INT_UID = IE.REC_UID
+            WHERE IEF.INT_PAY_FLG = 0 AND IE.STATUS = 1 GROUP BY IE.BEARER_ID
+        ) IE LEFT JOIN CORP_INFO CI ON CI.CORP_ID = IE.BEARER_ID
+        WHERE CI.STATUS = 1
+        <if test="counterPartyNm != null">
+            and CI.CORP_NAME LIKE CONCAT(CONCAT('%', #{counterPartyNm}),'%')
+        </if>
+        <if test="orgnNo != null">
+            and CI.ORGN_NO LIKE CONCAT(CONCAT('%', #{orgnNo}),'%')
+        </if>
+        UNION ALL
+        SELECT CORP_NAME payerNm, CORP_ID payerId, ORGN_NO orgNo, AMT settlementTotalAmt, 1 AS settlementTp
+        FROM (
+            SELECT BEARER_ID, "SUM"(FEE_AMT) AMT
+            FROM FEE_FLOW FF LEFT JOIN FEE ON FF.FEE_UID = FEE.REC_UID
+            WHERE FF.FEE_PAY_FLG = 0 AND FEE.STATUS = 1 GROUP BY FEE.BEARER_ID
+        ) IE LEFT JOIN CORP_INFO CI ON CI.CORP_ID = IE.BEARER_ID
+        WHERE CI.STATUS = 1
+        <if test="counterPartyNm != null">
+            and CI.CORP_NAME LIKE CONCAT(CONCAT('%', #{counterPartyNm}),'%')
+        </if>
+        <if test="orgnNo != null">
+            and CI.ORGN_NO LIKE CONCAT(CONCAT('%', #{orgnNo}),'%')
+        </if>
+    </select>
+    <select id="getInterestBy" resultType="com.ut.scf.pojo.auto.InterestFlow">
+        SELECT REC_UID recUid
+        FROM INTEREST_FLOW IEF
+        JOIN INTERESTS IE ON IEF.INT_UID = IE.REC_UID
+        WHERE IEF.INT_PAY_FLG = 0 AND IE.STATUS = 1 AND IE.BEARER_ID = #{corpId}
+    </select>
+    <select id="getFeeBy" resultType="com.ut.scf.pojo.auto.FeeFlow">
+        SELECT REC_UID recUid
+        FROM FEE_FLOW FF
+        JOIN FEE ON FF.FEE_UID = FEE.REC_UID
+        WHERE FF.FEE_PAY_FLG = 0 AND FEE.STATUS = 1 AND FEE.BEARER_ID = #{corpId}
+    </select>
+</mapper>

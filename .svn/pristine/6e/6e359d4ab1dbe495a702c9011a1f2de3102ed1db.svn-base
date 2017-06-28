@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ut.scf.dao.auto.CustAcMapper" >
+  <resultMap id="BaseResultMap" type="com.ut.scf.pojo.auto.CustAc" >
+    <id column="REC_UID" property="recUid" jdbcType="VARCHAR" />
+    <result column="AC_NM" property="acNm" jdbcType="VARCHAR" />
+    <result column="AC_BK_NM" property="acBkNm" jdbcType="VARCHAR" />
+    <result column="AC_TP" property="acTp" jdbcType="VARCHAR" />
+    <result column="AC_STS" property="acSts" jdbcType="VARCHAR" />
+    <result column="AC_NO" property="acNo" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="BUSI_DT" property="busiDt" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    REC_UID, AC_NM, AC_BK_NM, AC_TP, AC_STS, AC_NO, CUST_ID, CREATE_USER, CREATE_TIME, 
+    STATUS, BUSI_DT, UPDATE_USER, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ut.scf.pojo.auto.CustAcExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.CUST_AC
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.CUST_AC
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SCFCLOUD.CUST_AC
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ut.scf.pojo.auto.CustAcExample" >
+    delete from SCFCLOUD.CUST_AC
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ut.scf.pojo.auto.CustAc" >
+    insert into SCFCLOUD.CUST_AC (REC_UID, AC_NM, AC_BK_NM, 
+      AC_TP, AC_STS, AC_NO, 
+      CUST_ID, CREATE_USER, CREATE_TIME, 
+      STATUS, BUSI_DT, UPDATE_USER, 
+      UPDATE_TIME)
+    values (#{recUid,jdbcType=VARCHAR}, #{acNm,jdbcType=VARCHAR}, #{acBkNm,jdbcType=VARCHAR}, 
+      #{acTp,jdbcType=VARCHAR}, #{acSts,jdbcType=VARCHAR}, #{acNo,jdbcType=VARCHAR}, 
+      #{custId,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=DECIMAL}, #{busiDt,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ut.scf.pojo.auto.CustAc" >
+    insert into SCFCLOUD.CUST_AC
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recUid != null" >
+        REC_UID,
+      </if>
+      <if test="acNm != null" >
+        AC_NM,
+      </if>
+      <if test="acBkNm != null" >
+        AC_BK_NM,
+      </if>
+      <if test="acTp != null" >
+        AC_TP,
+      </if>
+      <if test="acSts != null" >
+        AC_STS,
+      </if>
+      <if test="acNo != null" >
+        AC_NO,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="busiDt != null" >
+        BUSI_DT,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recUid != null" >
+        #{recUid,jdbcType=VARCHAR},
+      </if>
+      <if test="acNm != null" >
+        #{acNm,jdbcType=VARCHAR},
+      </if>
+      <if test="acBkNm != null" >
+        #{acBkNm,jdbcType=VARCHAR},
+      </if>
+      <if test="acTp != null" >
+        #{acTp,jdbcType=VARCHAR},
+      </if>
+      <if test="acSts != null" >
+        #{acSts,jdbcType=VARCHAR},
+      </if>
+      <if test="acNo != null" >
+        #{acNo,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null" >
+        #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ut.scf.pojo.auto.CustAcExample" resultType="java.lang.Integer" >
+    select count(*) from SCFCLOUD.CUST_AC
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SCFCLOUD.CUST_AC
+    <set >
+      <if test="record.recUid != null" >
+        REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acNm != null" >
+        AC_NM = #{record.acNm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acBkNm != null" >
+        AC_BK_NM = #{record.acBkNm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acTp != null" >
+        AC_TP = #{record.acTp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acSts != null" >
+        AC_STS = #{record.acSts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acNo != null" >
+        AC_NO = #{record.acNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custId != null" >
+        CUST_ID = #{record.custId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUser != null" >
+        CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.busiDt != null" >
+        BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null" >
+        UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SCFCLOUD.CUST_AC
+    set REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      AC_NM = #{record.acNm,jdbcType=VARCHAR},
+      AC_BK_NM = #{record.acBkNm,jdbcType=VARCHAR},
+      AC_TP = #{record.acTp,jdbcType=VARCHAR},
+      AC_STS = #{record.acSts,jdbcType=VARCHAR},
+      AC_NO = #{record.acNo,jdbcType=VARCHAR},
+      CUST_ID = #{record.custId,jdbcType=VARCHAR},
+      CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ut.scf.pojo.auto.CustAc" >
+    update SCFCLOUD.CUST_AC
+    <set >
+      <if test="acNm != null" >
+        AC_NM = #{acNm,jdbcType=VARCHAR},
+      </if>
+      <if test="acBkNm != null" >
+        AC_BK_NM = #{acBkNm,jdbcType=VARCHAR},
+      </if>
+      <if test="acTp != null" >
+        AC_TP = #{acTp,jdbcType=VARCHAR},
+      </if>
+      <if test="acSts != null" >
+        AC_STS = #{acSts,jdbcType=VARCHAR},
+      </if>
+      <if test="acNo != null" >
+        AC_NO = #{acNo,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null" >
+        BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ut.scf.pojo.auto.CustAc" >
+    update SCFCLOUD.CUST_AC
+    set AC_NM = #{acNm,jdbcType=VARCHAR},
+      AC_BK_NM = #{acBkNm,jdbcType=VARCHAR},
+      AC_TP = #{acTp,jdbcType=VARCHAR},
+      AC_STS = #{acSts,jdbcType=VARCHAR},
+      AC_NO = #{acNo,jdbcType=VARCHAR},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=DECIMAL},
+      BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </update>
+</mapper>

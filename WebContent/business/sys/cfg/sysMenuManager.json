@@ -1,0 +1,48 @@
+{
+  "result": 0,
+  "resultMsg": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-datagrid",
+    "title": "菜单管理",
+
+    "sourceUrl": "/menu/list",
+    "btnGroup": [
+      {
+        "name": "添加菜单",
+        "icon": "fa fa-plus",
+        "submitUrl": "/menu/add",
+        "action": "eb.app.Router.go('#sysMenuManager-add')"
+      },
+      {
+        "name": "编辑",
+        "icon": "fa fa-pencil-square",
+        "action": "eb.app.Router.go('#sysMenuManager-edit',  {'requestData':{'menuId': '@{menuId}'}})"
+      },
+      {
+        "name": "删除菜单",
+        "icon": "fa fa-trash",
+        "action": "eb.app.deleteFromDataGrid({msg:'您确定要删除 @name 数据吗？', url: '/menu/delete', 'requestData': {'menuId': '@{menuId}'}})"
+      }
+    ],
+    "idField": "menuId",
+    "columns": [
+      {
+        "title": "菜单名称",
+        "field": "menuName"
+      },
+      {
+        "title": "菜单序列",
+        "field": "MENUORDER"
+      },
+	  {
+        "title": "菜单路径",
+        "field": "menuPath"
+      },
+      {
+        "title": "菜单描述",
+        "field": "note"
+      }
+    ]
+
+  }
+}

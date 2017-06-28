@@ -1,0 +1,71 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+    "pageType": "page-form",
+    "submitUrl": "/factor/cancIntFee/bpm/startGo",
+    "pageStrategy": "none",
+    "title": "勾销息费",
+    "fields": [
+      {
+        "id": "payerId",
+        "type": "hidden",
+        "name": "payerId"
+      },
+      {
+      	"id":"payerNm",
+        "type": "lookup",
+        "label": "付款人名称",
+        "route":"cancIntFeeCustForm",
+        "name": "payerNm",
+        "required": true
+      },
+      {
+        "id": "orgnNo",
+        "type": "text",
+        "label": "组织机构代码证号",
+        "name": "orgNo",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "id": "settlementTp",
+        "type": "select",
+        "label": "结算类型",
+        "name": "settlementTp",
+        "dict": [{"key": "", "value": "请选择"}, {"key": "0", "value": "结算利息"}, {"key": "1", "value": "结算费用"}],
+        "readonly": true,
+        "required": true
+      },
+      {
+        "id": "settlementAmt",
+        "type": "text",
+        "label": "本次结算总金额",
+        "name": "settlementAmt",
+        "readonly": true,
+        "required": true
+      },
+      {
+        "id": "invcsList",
+        "type": "datagrid",
+        "name": "invcsList",
+        "selectStrategy": "multi",
+        "columns": [
+       	  {
+            "title": "发票编号",
+            "field": "invcNo"
+          },
+          {
+            "title": "交易对手名称",
+            "field": "counterPartyNm"
+          },
+          {
+            "title": "结算金额",
+            "field": "settlementAmt"
+          }
+        ]
+      }
+    ],
+    "script": "business/factor/cancIntFee/js/cancIntFee.js"
+  }
+}

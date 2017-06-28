@@ -1,0 +1,176 @@
+{
+	"result": 0,
+	"resultNote": "Frontend CFG!",
+	"resultData": 
+	{
+		"pageType": "page-form",
+		"submitUrl": "/pub/corp/bpm/startGo",
+		"idField": "corpId",
+		"title": "新增/编辑接口",
+		"fields": 
+		[
+			{
+				"id": "hid-corp-corpId",
+				"type": "hidden",
+				"name": "corpId"
+			},
+
+			{
+				"id": "sel-corp-corpType",
+				"type": "select",
+				"label": "客户类型",
+				"name": "corpType",
+				"required": true,
+				"dictName": "CORP_TYPE"
+			},
+
+			{
+				"type": "text",
+				"label": "客户名称",
+				"name": "corpName",
+				"required": true
+			},
+
+			{
+				"type": "text",
+				"label": "组织机构代码证号",
+				"name": "orgnNo",
+				"required": true
+			},
+
+			{
+				"id": "txt-corp-lmtAmt",
+				"type": "text",
+				"label": "授信额度",
+				"name": "lmtAmt",
+				"reg": "decimal",
+				"required": true
+			},
+
+			{
+				"type": "text",
+				"label": "营业执照号",
+				"name": "businessLicense",
+				"required": false
+			},
+
+			{
+				"type": "text",
+				"label": "税号",
+				"name": "taxNo",
+				"required": false
+			},
+
+			{
+				"type": "text",
+				"label": "公司地址",
+				"name": "officeAddress",
+				"required": true
+			},
+
+			{
+				"type": "text",
+				"label": "联系方式",
+				"name": "mobPhone",
+				"required": true,
+				"reg": "mobilephone"
+			},
+
+			{
+				"type": "text",
+				"label": "固定电话",
+				"name": "fixedPhone",
+				"required": false
+			},
+
+			{
+				"type": "text",
+				"label": "法定代表人",
+				"name": "legalPerson",
+				"required": false
+			},
+
+			{
+				"type": "text",
+				"label": "法人电话",
+				"name": "legalMobPhone",
+				"required": false,
+				"reg": "mobilephone"
+			},
+
+			{
+				"type": "text",
+				"label": "住所地",
+				"name": "domicileAddr",
+				"required": false
+			},
+
+			{
+				"type": "text",
+				"label": "邮编",
+				"name": "postcode",
+				"required": false
+			},
+
+			{
+				"id": "dg-corp-acctList",
+				"type": "datagrid",
+				"name": "acctList",
+				"btnGroup": 
+				[
+					{
+						"type": "grid-form-win",
+						"title": "新增",
+						"icon": "fa fa-plus",
+						"route": "corpAcctDetailForm"
+					}
+				],
+
+				"idField": "recUid",
+				"columns": 
+				[
+					{
+						"title": "账号",
+						"field": "acNo"
+					},
+
+					{
+						"title": "户名",
+						"field": "acNm"
+					},
+
+					{
+						"title": "开户行",
+						"field": "acBkNm"
+					},
+
+					{
+						"title": "账号类型",
+						"field": "acTp",
+						"dictName": "ACCT_TYPE"
+					},
+
+					{
+						"title": "操作",
+						"actions": 
+						[
+							{
+								"name": "删除",
+								"icon": "fa fa-trash",
+								"action": "fn_corp_form.doDeleteAcct('@{recUid}',@{DATAINDEX})"
+							},
+
+							{
+								"name": "编辑",
+								"icon": "fa fa-trash",
+								"action": "fn_corp_form.doEditAcctForm('@{recUid}',@{DATAINDEX})"
+							}
+						]
+					}
+				]
+			}
+		],
+
+		"script": "business/pub/corp/js/corp.js"
+	}
+}

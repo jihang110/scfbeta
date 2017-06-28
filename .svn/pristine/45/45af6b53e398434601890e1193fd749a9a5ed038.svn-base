@@ -1,0 +1,39 @@
+package com.ut.scf.respbean.bpm;
+
+import java.util.Map;
+
+import com.ut.scf.core.bpm.FormConfig;
+
+public class AuditHisFormDataRespBean<FORMBEAN> {
+
+	private FORMBEAN formData;
+
+	private Map<String, String> opinions;
+
+	private FormConfig formConfig;
+
+	public FormConfig getFormConfig() {
+		return formConfig;
+	}
+
+	public void setFormConfig(FormConfig formConfig) {
+		this.formConfig = formConfig;
+	}
+
+	public FORMBEAN getFormData() {
+		return formData;
+	}
+
+	public void setFormData(FORMBEAN formData) {
+		this.formData = formData;
+	}
+
+	public Map<String, String> getOpinions() {
+		return opinions;
+	}
+
+	public void setOpinions(Map<String, String> opinions) {
+		this.opinions = opinions;
+	}
+
+}

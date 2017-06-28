@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ut.scf.dao.factor.ICntRecomDao">
+
+	<resultMap id="BaseResultMap" type="com.ut.scf.reqbean.factor.CntRecomReqBean">
+		<result column="REC_UID" property="recUid" jdbcType="VARCHAR" />
+		<result column="PRODUCT_NM" property="productNm" jdbcType="VARCHAR" />
+		<result column="LMT_MOL" property="lmtMol" jdbcType="VARCHAR" />
+		<result column="ASSOC_AMT" property="assocAmt" jdbcType="DECIMAL" />
+		<result column="AMT_TP" property="amtTp" jdbcType="VARCHAR" />
+		<result column="CUST_NM" property="custNm" jdbcType="VARCHAR" />
+		<result column="COUNTER_PARTY_NM" property="counterPartyNm" jdbcType="VARCHAR" />
+		<result column="BUSINESS_LICENSE" property="businessLicense" jdbcType="VARCHAR" />
+		<result column="OFFICE_ADDRESS" property="officeAddress" jdbcType="VARCHAR" />
+		<result column="MOB_PHONE" property="mobPhone" jdbcType="VARCHAR" />
+		<result column="FIXED_PHONE" property="fixedPhone" jdbcType="VARCHAR" />
+		<result column="LEGAL_PERSON" property="legalPerson" jdbcType="VARCHAR" />
+		<result column="POSTCODE" property="postcode" jdbcType="VARCHAR" />
+		<result column="LEGAL_MOB_PHONE" property="legalMobPhone" jdbcType="VARCHAR" />
+		<result column="EMAIL" property="email" jdbcType="VARCHAR" />
+		<result column="DOMICILE_ADDR" property="domicileAddr" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getCntRecomList" parameterType="hashmap" resultType="hashmap">
+		select b.PRODUCT_ID "productId",
+		a.REC_UID "recUid",
+		b.COUNTER_PARTY_ID
+		"counterPartyId",
+		b.CUST_ID "custId",
+		c.PRODUCT_NM "productNm",
+		d.CORP_NAME "counterPartyNm",
+		d.ORGN_NO "selOrgnNo",
+		e.CORP_NAME
+		"custNm",
+		e.ORGN_NO "buyOrgnNo"
+		from CNT_RECOM_SEL a
+		left join CNTRCT b
+		ON a.CNT_NO = b.REC_UID
+		left join PRODUCT c
+		on b.PRODUCT_ID = c.REC_UID
+		LEFT JOIN CORP_INFO d
+		on a.COUNTER_PARTY_ID = d.CORP_ID
+		LEFT JOIN
+		CORP_INFO e
+		on b.CUST_ID = e.CORP_ID
+		where 1 = 1
+		<if test="custNm != null">
+			and e.CORP_NAME LIKE CONCAT(CONCAT('%', #{custNm}),'%')
+		</if>
+		<if test="counterPartyNm != null">
+			and d.CORP_NAME LIKE CONCAT(CONCAT('%',
+			#{counterPartyNm}),'%')
+		</if>
+	</select>
+
+	<select id="selectByKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+			a.ASSOC_AMT "assocAmt",
+			a.AMT_TP "amtTp",
+			c.PRODUCT_NM
+			"productNm",
+			d.CORP_NAME "counterPartyNm",
+			d.BUSINESS_LICENSE "businessLicense",
+			d.OFFICE_ADDRESS "officeAddress",
+			d.MOB_PHONE "mobPhone",
+			d.FIXED_PHONE "fixedPhone",
+			d.LEGAL_PERSON "legalPerson",
+			d.LEGAL_MOB_PHONE "legalMobPhone",
+			d.POSTCODE "postcode",
+			d.EMAIL "email",
+			d.DOMICILE_ADDR "domicileAddr",
+			e.CORP_NAME "custNm"
+		from 
+			CNT_RECOM_SEL a
+			left join CNTRCT b ON a.CNT_NO = b.REC_UID
+			left join PRODUCT c on b.PRODUCT_ID = c.REC_UID
+			LEFT JOIN CORP_INFO d on a.COUNTER_PARTY_ID = d.CORP_ID
+			LEFT JOIN CORP_INFO e on b.CUST_ID = e.CORP_ID
+		where a.REC_UID = #{recUid,jdbcType=VARCHAR}
+	</select>
+
+</mapper>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ut.scf.dao.factor.IPaymentDao" >
+  <select id="getList" parameterType="hashmap" resultType="hashmap" >
+    select 
+    P.REC_UID "recUid", 
+    P.CNT_ID "cntId",
+    CT.CNT_NO "cntNo",
+    P.PRODUCT_ID "productId",
+    PD.PRODUCT_NM "productNm",
+    P.COUNTER_PARTY_ID "counterPartyId",
+    CI.CORP_NAME "counterPartyName",
+    P.UNPAID_PAYABLE_AMT "unpaidPayableAmt",
+    P.TTL_PMT_AMT "ttlPmtAmt",
+    P.CREATE_USER "createUser", 
+    P.CREATE_TIME "createTime", 
+    P.STATUS "status", 
+    P.BUSI_DT "busiDt", 
+    P.UPDATE_USER "updateUser", 
+    P.UPDATE_TIME  "updateTime"
+    from PAYMENT P
+    LEFT JOIN CORP_INFO CI 
+    ON P.COUNTER_PARTY_ID = CI.CORP_ID
+    LEFT JOIN CNTRCT CT
+    ON CT.REC_UID =  P.CNT_ID
+    LEFT JOIN PRODUCT PD
+    ON PD.REC_UID =  P.PRODUCT_ID
+    where 1=1
+    <if test="cntId != null">
+      and  P.CNT_ID = #{cntId}
+    </if>
+  </select>
+  
+   <resultMap id="invoiceExt" type="com.ut.scf.pojo.factor.InvoiceExt">
+    <id column="REC_UID" jdbcType="VARCHAR" property="cntId" />
+    <result column="CORP_NAME" jdbcType="VARCHAR" property="counterPartyNm" />
+    <result column="CORP_ID" jdbcType="VARCHAR" property="counterPartyId" />
+    <result column="ORGN_NO" jdbcType="VARCHAR" property="orgnNo" />
+    <result column="CNT_NO" jdbcType="VARCHAR" property="cntNo" />
+     <result column="UNPAID_PAYABLE_AMT" jdbcType="DECIMAL" property="unpaidPayableAmt" />
+    <result column="PRODUCT_NM" jdbcType="VARCHAR" property="productNm" />
+    <result column="PRODUCT_ID" jdbcType="VARCHAR" property="productId" />
+    <result column="DEDU_METHOD" jdbcType="VARCHAR" property="deduMethod" />
+    <result column="RATE_BEAR_PARTY" jdbcType="VARCHAR" property="rateBearParty" />
+    <result column="RATE" jdbcType="DECIMAL" property="rate" />
+    <result column="SUM_INV_AMT" jdbcType="DECIMAL" property="sumInvAmt" />
+    <result column="RATE_BEAR_PARTY" jdbcType="VARCHAR" property="rateBearParty" />
+    <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="BUSI_DT" jdbcType="TIMESTAMP" property="busiDt" />
+    <result column="UPDATE_USER" jdbcType="VARCHAR" property="updateUser" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <select id="getCounterPartyList" parameterType="hashmap" resultMap="invoiceExt" >
+	select CI.CORP_NAME,
+	CI.CORP_ID,
+	CI.ORGN_NO ,
+	CN.CNT_NO ,
+	TMP.UNPAID_PAYABLE_AMT,
+	CN.REC_UID ,
+	PR.PRODUCT_NM ,
+	PR.REC_UID "PRODUCT_ID" ,
+	CN.CREATE_USER ,
+	CI.CREATE_TIME ,
+	CI.STATUS ,
+	CI.BUSI_DT ,
+	CI.UPDATE_USER ,
+	CI.UPDATE_TIME 
+	from CORP_INFO CI
+	LEFT JOIN CNTRCT CN
+	ON CN.COUNTER_PARTY_ID = CI.CORP_ID
+	LEFT JOIN PRODUCT PR
+	ON PR.REC_UID = CN.PRODUCT_ID
+	LEFT JOIN (select II.CNTRCT_NO "CNT_NO",
+						COUNT(II.INV_AMT) AS UNPAID_PAYABLE_AMT
+				from INVC_INFO II
+				LEFT JOIN CNTRCT CN
+				ON CN.REC_UID = II.CNTRCT_NO
+				WHERE II.INV_STATUS IN ('2', '3', '4')
+				GROUP BY II.CNTRCT_NO) TMP
+	ON TMP.CNT_NO = CN.CNT_NO
+	where CI.STATUS = 1
+    <if test="counterPartyNm != null">
+      and CI.CORP_NAME = #{counterPartyNm}
+    </if>
+    <if test="orgnNo != null">
+      and CI.ORGN_NO = #{orgnNo}
+    </if>
+  </select>
+</mapper>

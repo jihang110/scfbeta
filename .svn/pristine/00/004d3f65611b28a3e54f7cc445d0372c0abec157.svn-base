@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ut.scf.dao.serial.SerialNumMapper">
+  <resultMap id="BaseResultMap" type="com.ut.scf.pojo.serial.SerialNum">
+    <id column="SERIAL_ID" jdbcType="VARCHAR" property="serialId" />
+    <result column="SERIAL_NM" jdbcType="VARCHAR" property="serialNm" />
+    <result column="SERIAL_RULE" jdbcType="VARCHAR" property="serialRule" />
+    <result column="MOD_ONE" jdbcType="VARCHAR" property="modOne" />
+    <result column="MOD_TWO" jdbcType="VARCHAR" property="modTwo" />
+    <result column="SEPARATOR" jdbcType="VARCHAR" property="separator" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    SERIAL_ID, SERIAL_NM, SERIAL_RULE, MOD_ONE, MOD_TWO, SEPARATOR, STATUS, CREATE_USER, 
+    CREATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.ut.scf.pojo.serial.SerialNumExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.SERIAL_NUM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.SERIAL_NUM
+    where SERIAL_ID = #{serialId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from SCFCLOUD.SERIAL_NUM
+    where SERIAL_ID = #{serialId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ut.scf.pojo.serial.SerialNumExample">
+    delete from SCFCLOUD.SERIAL_NUM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ut.scf.pojo.serial.SerialNum">
+    insert into SCFCLOUD.SERIAL_NUM (SERIAL_ID, SERIAL_NM, SERIAL_RULE, 
+      MOD_ONE, MOD_TWO, SEPARATOR, 
+      STATUS, CREATE_USER, CREATE_TIME
+      )
+    values (getserialid('SerNum'), #{serialNm,jdbcType=VARCHAR}, #{serialRule,jdbcType=VARCHAR}, 
+      #{modOne,jdbcType=VARCHAR}, #{modTwo,jdbcType=VARCHAR}, #{separator,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ut.scf.pojo.serial.SerialNum">
+    insert into SCFCLOUD.SERIAL_NUM
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="serialId != null">
+        SERIAL_ID,
+      </if>
+      <if test="serialNm != null">
+        SERIAL_NM,
+      </if>
+      <if test="serialRule != null">
+        SERIAL_RULE,
+      </if>
+      <if test="modOne != null">
+        MOD_ONE,
+      </if>
+      <if test="modTwo != null">
+        MOD_TWO,
+      </if>
+      <if test="separator != null">
+        SEPARATOR,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="createUser != null">
+        CREATE_USER,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="serialId != null">
+        #{serialId,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNm != null">
+        #{serialNm,jdbcType=VARCHAR},
+      </if>
+      <if test="serialRule != null">
+        #{serialRule,jdbcType=VARCHAR},
+      </if>
+      <if test="modOne != null">
+        #{modOne,jdbcType=VARCHAR},
+      </if>
+      <if test="modTwo != null">
+        #{modTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="separator != null">
+        #{separator,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ut.scf.pojo.serial.SerialNumExample" resultType="java.lang.Integer">
+    select count(*) from SCFCLOUD.SERIAL_NUM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update SCFCLOUD.SERIAL_NUM
+    <set>
+      <if test="record.serialId != null">
+        SERIAL_ID = #{record.serialId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serialNm != null">
+        SERIAL_NM = #{record.serialNm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serialRule != null">
+        SERIAL_RULE = #{record.serialRule,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modOne != null">
+        MOD_ONE = #{record.modOne,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modTwo != null">
+        MOD_TWO = #{record.modTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.separator != null">
+        SEPARATOR = #{record.separator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUser != null">
+        CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update SCFCLOUD.SERIAL_NUM
+    set SERIAL_ID = #{record.serialId,jdbcType=VARCHAR},
+      SERIAL_NM = #{record.serialNm,jdbcType=VARCHAR},
+      SERIAL_RULE = #{record.serialRule,jdbcType=VARCHAR},
+      MOD_ONE = #{record.modOne,jdbcType=VARCHAR},
+      MOD_TWO = #{record.modTwo,jdbcType=VARCHAR},
+      SEPARATOR = #{record.separator,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ut.scf.pojo.serial.SerialNum">
+    update SCFCLOUD.SERIAL_NUM
+    <set>
+      <if test="serialNm != null">
+        SERIAL_NM = #{serialNm,jdbcType=VARCHAR},
+      </if>
+      <if test="serialRule != null">
+        SERIAL_RULE = #{serialRule,jdbcType=VARCHAR},
+      </if>
+      <if test="modOne != null">
+        MOD_ONE = #{modOne,jdbcType=VARCHAR},
+      </if>
+      <if test="modTwo != null">
+        MOD_TWO = #{modTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="separator != null">
+        SEPARATOR = #{separator,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where SERIAL_ID = #{serialId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ut.scf.pojo.serial.SerialNum">
+    update SCFCLOUD.SERIAL_NUM
+    set SERIAL_NM = #{serialNm,jdbcType=VARCHAR},
+      SERIAL_RULE = #{serialRule,jdbcType=VARCHAR},
+      MOD_ONE = #{modOne,jdbcType=VARCHAR},
+      MOD_TWO = #{modTwo,jdbcType=VARCHAR},
+      SEPARATOR = #{separator,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where SERIAL_ID = #{serialId,jdbcType=VARCHAR}
+  </update>
+</mapper>

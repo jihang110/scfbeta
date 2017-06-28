@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ut.scf.dao.auto.LoanDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.ut.scf.pojo.auto.LoanDetail" >
+    <id column="REC_UID" property="recUid" jdbcType="VARCHAR" />
+    <result column="RELA_ID" property="relaId" jdbcType="VARCHAR" />
+    <result column="INVC_ID" property="invcId" jdbcType="VARCHAR" />
+    <result column="INV_LOAN_AVAL" property="invLoanAval" jdbcType="DECIMAL" />
+    <result column="INV_LOAN_AMT" property="invLoanAmt" jdbcType="DECIMAL" />
+    <result column="LOAN_VAL_DT" property="loanValDt" jdbcType="TIMESTAMP" />
+    <result column="LOAN_DUE_DT" property="loanDueDt" jdbcType="TIMESTAMP" />
+    <result column="INT_AMT" property="intAmt" jdbcType="DECIMAL" />
+    <result column="INV_LOAN_STS" property="invLoanSts" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="BUSI_DT" property="busiDt" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    REC_UID, RELA_ID, INVC_ID, INV_LOAN_AVAL, INV_LOAN_AMT, LOAN_VAL_DT, LOAN_DUE_DT, 
+    INT_AMT, INV_LOAN_STS, CREATE_USER, CREATE_TIME, STATUS, BUSI_DT, UPDATE_USER, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ut.scf.pojo.auto.LoanDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.LOAN_DETAIL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SCFCLOUD.LOAN_DETAIL
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SCFCLOUD.LOAN_DETAIL
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ut.scf.pojo.auto.LoanDetailExample" >
+    delete from SCFCLOUD.LOAN_DETAIL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ut.scf.pojo.auto.LoanDetail" >
+    insert into SCFCLOUD.LOAN_DETAIL (REC_UID, RELA_ID, INVC_ID, 
+      INV_LOAN_AVAL, INV_LOAN_AMT, LOAN_VAL_DT, 
+      LOAN_DUE_DT, INT_AMT, INV_LOAN_STS, 
+      CREATE_USER, CREATE_TIME, STATUS, 
+      BUSI_DT, UPDATE_USER, UPDATE_TIME
+      )
+    values (#{recUid,jdbcType=VARCHAR}, #{relaId,jdbcType=VARCHAR}, #{invcId,jdbcType=VARCHAR}, 
+      #{invLoanAval,jdbcType=DECIMAL}, #{invLoanAmt,jdbcType=DECIMAL}, #{loanValDt,jdbcType=TIMESTAMP}, 
+      #{loanDueDt,jdbcType=TIMESTAMP}, #{intAmt,jdbcType=DECIMAL}, #{invLoanSts,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=DECIMAL}, 
+      #{busiDt,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ut.scf.pojo.auto.LoanDetail" >
+    insert into SCFCLOUD.LOAN_DETAIL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recUid != null" >
+        REC_UID,
+      </if>
+      <if test="relaId != null" >
+        RELA_ID,
+      </if>
+      <if test="invcId != null" >
+        INVC_ID,
+      </if>
+      <if test="invLoanAval != null" >
+        INV_LOAN_AVAL,
+      </if>
+      <if test="invLoanAmt != null" >
+        INV_LOAN_AMT,
+      </if>
+      <if test="loanValDt != null" >
+        LOAN_VAL_DT,
+      </if>
+      <if test="loanDueDt != null" >
+        LOAN_DUE_DT,
+      </if>
+      <if test="intAmt != null" >
+        INT_AMT,
+      </if>
+      <if test="invLoanSts != null" >
+        INV_LOAN_STS,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="busiDt != null" >
+        BUSI_DT,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recUid != null" >
+        #{recUid,jdbcType=VARCHAR},
+      </if>
+      <if test="relaId != null" >
+        #{relaId,jdbcType=VARCHAR},
+      </if>
+      <if test="invcId != null" >
+        #{invcId,jdbcType=VARCHAR},
+      </if>
+      <if test="invLoanAval != null" >
+        #{invLoanAval,jdbcType=DECIMAL},
+      </if>
+      <if test="invLoanAmt != null" >
+        #{invLoanAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="loanValDt != null" >
+        #{loanValDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loanDueDt != null" >
+        #{loanDueDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="intAmt != null" >
+        #{intAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="invLoanSts != null" >
+        #{invLoanSts,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null" >
+        #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ut.scf.pojo.auto.LoanDetailExample" resultType="java.lang.Integer" >
+    select count(*) from SCFCLOUD.LOAN_DETAIL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SCFCLOUD.LOAN_DETAIL
+    <set >
+      <if test="record.recUid != null" >
+        REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relaId != null" >
+        RELA_ID = #{record.relaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invcId != null" >
+        INVC_ID = #{record.invcId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invLoanAval != null" >
+        INV_LOAN_AVAL = #{record.invLoanAval,jdbcType=DECIMAL},
+      </if>
+      <if test="record.invLoanAmt != null" >
+        INV_LOAN_AMT = #{record.invLoanAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.loanValDt != null" >
+        LOAN_VAL_DT = #{record.loanValDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.loanDueDt != null" >
+        LOAN_DUE_DT = #{record.loanDueDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.intAmt != null" >
+        INT_AMT = #{record.intAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.invLoanSts != null" >
+        INV_LOAN_STS = #{record.invLoanSts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUser != null" >
+        CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.busiDt != null" >
+        BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null" >
+        UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SCFCLOUD.LOAN_DETAIL
+    set REC_UID = #{record.recUid,jdbcType=VARCHAR},
+      RELA_ID = #{record.relaId,jdbcType=VARCHAR},
+      INVC_ID = #{record.invcId,jdbcType=VARCHAR},
+      INV_LOAN_AVAL = #{record.invLoanAval,jdbcType=DECIMAL},
+      INV_LOAN_AMT = #{record.invLoanAmt,jdbcType=DECIMAL},
+      LOAN_VAL_DT = #{record.loanValDt,jdbcType=TIMESTAMP},
+      LOAN_DUE_DT = #{record.loanDueDt,jdbcType=TIMESTAMP},
+      INT_AMT = #{record.intAmt,jdbcType=DECIMAL},
+      INV_LOAN_STS = #{record.invLoanSts,jdbcType=VARCHAR},
+      CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      BUSI_DT = #{record.busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ut.scf.pojo.auto.LoanDetail" >
+    update SCFCLOUD.LOAN_DETAIL
+    <set >
+      <if test="relaId != null" >
+        RELA_ID = #{relaId,jdbcType=VARCHAR},
+      </if>
+      <if test="invcId != null" >
+        INVC_ID = #{invcId,jdbcType=VARCHAR},
+      </if>
+      <if test="invLoanAval != null" >
+        INV_LOAN_AVAL = #{invLoanAval,jdbcType=DECIMAL},
+      </if>
+      <if test="invLoanAmt != null" >
+        INV_LOAN_AMT = #{invLoanAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="loanValDt != null" >
+        LOAN_VAL_DT = #{loanValDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loanDueDt != null" >
+        LOAN_DUE_DT = #{loanDueDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="intAmt != null" >
+        INT_AMT = #{intAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="invLoanSts != null" >
+        INV_LOAN_STS = #{invLoanSts,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="busiDt != null" >
+        BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ut.scf.pojo.auto.LoanDetail" >
+    update SCFCLOUD.LOAN_DETAIL
+    set RELA_ID = #{relaId,jdbcType=VARCHAR},
+      INVC_ID = #{invcId,jdbcType=VARCHAR},
+      INV_LOAN_AVAL = #{invLoanAval,jdbcType=DECIMAL},
+      INV_LOAN_AMT = #{invLoanAmt,jdbcType=DECIMAL},
+      LOAN_VAL_DT = #{loanValDt,jdbcType=TIMESTAMP},
+      LOAN_DUE_DT = #{loanDueDt,jdbcType=TIMESTAMP},
+      INT_AMT = #{intAmt,jdbcType=DECIMAL},
+      INV_LOAN_STS = #{invLoanSts,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=DECIMAL},
+      BUSI_DT = #{busiDt,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where REC_UID = #{recUid,jdbcType=VARCHAR}
+  </update>
+</mapper>

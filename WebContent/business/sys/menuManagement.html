@@ -1,0 +1,239 @@
+<div class="row-fluid">
+    <div class="span6" style="height: 400px;overflow: auto;">
+        <ul id="sys-management-menu-tree" class="ztree"></ul>
+    </div>
+    <div id="sys-management-menu-form-wrapper" class="span6" style="height: 400px;overflow: auto;">
+
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <button id="sys-management-btn-up" class="btn eb-richbtn blue" disabled ><i class="fa fa-arrow-up" aria-hidden="true"></i>上移</button>
+        <button id="sys-management-btn-down" class="btn eb-richbtn blue" disabled ><i class="fa fa-arrow-down" aria-hidden="true"></i>下移</button>
+        <button id="sys-management-btn-save" class="btn eb-richbtn blue"><i class="fa fa-floppy-o" aria-hidden="true"></i>保存</button>
+        <button id="sys-management-btn-new" class="btn eb-richbtn blue" disabled><i class="fa fa-plus" aria-hidden="true"></i>新建</button>
+    </div>
+</div>
+<script type="text/javascript">
+    eb.app.MenuManager =
+    {
+        prevNode: null,
+
+        nextNode: null,
+
+        targetNode: null,
+
+        ztreeObj: null,
+
+        menuSaveTimer: false,
+
+        // 更新按钮状态
+        refreshStatus: function (treeNode) {
+            eb.app.MenuManager.targetNode = treeNode;
+            eb.app.MenuManager.prevNode = treeNode.getPreNode();
+            eb.app.MenuManager.nextNode = treeNode.getNextNode();
+
+            eb.app.MenuManager.prevNode ? $('#sys-management-btn-up').removeAttr('disabled')   : $('#sys-management-btn-up').attr('disabled', 'disabled');
+            eb.app.MenuManager.nextNode ? $('#sys-management-btn-down').removeAttr('disabled') : $('#sys-management-btn-down').attr('disabled', 'disabled');
+        },
+
+        // 保存菜单排序信息
+        saveMenuOrder: function () {
+
+            var getOrderData = function (nodeArr, resultArr) {
+                var resultArr = resultArr || [];
+
+                for (var i=0; i<nodeArr.length; i++)
+                {
+                    var node = nodeArr[i];
+                    resultArr.push({'menuId': node.menuId, 'menuOrder': resultArr.length});
+                    if (node.subMenuList && node.subMenuList.length>0)
+                    {
+                        resultArr = getOrderData(node.subMenuList, resultArr);
+                    }
+                }
+
+                return resultArr;
+            };
+
+            var orderData = getOrderData(eb.app.MenuManager.ztreeObj.getNodes(), []);
+
+            // TODO 调用接口保存数据
+
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+            toastr['info']('菜单顺序调整已经保存成功！');
+            // MOCK 保存结果 */
+        },
+
+        loadMenuForm: function (formData) {
+            var loadForm = function (formData) {
+                var cfg = {
+                    "formId": "sys-management-menu-form",
+                    "fields": [
+                        {
+                            "type": "hidden",
+                            "name": "menuId"
+                        },
+                        {
+                            "type": "text",
+                            "label": "菜单名称",
+                            "name": "menuName",
+                            "required": true
+                        },
+                        {
+                            "type": "tree",
+                            "label": "父菜单",
+                            "name": "parentId",
+                            "selectStrategy": "single",
+                            "sourceUrl": "/menu/tree",
+                            "keyField": "menuId",
+                            "valueField": "menuName",
+                            "idField": "menuId",
+                            "pidField": "parentId",
+                            "childrenField": "subMenuList"
+                        },
+                        {
+                            "type": "text",
+                            "label": "菜单路径",
+                            "name": "menuPath"
+                        },
+                        {
+                            "type": "textarea",
+                            "label": "菜单描述",
+                            "name": "note"
+                        }
+                    ]
+                };
+
+                if (formData)
+                {
+                    for (var i=0; i<cfg.fields.length; i++)
+                    {
+                        cfg.fields[i].formId = cfg.formId;
+                        //fields[i].gridId = gridId;
+                        cfg.fields[i].id = cfg.fields[i].id || 'eb-richipt-'+eb.utils.random(6);
+
+                        if (formData)
+                        {
+                            try {
+                                cfg.fields[i].value = eval("formData." + cfg.fields[i].name)
+                            } catch(e) {
+                                // no need to do anything!
+                            }
+                        }
+
+                        if (cfg.fields[i].dictName)
+                        {
+                            cfg.fields[i].dict = eb.app.cache.dicts[cfg.fields[i].dictName] || [];
+                        }
+                    }
+                }
+                var html = eb.tplengine.parse('form', cfg);
+                $('#sys-management-menu-form-wrapper').html(html);
+                $("#sys-management-menu-form").EBRichForm();
+                //return "";
+            }
+
+            loadForm(formData);
+        }
+    };
+
+    // 加载树
+    new eb.Client({
+            url: eb.settings.SERVER_CONTEXT_PATH + '/menu/tree'
+        })
+        .ifSuccess(function (response) {
+
+            eb.app.MenuManager.ztreeObj = $.fn.zTree.init($('#sys-management-menu-tree'), {
+                data: {
+                    key: {
+                        title: 'menuId',
+                        checked: "ztreeItemSelected",
+                        name: 'menuName',
+                        children: 'subMenuList'
+                    },
+                    simpleData: {
+                        enable: true,
+                        idKey: 'menuId',
+                        pIdKey: 'parentId'
+                        //rootPId: null
+                    }
+                },
+                callback: {
+                    onClick: function (event, treeId, treeNode, clickFlag) {
+                        eb.app.MenuManager.refreshStatus(treeNode);
+                        eb.app.MenuManager.loadMenuForm(treeNode);
+
+                        $('#sys-management-btn-new').removeAttr('disabled');
+
+                        event.stopPropagation();
+                        return false;
+                    }
+                }
+            }, response.data);
+
+        })
+        .ifFail(function (response) {
+            alert('菜单数据读取错误，请稍候再试！');
+        })
+        .send();
+
+
+
+    eb.app.MenuManager.loadMenuForm();
+
+    $("#sys-management-btn-up").click(function (e) {
+        clearTimeout(eb.app.MenuManager.menuSaveTimer);
+
+        var curMenuId = eb.app.MenuManager.targetNode.menuId;
+        eb.app.MenuManager.ztreeObj.moveNode(eb.app.MenuManager.prevNode, eb.app.MenuManager.targetNode, 'prev');
+
+        var treeNode = eb.app.MenuManager.ztreeObj.getNodeByParam("menuId", curMenuId, null);
+
+        eb.app.MenuManager.refreshStatus(treeNode);
+
+        eb.app.MenuManager.menuSaveTimer = setTimeout(function () {
+            eb.app.MenuManager.saveMenuOrder();
+        }, 2000);
+    });
+
+    $("#sys-management-btn-down").click(function (e) {
+        clearTimeout(eb.app.MenuManager.menuSaveTimer);
+
+        var curMenuId = eb.app.MenuManager.targetNode.menuId;
+        eb.app.MenuManager.ztreeObj.moveNode(eb.app.MenuManager.nextNode, eb.app.MenuManager.targetNode, 'next');
+
+        var treeNode = eb.app.MenuManager.ztreeObj.getNodeByParam("menuId", curMenuId, null);
+
+        eb.app.MenuManager.refreshStatus(treeNode);
+
+        eb.app.MenuManager.menuSaveTimer = setTimeout(function () {
+            eb.app.MenuManager.saveMenuOrder();
+        }, 2000);
+    });
+
+    $("#sys-management-btn-save").click(function (e) {
+        // TODO
+    });
+
+    $("#sys-management-btn-new").click(function (e) {
+        var parentId = eb.app.MenuManager.targetNode.menuId;
+        eb.app.MenuManager.loadMenuForm({parentId: parentId});
+    });
+</script> 
