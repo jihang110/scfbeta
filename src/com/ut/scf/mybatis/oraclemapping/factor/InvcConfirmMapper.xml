@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ut.scf.dao.factor.IInvcConfirmDao">
+
+    <resultMap id="invoiceExt" type="com.ut.scf.pojo.factor.InvoiceExt">
+        <id column="REC_UID" jdbcType="VARCHAR" property="cntId" />
+        <result column="CORP_ID" jdbcType="VARCHAR" property="counterPartyId" />
+        <result column="CORP_NAME" jdbcType="VARCHAR" property="counterPartyNm" />
+        <result column="ORGN_NO" jdbcType="VARCHAR" property="orgnNo" />
+        <result column="CNT_ID" jdbcType="VARCHAR" property="cntId" />
+        <result column="CNT_NO" jdbcType="VARCHAR" property="cntNo" />
+        <result column="PRODUCT_NM" jdbcType="VARCHAR" property="productNm" />
+        <result column="DEDU_METHOD" jdbcType="VARCHAR" property="deduMethod" />
+        <result column="RATE_BEAR_PARTY" jdbcType="VARCHAR" property="rateBearParty" />
+        <result column="RATE" jdbcType="DECIMAL" property="rate" />
+        <result column="SUM_INV_AMT" jdbcType="DECIMAL" property="sumInvAmt" />
+        <result column="RATE_BEAR_PARTY" jdbcType="VARCHAR" property="rateBearParty" />
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="STATUS" jdbcType="DECIMAL" property="status" />
+        <result column="BUSI_DT" jdbcType="TIMESTAMP" property="busiDt" />
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="updateUser" />
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+
+    <select id="getCounterPartyList" parameterType="HashMap" resultMap="invoiceExt">
+        select
+        CI.CORP_ID CORP_ID,
+        CI.CORP_NAME CORP_NAME,
+        CI.ORGN_NO ORGN_NO,
+        CN.REC_UID CNT_ID,
+        CNTR.CNT_NO CNT_NO,
+        PR.PRODUCT_NM PRODUCT_NM,
+        CN.DEDU_METHOD DEDU_METHOD,
+        CN.RATE_BEAR_PARTY RATE_BEAR_PARTY,
+        CN.RATE RATE,
+        TMP.SUM_INV_AMT SUM_INV_AMT,
+        CI.CREATE_USER CREATE_USER,
+        CI.CREATE_TIME CREATE_TIME,
+        CI.STATUS STATUS,
+        CI.BUSI_DT BUSI_DT,
+        CI.UPDATE_USER UPDATE_USER,
+        CI.UPDATE_TIME  UPDATE_TIME
+        from  CORP_INFO CI
+        LEFT JOIN CNTRCT CN
+        ON CN.CUST_ID = CI.CORP_ID
+        LEFT JOIN PRODUCT PR
+        ON PR.REC_UID = CN.PRODUCT_ID
+        LEFT JOIN CNTRCT CNTR
+        ON (CNTR.CUST_ID = CN.COUNTER_PARTY_ID AND CNTR.PRODUCT_ID = CN.PRODUCT_ID)
+        LEFT JOIN (
+            select II.CNT_NO "CNT_NO", SUM(II.INV_AMT) AS SUM_INV_AMT
+            from INVC_INFO II
+            LEFT JOIN CNTRCT CN
+            ON CN.CNT_NO = II.CNT_NO
+            WHERE II.STATUS = 1 and CN.STATUS = 1
+            <if test="invStatus != null">
+                and II.INV_STATUS = #{invStatus, jdbcType=VARCHAR}
+            </if>
+            <if test="invStatusMore != null">
+                and II.INV_STATUS
+                <foreach collection="invStatusMore" open="IN (" close=")" separator="," item="item">
+                    #{item}
+                </foreach>
+            </if>
+            GROUP BY II.CNT_NO) TMP
+        ON TMP.CNT_NO = CN.CNT_NO
+        where CI.STATUS = 1 and CN.STATUS = 1 and PR.STATUS = 1 and CN.CNT_TP = 1 and CNTR.CNT_TP = 0
+        <![CDATA[AND TMP.SUM_INV_AMT > 0]]>
+        <if test="counterPartyNm != null">
+            and CI.CORP_NAME LIKE  CONCAT(CONCAT('%', #{counterPartyNm}),'%')
+        </if>
+        <if test="orgnNo != null">
+            and CI.ORGN_NO LIKE CONCAT(CONCAT('%', #{orgnNo}),'%')
+        </if>
+        <if test="custId != null">
+            and CNTR.CUST_ID = #{custId}
+        </if>
+    </select>
+
+</mapper>

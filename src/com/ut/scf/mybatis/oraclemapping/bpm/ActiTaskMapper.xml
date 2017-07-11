@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ut.scf.dao.bpm.IActiTaskDao">
+  
+  <select id="getCompletedTaskList" parameterType="hashmap" resultType="com.ut.scf.respbean.bpm.CompletedTaskRespBean">
+        SELECT distinct rp.NAME_          procDefName,
+                        rp.ID_            procDefId,
+                        rp.KEY_           procDefKey,
+                        ht.id_            taskId,
+                        ht.TASK_DEF_KEY_  taskDefKey,
+                        ht.PROC_INST_ID_  procInstId,
+                        ht.NAME_          taskName,
+                        ht.ASSIGNEE_      assignee,
+                        hp.START_TIME_    startTime,
+                        hp.END_TIME_      endTime,
+                        case when hp.END_TIME_ is null then '0' else '1' end procStatus
+          from ACT_HI_TASKINST ht, act_re_procdef rp, act_hi_procinst hp
+	<where>
+          rp.ID_ = ht.PROC_DEF_ID_ and hp.ID_ = ht.PROC_INST_ID_ and (ht.ASSIGNEE_ = #{userId} or ht.OWNER_ = #{userId})
+		<if test="taskName != null">
+			and ht.NAME_ LIKE CONCAT(CONCAT('%', #{taskName}),'%') 
+		</if>
+		<if test="procdefName != null">
+			and rp.NAME_ LIKE CONCAT(CONCAT('%', #{procDefName}),'%') 
+		</if>
+		<if test='procStatus != null and procStatus == "0"'>
+			and hp.END_TIME_ is null
+		</if>
+		<if test='procStatus != null and procStatus == "1"'>
+			and hp.END_TIME_ is not null
+		</if>
+		<if test="startTime != null">
+			<![CDATA[  and hp.START_TIME_ >= to_timestamp(#{startTime}|| ' 00:00:0.000000000','yyyy-mm-dd hh24:mi:ss.ff9') ]]>
+		</if>
+		<if test="endTime != null">
+			<![CDATA[  and hp.END_TIME_ <= to_timestamp(#{endTime}|| ' 00:00:0.000000000','yyyy-mm-dd hh24:mi:ss.ff9') ]]>
+		</if>
+	</where>           
+         ORDER BY hp.START_TIME_ desc
+  </select>
+   
+   <select id="getTodoTaskList" parameterType="hashmap" resultType="com.ut.scf.respbean.bpm.TaskListRespBean">
+		select distinct RES.Id_ 			taskId,
+		                RES.Proc_Inst_Id_ 	processInstanceId,
+		                RES.Proc_Def_Id_ 	processDefinitionId,
+		                RES.Name_ 			taskName,
+		                RES.Task_Def_Key_ 	taskDefKey,
+		                RES.Create_Time_ 	taskCreateTime,
+		                RES.Assignee_ 		assignee,
+		                P.Key_ 				processDefinitionKey,
+		                P.Name_ 			processDefinitionName,
+		                HIP.Name_ 			processInstanceName,
+		                HIP.Start_Time_ 	processCreateTime,
+		                (select text_ from ACT_RU_VARIABLE 
+		                  where EXECUTION_ID_ = RES.Execution_Id_
+		                    and NAME_ = 'lastProcessTime'
+		                    and TASK_ID_ is null) lastProcessTime,
+		                (select text_ from ACT_RU_VARIABLE 
+		                  where EXECUTION_ID_ = RES.Execution_Id_
+		                    and NAME_ = 'lastProcessor'
+		                    and TASK_ID_ is null) lastProcessorId
+		  from ACT_RU_TASK         RES,
+		       ACT_RU_IDENTITYLINK I,
+		       ACT_RE_PROCDEF      P,
+		       ACT_HI_PROCINST     HIP
+		 WHERE RES.ID_ = I.TASK_ID_(+)
+		   and RES.Proc_Def_Id_ = P.Id_
+		   and RES.Proc_Inst_Id_ = HIP.Proc_Inst_Id_
+		   and (RES.ASSIGNEE_ = #{userId} or
+		       (RES.ASSIGNEE_ is null and I.TYPE_ = 'candidate' and I.USER_ID_ = #{userId}))
+		 order by RES.CREATE_TIME_ desc
+   </select>
+</mapper>

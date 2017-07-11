@@ -1,0 +1,63 @@
+<div class="row" style="text-align: center; margin-top: 40px;">
+    <i class="fa fa-check-circle" aria-hidden="true" style="font-size: 60px; color: green; line-height: 60px; vertical-align: middle;"></i>
+    <h3 style="line-height: 60px; vertical-align: middle; display: inline-block; margin: 0 20px;">
+        处理成功
+    </h3>
+</div>
+<div class="row">
+    <img id="wfresult-chart" src="" style="display: block; margin: 0 auto 20px auto; max-width: 95%;">
+
+    <div class="eb-richipt-wrapper form-group col-md-6">
+        <div class="eb-richipt eb-richipt-text">
+            <label class="control-label col-md-4" style="text-align: right;">交易流水号</label>
+            <div class="col-md-8">
+                <input id="wfresult-ipt-trxSerialNum" class="form-control" value="" disabled type="text">
+            </div>
+        </div>
+    </div>
+    <div class="eb-richipt-wrapper form-group col-md-6">
+        <div class="eb-richipt eb-richipt-text">
+            <label class="control-label col-md-4" style="text-align: right;">交易时间</label>
+            <div class="col-md-8">
+                <input id="wfresult-ipt-trxTime" class="form-control" value="" disabled type="text">
+            </div>
+        </div>
+    </div>
+    <div class="eb-richipt-wrapper form-group col-md-6">
+        <div class="eb-richipt eb-richipt-text">
+            <label class="control-label col-md-4" style="text-align: right;">下一节点</label>
+            <div class="col-md-8">
+                <input id="wfresult-ipt-nextTaskName" class="form-control" value="" disabled type="text">
+            </div>
+        </div>
+    </div>
+    <div class="eb-richipt-wrapper form-group col-md-6">
+        <div class="eb-richipt eb-richipt-text">
+            <label class="control-label col-md-4" style="text-align: right;">下一节点处理人</label>
+            <div class="col-md-8">
+                <input id="wfresult-ipt-candidates" class="form-control" value="" disabled type="text">
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div style="margin: 20px 60px; border: 1px solid #E1E5EC; padding: 10px 20px;">
+        <p>您还可以做以下操作：</p>
+        <ul>
+            <li>跳转至&nbsp;<a href="#homepage">首页</a></li>
+            <li>跳转至&nbsp;<a href="#workflowTodoList">待办列表</a></li>
+            <li>跳转至&nbsp;<a href="#">已办列表</a></li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var resultData = eb.app.cache.currentWorkflowResult;
+
+    $('#wfresult-chart').attr('src', eb.settings.SERVER_CONTEXT_PATH + '/bpm/graph?' + (resultData.nextTaskId ? 'taskId='+resultData.nextTaskId : 'processDefinitionId='+resultData.processDefinitionId));
+    $('#wfresult-ipt-trxSerialNum').val(resultData.trxSerialNum || '');
+    $('#wfresult-ipt-trxTime').val(resultData.trxTime || '');
+    $('#wfresult-ipt-nextTaskName').val(resultData.nextTaskName || '');
+    $('#wfresult-ipt-candidates').val(resultData.candidates || '');
+</script>

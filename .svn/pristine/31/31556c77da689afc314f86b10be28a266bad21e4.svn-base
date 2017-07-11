@@ -1,0 +1,42 @@
+{
+  "result": 0,
+  "resultNote": "Frontend CFG!",
+  "resultData": {
+  	"formId": "userRoleForm",
+    "pageType": "page-form",
+    "idField": "deptId",
+    "fields": [
+		{
+        "type": "tree",
+        "dictName": "DEPT_NAME",
+        "label": "机构名称",
+        "name": "mainDeptId",
+        "selectStrategy": "single",
+        "keyField": "deptId",
+        "valueField": "deptName",
+        "idField": "deptId",
+        "pidField": "parentId",
+        "childrenField": "subDeptList",
+        "id":"user-deptId",
+        "required":true
+      },
+      {
+        "type": "multiselect",
+        "label": "部门角色",
+        "dictName": "ROLE_NAME",
+        "name": "mainRoleId",
+        "id":"user-deptRoles",
+        "required":true
+      }
+    ],
+    "btnGroup": [
+      {
+        "id": "userDept-add",
+        "title": "保存",
+        "icon": "fa fa-paper-plane",
+        "type": "custom"
+      }
+    ],
+    "script": "business/sys/js/userManager-add.js"
+  }
+}

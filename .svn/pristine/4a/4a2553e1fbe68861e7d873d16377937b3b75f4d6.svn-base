@@ -1,0 +1,143 @@
+{
+  "flag": 0,
+  "data": {
+    "pageType": "page-form",
+    "submitUrl": "/rest/save",
+    "title": "表单编辑",
+    "fields": [
+      {
+        "type": "hidden",
+        "name": "field1"
+      },
+      {
+        "id": "field1",
+        "type": "text",
+        "label": "简单文本",
+        "name": "field1",
+        "required": true,
+        "readonly": true
+      },
+      {
+        "type": "lookup",
+        "label": "Lookup",
+        "name": "field1",
+        "route": "demoDataGrid",
+        "required": true,
+        "readonly": true
+      },
+      {
+        "id": "field2",
+        "type": "text",
+        "label": "正则校验",
+        "name": "field2",
+        "reg": "number"
+      },
+      {
+        "id": "field3",
+        "type": "password",
+        "label": "密码",
+        "name": "field3",
+        "required": true
+      },
+      {
+        "id": "field4",
+        "type": "select",
+        "label": "单选",
+        "dict": [{"value":"选项一", "key":"opt1"}, {"value":"选项二", "key":"opt2"}, {"value":"选项三", "key":"opt3"}],
+        "name": "field4",
+        "required": true
+      },
+      {
+        "id": "field5",
+        "type": "multiselect",
+        "label": "多选",
+        "dict": [{"value":"选项一", "key":"opt1"}, {"value":"选项二", "key":"opt2"}, {"value":"选项三", "key":"opt3"}],
+        "name": "field5",
+        "required": true
+      },
+      {
+        "id": "field200",
+        "type": "tree",
+        "label": "树",
+        "sourceUrl": "/menu/tree",
+        "keyField": "menuId",
+        "valueField": "menuName",
+        "idField": "menuId",
+        "pidField": "parentId",
+        "childrenField": "subMenuList",
+        "name": "field200",
+        "required": true
+      },
+      {
+        "id": "field6",
+        "type": "radio",
+        "label": "单选",
+        "dict": [{"value":"选项一", "key":"opt1"}, {"value":"选项二", "key":"opt2"}, {"value":"选项三", "key":"opt3"}],
+        "name": "field6"
+      },
+      {
+        "id": "field7",
+        "type": "checkbox",
+        "label": "多选",
+        "dict": [{"value":"选项一", "key":"opt1"}, {"value":"选项二", "key":"opt2"}, {"value":"选项三", "key":"opt3"}],
+        "name": "field7"
+      },
+      {
+        "id": "field8",
+        "type": "timepicker",
+        "subType": "date",
+        "label": "日期",
+        "name": "field8",
+        "required": true
+      },
+      {
+        "id": "field9",
+        "type": "timepicker",
+        "subType": "time",
+        "label": "时间",
+        "name": "field9"
+      },
+      {
+        "id": "field10",
+        "type": "timepicker",
+        "subType": "datetime",
+        "label": "日期时间",
+        "name": "field10"
+      },
+      {
+        "id": "field11",
+        "type": "textarea",
+        "label": "多行文本",
+        "name": "field11"
+      },
+      {
+        "type": "datagrid",
+        "name": "somelist",
+        "btnGroup": [
+          {
+            "type": "grid-form-win",
+            "title": "新增",
+            "icon": "fa fa-plus",
+            "route": "demoDetailForm"
+          }
+        ],
+        "idField": "ff0",
+        "columns": [
+          {
+            "title": "字段一",
+            "field": "ff1"
+          },
+          {
+            "title": "字段二",
+            "field": "ff2"
+          },
+          {
+            "title": "字段三",
+            "field": "ff3"
+          }
+        ]
+      }
+    ]
+  },
+  "msg": null
+}
